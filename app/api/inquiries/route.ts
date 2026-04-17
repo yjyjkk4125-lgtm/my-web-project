@@ -54,21 +54,16 @@ export async function POST(request: Request) {
     experience: trimStr(body.experience, 2000),
   };
 
-  if (
-    !row.last_name ||
-    !row.first_name ||
-    !row.company ||
-    !row.email ||
-    !row.phone ||
-    !row.department ||
-    !row.position ||
-    !row.main_task ||
-    !row.experience
-  ) {
+  const missingFields = Object.entries(row)
+    .filter(([, value]) => !value)
+    .map(([key]) => key);
+
+  if (missingFields.length > 0) {
     return NextResponse.json(
       {
         error:
-          "필수 필드(last_name, first_name, company, email, phone, department, position, main_task, experience)가 비어 있습니다.",
+          "필수 필드가 비어 있습니다.",
+        missingFields,
       },
       { status: 400 }
     );

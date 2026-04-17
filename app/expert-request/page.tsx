@@ -84,16 +84,28 @@ export default function ExpertRequestPage() {
         body: JSON.stringify(payload),
       });
 
-      const json = (await response.json()) as { data?: unknown; error?: string; code?: string };
+      const json = (await response.json()) as {
+        data?: unknown;
+        error?: string;
+        code?: string;
+        missingFields?: string[];
+      };
 
       if (!response.ok) {
         console.log("문의 저장 API 오류:", {
           status: response.status,
           error: json.error,
           code: json.code,
+          missingFields: json.missingFields,
         });
+        const missingText =
+          json.missingFields && json.missingFields.length > 0
+            ? `누락 필드: ${json.missingFields.join(", ")}`
+            : "";
         setSubmitStatus(
-          json.error ?? `저장 실패 (HTTP ${response.status}). 서버 로그를 확인해 주세요.`
+          `${json.error ?? `저장 실패 (HTTP ${response.status})`}${
+            missingText ? ` (${missingText})` : ""
+          }`
         );
         return;
       }
