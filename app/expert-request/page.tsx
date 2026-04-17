@@ -2,8 +2,6 @@
 
 import { FormEvent, useEffect, useState } from "react";
 
-import { supabase } from "@/lib/supabase";
-
 type InquiryInsert = {
   last_name: string;
   first_name: string;
@@ -77,26 +75,30 @@ export default function ExpertRequestPage() {
     setIsSubmitting(true);
 
     try {
-      const { data, error } = await supabase
-        .from("inquiries")
-        .insert([payload])
-        .select();
+      const response = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-      if (error) {
-        console.log("Supabase insert error:", {
-          message: error.message,
-          details: error.details,
-          hint: error.hint,
-          code: error.code,
+      const json = (await response.json()) as { data?: unknown; error?: string; code?: string };
+
+      if (!response.ok) {
+        console.log("문의 저장 API 오류:", {
+          status: response.status,
+          error: json.error,
+          code: json.code,
         });
-        setSubmitStatus(`저장 실패: ${error.message}`);
+        setSubmitStatus(
+          json.error ?? `저장 실패 (HTTP ${response.status}). 서버 로그를 확인해 주세요.`
+        );
         return;
       }
 
-      console.log("Supabase insert success:", data);
+      console.log("문의 저장 성공:", json.data);
       setSubmitStatus("저장이 완료되었습니다.");
     } catch (error) {
-      console.log("Supabase insert unexpected error:", error);
+      console.log("문의 저장 네트워크 오류:", error);
       setSubmitStatus("예상치 못한 오류가 발생했습니다.");
     } finally {
       setIsSubmitting(false);
