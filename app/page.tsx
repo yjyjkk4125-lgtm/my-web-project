@@ -15,7 +15,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="mt-10 rounded-2xl border border-black/10 bg-white p-8 shadow-sm dark:border-white/15 dark:bg-black/20">
+      <section id="inquiry-form" className="mt-10 rounded-2xl border border-black/10 bg-white p-8 shadow-sm dark:border-white/15 dark:bg-black/20">
         <h2 className="text-2xl font-semibold">등록 전문가 확인</h2>
         <p className="mt-3 text-sm text-black/70 dark:text-white/80">
           원하는 경력과 자문 분야를 입력하면 등록 전문가 매칭 가능 여부를
