@@ -132,17 +132,11 @@ export default function Home() {
               </span>
 
               <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-5xl">
-                해외 진출과 브랜드 고민,
-                <br />
-                전문가와 1시간 1:1
-                <br />
-                전화 자문
+              해외 진출, 전문가 인사이트로더 빠른 결정
               </h1>
 
               <p className="mt-6 max-w-md text-base leading-relaxed text-slate-300">
-                K-뷰티 브랜드사가 시장 확장, 브랜딩, 제품 전략 등 핵심
-                이슈를 정리하면 업계 전문가가 1시간 동안 실무 중심으로
-                해결 방향을 제안합니다.
+              K-뷰티 브랜드 전문가의 실전 경험, 1시간 1:1 직접 자문
               </p>
 
               <div className="mt-10 space-y-3 text-sm text-slate-400">
