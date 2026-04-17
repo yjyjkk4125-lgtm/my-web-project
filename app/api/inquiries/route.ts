@@ -8,6 +8,9 @@ type InquiryBody = {
   email?: string;
   phone?: string;
   department?: string;
+  position?: string;
+  main_task?: string;
+  experience?: string;
 };
 
 function trimStr(value: unknown, max: number): string {
@@ -46,6 +49,9 @@ export async function POST(request: Request) {
     email: trimStr(body.email, 320),
     phone: trimStr(body.phone, 100),
     department: trimStr(body.department, 500),
+    position: trimStr(body.position, 500),
+    main_task: trimStr(body.main_task, 1000),
+    experience: trimStr(body.experience, 2000),
   };
 
   if (
@@ -54,10 +60,16 @@ export async function POST(request: Request) {
     !row.company ||
     !row.email ||
     !row.phone ||
-    !row.department
+    !row.department ||
+    !row.position ||
+    !row.main_task ||
+    !row.experience
   ) {
     return NextResponse.json(
-      { error: "필수 필드(last_name, first_name, company, email, phone, department)가 비어 있습니다." },
+      {
+        error:
+          "필수 필드(last_name, first_name, company, email, phone, department, position, main_task, experience)가 비어 있습니다.",
+      },
       { status: 400 }
     );
   }

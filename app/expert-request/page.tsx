@@ -9,6 +9,9 @@ type InquiryInsert = {
   email: string;
   phone: string;
   department: string;
+  position: string;
+  main_task: string;
+  experience: string;
 };
 
 export default function ExpertRequestPage() {
@@ -41,6 +44,9 @@ export default function ExpertRequestPage() {
       email: email.trim(),
       phone: phone.trim(),
       department: department.trim(),
+      position: title.trim(),
+      main_task: responsibilities.trim(),
+      experience: expertExperience.trim(),
     };
 
     console.log("insert payload:", payload);
@@ -51,18 +57,15 @@ export default function ExpertRequestPage() {
       !payload.company ||
       !payload.email ||
       !payload.phone ||
-      !payload.department
+      !payload.department ||
+      !payload.position ||
+      !payload.main_task ||
+      !payload.experience
     ) {
       console.log(
-        "Supabase insert blocked: 필수 입력값(last_name, first_name, company, email, phone, department)이 비어 있습니다."
+        "Supabase insert blocked: 필수 입력값(last_name, first_name, company, email, phone, department, position, main_task, experience)이 비어 있습니다."
       );
       setSubmitStatus("필수 입력값이 비어 있습니다.");
-      return;
-    }
-
-    if (!title.trim() || !responsibilities.trim() || !expertExperience.trim()) {
-      console.log("Supabase insert blocked: 직책/주요 담당 업무/요구 전문가 경험이 비어 있습니다.");
-      setSubmitStatus("직책/주요 담당 업무/요구 전문가 경험을 입력해주세요.");
       return;
     }
 
