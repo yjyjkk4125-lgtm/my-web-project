@@ -132,7 +132,9 @@ export default function Home() {
               </span>
 
               <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-5xl">
-              해외 진출, 전문가 인사이트로더 빠른 결정
+              해외 진출, 
+              <br />
+              전문가 인사이트로더 빠른 결정
               </h1>
 
               <p className="mt-6 max-w-md text-base leading-relaxed text-slate-300">
