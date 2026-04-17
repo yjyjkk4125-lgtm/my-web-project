@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useModal } from "@/context/ModalContext";
 
 const supportItems = [
-  { label: "서비스 개요", href: "/services/overview" },
-  { label: "VIALOCAL 시작하기", href: "/services/getting-started" },
-  { label: "VIALOCAL 차별화", href: "/services/differentiation" },
-  { label: "전화 자문", href: "/services/call-consulting" },
+  { label: "서비스 개요", href: "/services/overview", modal: false },
+  { label: "VIALOCAL 시작하기", href: "/services/getting-started", modal: false },
+  { label: "VIALOCAL 차별화", href: "/services/differentiation", modal: false },
+  { label: "전화 자문", href: "/services/call-consulting", modal: true },
 ];
 
 const navLinks = [
@@ -20,6 +21,13 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const { openModal } = useModal();
+
+  const handleModalOpen = () => {
+    setDropdownOpen(false);
+    setMobileOpen(false);
+    openModal();
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white">
@@ -48,12 +56,7 @@ export default function Navbar() {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
 
@@ -66,16 +69,30 @@ export default function Navbar() {
               }`}
             >
               <ul className="py-1">
-                {supportItems.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="block px-4 py-2.5 text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
+                {supportItems.map((item) =>
+                  item.modal ? (
+                    <li key={item.label}>
+                      <button
+                        onClick={handleModalOpen}
+                        className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
+                      >
+                        {item.label}
+                        <span className="ml-auto rounded bg-blue-100 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">
+                          문의
+                        </span>
+                      </button>
+                    </li>
+                  ) : (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="block px-4 py-2.5 text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  )
+                )}
               </ul>
             </div>
           </div>
@@ -92,12 +109,12 @@ export default function Navbar() {
         </nav>
 
         {/* 문의하기 버튼 (데스크톱) */}
-        <a
-          href="/#inquiry-form"
+        <button
+          onClick={handleModalOpen}
           className="hidden rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 md:inline-block"
         >
           문의하기
-        </a>
+        </button>
 
         {/* 모바일 햄버거 버튼 */}
         <button
@@ -137,17 +154,31 @@ export default function Navbar() {
           </button>
           {mobileDropdownOpen && (
             <ul className="mb-2 ml-4 space-y-1 border-l-2 border-blue-100 pl-3">
-              {supportItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="block py-2 text-sm text-slate-600 hover:text-blue-700"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              {supportItems.map((item) =>
+                item.modal ? (
+                  <li key={item.label}>
+                    <button
+                      onClick={handleModalOpen}
+                      className="flex w-full items-center gap-2 py-2 text-left text-sm text-slate-600 hover:text-blue-700"
+                    >
+                      {item.label}
+                      <span className="rounded bg-blue-100 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">
+                        문의
+                      </span>
+                    </button>
+                  </li>
+                ) : (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="block py-2 text-sm text-slate-600 hover:text-blue-700"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
           )}
 
@@ -162,13 +193,12 @@ export default function Navbar() {
             </Link>
           ))}
 
-          <a
-            href="/#inquiry-form"
-            onClick={() => setMobileOpen(false)}
-            className="mt-3 block rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-semibold text-white hover:bg-blue-800"
+          <button
+            onClick={handleModalOpen}
+            className="mt-3 w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-semibold text-white hover:bg-blue-800"
           >
             문의하기
-          </a>
+          </button>
         </nav>
       )}
     </header>
