@@ -7,7 +7,6 @@ export default function Home() {
 
   return (
     <main>
-      {/* ── Hero Section ── */}
       <section className="relative bg-[#0a1628]">
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#0d2044] to-[#102060]" />
 
@@ -18,34 +17,22 @@ export default function Home() {
           </span>
 
           {/* 타이틀 */}
-          <h1 className="mt-6 max-w-2xl text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl">
-            해외 진출과 브랜드 고민,
-            <br />
-            전문가와 1시간
-            <br />
-            1:1 전화 자문
+          <h1 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
+            해외 진출, 전문가 인사이트로 더 빠른 결정
           </h1>
 
           {/* 설명 */}
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-300 md:text-lg">
+          <p className="mt-5 max-w-lg text-base leading-relaxed text-slate-300 md:text-lg">
             K-뷰티 브랜드 전문가의 실전 경험, 1시간 1:1 직접 자문
           </p>
 
           {/* 문의하기 버튼 */}
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <button
-              onClick={openModal}
-              className="rounded-lg bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
-            >
-              문의하기
-            </button>
-            <button
-              onClick={openModal}
-              className="rounded-lg border border-white/30 px-7 py-3.5 text-sm font-semibold text-white transition hover:border-white/60 hover:bg-white/10"
-            >
-              전문가 확인 요청하기
-            </button>
-          </div>
+          <button
+            onClick={openModal}
+            className="mt-8 rounded-lg bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
+          >
+            문의하기
+          </button>
         </div>
       </section>
     </main>
