@@ -13,7 +13,7 @@ const supportItems = [
 
 const navLinks = [
   { label: "클라이언트", href: "/clients" },
-  { label: "자문위원", href: "/experts" },
+  { label: "자문위원", href: "/advisor" },
   { label: "VIALOCAL 소개", href: "/about" },
 ];
 
