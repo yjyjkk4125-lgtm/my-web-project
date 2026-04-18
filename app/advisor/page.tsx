@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 /* ── 스크롤 Fade-in 래퍼 ─────────────────────────────────── */
 function FadeIn({
@@ -165,9 +166,12 @@ export default function AdvisorPage() {
             이끄는 자문위원
           </h1>
 
-          <button className="mt-8 rounded border border-white px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-[#0a1628]">
+          <Link
+            href="/advisor/register"
+            className="mt-8 inline-block rounded border border-white px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-[#0a1628]"
+          >
             자문위원 등록하기
-          </button>
+          </Link>
         </div>
       </section>
 
@@ -280,9 +284,12 @@ export default function AdvisorPage() {
             <h2 className="text-2xl font-bold text-white md:text-3xl lg:text-4xl">
               지금 바로 VIALOCAL 자문위원에 등록하세요
             </h2>
-            <button className="mt-10 rounded border border-white px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white hover:text-[#0a1628]">
+            <Link
+              href="/advisor/register"
+              className="mt-10 inline-block rounded border border-white px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white hover:text-[#0a1628]"
+            >
               자문위원 등록하기
-            </button>
+            </Link>
           </div>
         </FadeIn>
       </section>
