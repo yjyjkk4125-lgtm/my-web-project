@@ -239,8 +239,8 @@ export default function Home() {
             </h2>
           </FadeIn>
 
-          {/* 그리드 (2×2) */}
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 items-stretch">
+          {/* 그리드 (모바일 1열 → md 이상 4열) */}
+          <div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-4">
           {[
           { delay: 0,   label: "검증", title: "엄격한 경력 검증을 통과한 산업별 실무 전문가 그룹" },
           { delay: 120, label: "지식", title: "검색이나 리포트로는 찾을 수 없는 현지의 암묵지(Tacit Knowledge) 제공" },
