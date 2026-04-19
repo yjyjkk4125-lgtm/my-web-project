@@ -103,7 +103,7 @@ const processSteps = [
   {
     Icon: IconCoin,
     title: "자문료 지급",
-    desc: "1시간 자문이 완료되면 자문료를 송금해드립니다.",
+    desc: "자문 완료 건에 대한 자문료는 매월 지정된 정산일에 일괄 계좌 이체로 지급해 드립니다.",
   },
   {
     Icon: IconHandshake,
