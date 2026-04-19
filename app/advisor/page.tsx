@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 /* ── 스크롤 Fade-in 래퍼 ─────────────────────────────────── */
@@ -281,9 +282,15 @@ export default function AdvisorPage() {
       <section className="bg-[#f0f4f8] py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            {/* 가로형 이미지 플레이스홀더 */}
-            <div className="aspect-video w-full overflow-hidden rounded-2xl bg-slate-200 flex items-center justify-center">
-              <span className="text-sm text-slate-400">[비즈니스 가교 가로형 이미지]</span>
+            {/* 가로형 이미지 */}
+            <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-200">
+              <Image
+                src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&q=80&fit=crop"
+                alt="글로벌 비즈니스 파트너십"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             </div>
 
             {/* 텍스트 */}

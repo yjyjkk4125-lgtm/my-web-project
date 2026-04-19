@@ -211,10 +211,10 @@ export default function Home() {
               </div>
               <div className="relative order-1 aspect-video overflow-hidden rounded-2xl bg-slate-100 lg:order-2">
                 <Image
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80&fit=crop"
+                  src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80&fit=crop"
                   alt="검증된 전문가와의 1:1 화상 자문"
                   fill
-                  className="object-cover object-top"
+                  className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
@@ -239,25 +239,25 @@ export default function Home() {
             </h2>
           </FadeIn>
 
-          {/* 그리드 (모바일 1열 → md 이상 4열) */}
-          <div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-4">
-          {[
-          { delay: 0,   label: "검증", title: "엄격한 경력 검증을 통과한 산업별 실무 전문가 그룹" },
-          { delay: 120, label: "지식", title: "검색이나 리포트로는 찾을 수 없는 현지의 암묵지(Tacit Knowledge) 제공" },
-          { delay: 0,   label: "보안", title: "철저한 비밀유지 의무(NDA) 기반의 안전하고 프라이빗한 정보 교환" },
-          { delay: 120, label: "효율", title: "시행착오를 줄이는 가장 빠른 방법, 실무자의 경험치를 사는 효율성" },
-          ].map((item, idx) => (
-          <FadeIn key={idx} delay={item.delay} className="h-full">
-          <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition hover:bg-white/10">
-          <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">
-          {item.label}
-          </p>
-          <h3 className="mt-3 text-sm font-bold text-white whitespace-nowrap overflow-hidden text-ellipsis">
-          {item.title}
-          </h3>
-          </div>
-          </FadeIn>
-          ))}
+          {/* 그리드 (모바일 1열 → md 이상 2×2) */}
+          <div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-2">
+            {[
+              { delay: 0,   label: "검증", title: "엄격한 경력 검증을 통과한 산업별 실무 전문가 그룹" },
+              { delay: 120, label: "지식", title: "검색이나 리포트로는 찾을 수 없는 현지의 암묵지(Tacit Knowledge) 제공" },
+              { delay: 0,   label: "보안", title: "철저한 비밀유지 의무(NDA) 기반의 안전하고 프라이빗한 정보 교환" },
+              { delay: 120, label: "효율", title: "시행착오를 줄이는 가장 빠른 방법, 실무자의 경험치를 사는 효율성" },
+            ].map((item, idx) => (
+              <FadeIn key={idx} delay={item.delay} className="h-full">
+                <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:bg-white/10 lg:p-8">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">
+                    {item.label}
+                  </p>
+                  <h3 className="mt-3 whitespace-nowrap text-[11px] font-bold text-white lg:text-xs">
+                    {item.title}
+                  </h3>
+                </div>
+              </FadeIn>
+            ))}
           </div>
 
           {/* CTA */}

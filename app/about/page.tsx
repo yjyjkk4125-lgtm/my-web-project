@@ -53,7 +53,10 @@ export default function About() {
           섹션 1 — Hero  |  다크 네이비
       ════════════════════════════════════════════ */}
       <section className="relative bg-[#0a1628]">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#0d2044] to-[#102060]" />
+        {/* 배경 이미지 */}
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1600&q=60')] bg-cover bg-center opacity-30" />
+        {/* 다크 오버레이 — 흰 글씨 가독성 확보 */}
+        <div className="pointer-events-none absolute inset-0 bg-black/50" />
         <div className="relative mx-auto flex min-h-[calc(100vh-64px)] max-w-7xl flex-col items-start justify-center px-6 pt-24 pb-24 lg:pt-32 lg:pb-32">
           <FadeIn>
             <span className="inline-block rounded-full border border-blue-400/40 bg-blue-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-300">
