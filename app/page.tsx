@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useModal } from "@/context/ModalContext";
 
@@ -91,36 +92,60 @@ export default function Home() {
           {/* 섹션 헤더 */}
           <FadeIn>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-              섹션 A 레이블
+              왜 VIALOCAL인가
             </p>
             <h2 className="mt-3 max-w-xl text-3xl font-bold text-slate-900 md:text-4xl">
-              섹션 A 제목을 여기에 입력하세요
+              해외 진출의 모든 단계, 전문가가 함께합니다
             </h2>
             <p className="mt-4 max-w-2xl text-slate-500">
-              섹션 A 설명 문구를 여기에 입력하세요.
+              시장 진입부터 운영까지, 단계별 실무 자문
             </p>
           </FadeIn>
 
           {/* 3열 카드 */}
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { delay: 0 },
-              { delay: 120 },
-              { delay: 240 },
+              {
+                delay: 0,
+                title: "시장 진입",
+                desc: "미국·유럽·동남아 등 유통 채널 선택, 바이어 발굴, 플랫폼 입점 전략",
+                icon: (
+                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                ),
+              },
+              {
+                delay: 120,
+                title: "브랜드·마케팅",
+                desc: "현지 소비자 맞춤 브랜딩, 콘텐츠 마케팅, 이커머스 운영 최적화",
+                icon: (
+                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                  </svg>
+                ),
+              },
+              {
+                delay: 240,
+                title: "인증·물류",
+                desc: "MoCRA·CPNP 등 국가별 인증 취득, 물류 경로 설계, SCM 구축",
+                icon: (
+                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                ),
+              },
             ].map((card, idx) => (
               <FadeIn key={idx} delay={card.delay}>
                 <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:shadow-md">
-                  {/* 아이콘 자리 */}
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
+                    {card.icon}
                   </div>
                   <h3 className="mt-5 text-lg font-semibold text-slate-900">
-                    카드 {idx + 1} 제목
+                    {card.title}
                   </h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">
-                    카드 {idx + 1} 설명 내용을 여기에 입력하세요.
+                    {card.desc}
                   </p>
                 </div>
               </FadeIn>
@@ -137,31 +162,34 @@ export default function Home() {
           {/* 섹션 B 헤더 */}
           <FadeIn>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-              섹션 B 레이블
+              자문 프로세스
             </p>
             <h2 className="mt-3 max-w-xl text-3xl font-bold text-slate-900 md:text-4xl">
-              섹션 B 제목을 여기에 입력하세요
+              문의부터 자문까지, 단 2단계
             </h2>
           </FadeIn>
 
           {/* B-1: 이미지 왼쪽 / 텍스트 오른쪽 */}
           <FadeIn>
             <div className="grid items-center gap-12 lg:grid-cols-2">
-              <div className="aspect-video overflow-hidden rounded-2xl bg-slate-100">
-                {/* 이미지 또는 영상 자리 */}
-                <div className="flex h-full items-center justify-center text-sm text-slate-400">
-                  이미지 / 영상 자리 (B-1)
-                </div>
+              <div className="relative aspect-video overflow-hidden rounded-2xl bg-slate-100">
+                <Image
+                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80&fit=crop"
+                  alt="비즈니스 고민 접수 및 전문가 매칭"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-                  B-1 레이블
+                  의뢰 및 매칭
                 </p>
                 <h3 className="mt-3 text-2xl font-bold text-slate-900 md:text-3xl">
-                  B-1 제목을 여기에 입력하세요
+                  비즈니스 고민 접수 및 최적 전문가 매칭
                 </h3>
                 <p className="mt-4 leading-relaxed text-slate-500">
-                  B-1 설명 내용을 여기에 입력하세요.
+                  현재 직면한 해외 진출 이슈를 상세히 남겨주세요. VIALOCAL팀이 24시간 이내에 전문가 풀에서 가장 적합한 전문가를 선별해 제안합니다.
                 </p>
               </div>
             </div>
@@ -172,19 +200,23 @@ export default function Home() {
             <div className="grid items-center gap-12 lg:grid-cols-2">
               <div className="order-2 lg:order-1">
                 <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-                  B-2 레이블
+                  자문 및 해결
                 </p>
                 <h3 className="mt-3 text-2xl font-bold text-slate-900 md:text-3xl">
-                  B-2 제목을 여기에 입력하세요
+                  검증된 전문가와의 1:1 자문 실행
                 </h3>
                 <p className="mt-4 leading-relaxed text-slate-500">
-                  B-2 설명 내용을 여기에 입력하세요.
+                  매칭된 전문가의 경력을 확인하고 일정을 확정하세요. 1시간의 유선/화상 자문을 통해 실무자의 진짜 해결책을 얻습니다.
                 </p>
               </div>
-              <div className="order-1 aspect-video overflow-hidden rounded-2xl bg-slate-100 lg:order-2">
-                <div className="flex h-full items-center justify-center text-sm text-slate-400">
-                  이미지 / 영상 자리 (B-2)
-                </div>
+              <div className="relative order-1 aspect-video overflow-hidden rounded-2xl bg-slate-100 lg:order-2">
+                <Image
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80&fit=crop"
+                  alt="검증된 전문가와의 1:1 화상 자문"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
             </div>
           </FadeIn>
@@ -199,35 +231,29 @@ export default function Home() {
           {/* 섹션 C 헤더 */}
           <FadeIn>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">
-              섹션 C 레이블
+              이런 분께 필요합니다
             </p>
-            <h2 className="mt-3 max-w-xl text-3xl font-bold text-white md:text-4xl">
-              섹션 C 제목을 여기에 입력하세요
+            <h2 className="mt-3 max-w-3xl text-3xl font-bold text-white md:text-4xl">
+              K-뷰티 글로벌 진출, 의사결정을 돕는 상위 1% 전문가 그룹
             </h2>
-            <p className="mt-4 max-w-2xl text-slate-400">
-              섹션 C 설명 문구를 여기에 입력하세요.
-            </p>
           </FadeIn>
 
           {/* 그리드 (2×2) */}
           <div className="mt-16 grid gap-6 sm:grid-cols-2">
             {[
-              { delay: 0 },
-              { delay: 120 },
-              { delay: 0 },
-              { delay: 120 },
+              { delay: 0,   label: "검증", title: "엄격한 경력 검증을 통과한 산업별 실무 전문가 그룹" },
+              { delay: 120, label: "지식", title: "검색이나 리포트로는 찾을 수 없는 현지의 암묵지(Tacit Knowledge) 제공" },
+              { delay: 0,   label: "보안", title: "철저한 비밀유지 의무(NDA) 기반의 안전하고 프라이빗한 정보 교환" },
+              { delay: 120, label: "효율", title: "시행착오를 줄이는 가장 빠른 방법, 실무자의 경험치를 사는 효율성" },
             ].map((item, idx) => (
               <FadeIn key={idx} delay={item.delay}>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition hover:bg-white/10">
                   <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">
-                    항목 {idx + 1}
+                    {item.label}
                   </p>
                   <h3 className="mt-3 text-xl font-bold text-white">
-                    그리드 항목 {idx + 1} 제목
+                    {item.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-400">
-                    그리드 항목 {idx + 1} 설명 내용을 여기에 입력하세요.
-                  </p>
                 </div>
               </FadeIn>
             ))}

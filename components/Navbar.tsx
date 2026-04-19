@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useModal } from "@/context/ModalContext";
 
 const supportItems = [
@@ -22,6 +22,16 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
   const { openModal } = useModal();
+  const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleDropdownEnter = () => {
+    if (closeTimeout.current) clearTimeout(closeTimeout.current);
+    setDropdownOpen(true);
+  };
+
+  const handleDropdownLeave = () => {
+    closeTimeout.current = setTimeout(() => setDropdownOpen(false), 250);
+  };
 
   const handleModalOpen = () => {
     setDropdownOpen(false);
@@ -45,8 +55,8 @@ export default function Navbar() {
           {/* 지원 영역 드롭다운 */}
           <div
             className="relative"
-            onMouseEnter={() => setDropdownOpen(true)}
-            onMouseLeave={() => setDropdownOpen(false)}
+            onMouseEnter={handleDropdownEnter}
+            onMouseLeave={handleDropdownLeave}
           >
             <button className="flex items-center gap-1 rounded-md px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900">
               지원 영역
@@ -60,40 +70,42 @@ export default function Navbar() {
               </svg>
             </button>
 
-            {/* 드롭다운 패널 */}
-            <div
-              className={`absolute left-0 top-full mt-1 w-52 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg transition-all duration-200 ${
-                dropdownOpen
-                  ? "pointer-events-auto translate-y-0 opacity-100"
-                  : "pointer-events-none -translate-y-1 opacity-0"
-              }`}
-            >
-              <ul className="py-1">
-                {supportItems.map((item) =>
-                  item.modal ? (
-                    <li key={item.label}>
-                      <button
-                        onClick={handleModalOpen}
-                        className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
-                      >
-                        {item.label}
-                        <span className="ml-auto rounded bg-blue-100 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">
-                          문의
-                        </span>
-                      </button>
-                    </li>
-                  ) : (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        className="block px-4 py-2.5 text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  )
-                )}
-              </ul>
+            {/* 드롭다운 패널 — pt-2로 버튼과의 간격을 투명 히트박스로 채움 */}
+            <div className="absolute left-0 top-full pt-2">
+              <div
+                className={`w-52 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg transition-all duration-200 ${
+                  dropdownOpen
+                    ? "pointer-events-auto translate-y-0 opacity-100"
+                    : "pointer-events-none -translate-y-1 opacity-0"
+                }`}
+              >
+                <ul className="py-1">
+                  {supportItems.map((item) =>
+                    item.modal ? (
+                      <li key={item.label}>
+                        <button
+                          onClick={handleModalOpen}
+                          className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
+                        >
+                          {item.label}
+                          <span className="ml-auto rounded bg-blue-100 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">
+                            문의
+                          </span>
+                        </button>
+                      </li>
+                    ) : (
+                      <li key={item.href}>
+                        <Link
+                          href={item.href}
+                          className="block px-4 py-2.5 text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
             </div>
           </div>
 
