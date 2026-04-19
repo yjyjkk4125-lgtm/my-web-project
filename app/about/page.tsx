@@ -59,10 +59,10 @@ export default function About() {
             <span className="inline-block rounded-full border border-blue-400/40 bg-blue-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-300">
               VIALOCAL 소개
             </span>
-            <h1 className="mt-14 text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
+            <h1 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
               K-뷰티 브랜드의 해외 진출을 가장 빠르게
             </h1>
-            <p className="mt-14 max-w-lg text-base leading-relaxed text-slate-300 md:text-lg">
+            <p className="mt-4 max-w-lg text-base leading-relaxed text-slate-300 md:text-lg">
               이론이 아닌 현장의 언어로, 실무 전문가가 직접 답합니다
             </p>
           </FadeIn>
