@@ -243,7 +243,7 @@ export default function Home() {
           <div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-2">
             {[
               { delay: 0,   label: "검증", title: "엄격한 경력 검증을 통과한 산업별 실무 전문가 그룹" },
-              { delay: 120, label: "지식", title: "검색이나 리포트로는 찾을 수 없는 현지의 암묵지(Tacit Knowledge) 제공" },
+              { delay: 120, label: "지식", title: "리포트에는 담기지 않는 현장 실무자들의 생생한 노하우" },
               { delay: 0,   label: "보안", title: "철저한 비밀유지 의무(NDA) 기반의 안전하고 프라이빗한 정보 교환" },
               { delay: 120, label: "효율", title: "시행착오를 줄이는 가장 빠른 방법, 실무자의 경험치를 사는 효율성" },
             ].map((item, idx) => (
