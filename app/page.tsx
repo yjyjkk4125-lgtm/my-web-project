@@ -94,7 +94,7 @@ export default function Home() {
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
               왜 VIALOCAL인가
             </p>
-            <h2 className="mt-3 max-w-xl text-3xl font-bold text-slate-900 md:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold text-slate-900 md:text-4xl">
               해외 진출의 모든 단계, 전문가가 함께합니다
             </h2>
             <p className="mt-4 max-w-2xl text-slate-500">
@@ -214,7 +214,7 @@ export default function Home() {
                   src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80&fit=crop"
                   alt="검증된 전문가와의 1:1 화상 자문"
                   fill
-                  className="object-cover"
+                  className="object-cover object-top"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
@@ -234,29 +234,30 @@ export default function Home() {
               이런 분께 필요합니다
             </p>
             <h2 className="mt-3 max-w-3xl text-3xl font-bold text-white md:text-4xl">
-              K-뷰티 글로벌 진출, 의사결정을 돕는 상위 1% 전문가 그룹
+              K-뷰티 글로벌 진출,<br/> 
+              의사결정을 돕는 상위 1% 전문가 그룹
             </h2>
           </FadeIn>
 
           {/* 그리드 (2×2) */}
-          <div className="mt-16 grid gap-6 sm:grid-cols-2">
-            {[
-              { delay: 0,   label: "검증", title: "엄격한 경력 검증을 통과한 산업별 실무 전문가 그룹" },
-              { delay: 120, label: "지식", title: "검색이나 리포트로는 찾을 수 없는 현지의 암묵지(Tacit Knowledge) 제공" },
-              { delay: 0,   label: "보안", title: "철저한 비밀유지 의무(NDA) 기반의 안전하고 프라이빗한 정보 교환" },
-              { delay: 120, label: "효율", title: "시행착오를 줄이는 가장 빠른 방법, 실무자의 경험치를 사는 효율성" },
-            ].map((item, idx) => (
-              <FadeIn key={idx} delay={item.delay}>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition hover:bg-white/10">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">
-                    {item.label}
-                  </p>
-                  <h3 className="mt-3 text-xl font-bold text-white">
-                    {item.title}
-                  </h3>
-                </div>
-              </FadeIn>
-            ))}
+          <div className="mt-16 grid gap-6 sm:grid-cols-2 items-stretch">
+          {[
+          { delay: 0,   label: "검증", title: "엄격한 경력 검증을 통과한 산업별 실무 전문가 그룹" },
+          { delay: 120, label: "지식", title: "검색이나 리포트로는 찾을 수 없는 현지의 암묵지(Tacit Knowledge) 제공" },
+          { delay: 0,   label: "보안", title: "철저한 비밀유지 의무(NDA) 기반의 안전하고 프라이빗한 정보 교환" },
+          { delay: 120, label: "효율", title: "시행착오를 줄이는 가장 빠른 방법, 실무자의 경험치를 사는 효율성" },
+          ].map((item, idx) => (
+          <FadeIn key={idx} delay={item.delay} className="h-full">
+          <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition hover:bg-white/10">
+          <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">
+          {item.label}
+          </p>
+          <h3 className="mt-3 text-sm font-bold text-white whitespace-nowrap overflow-hidden text-ellipsis">
+          {item.title}
+          </h3>
+          </div>
+          </FadeIn>
+          ))}
           </div>
 
           {/* CTA */}
