@@ -54,58 +54,49 @@ export default function About() {
       ════════════════════════════════════════════ */}
       <section className="relative bg-[#0a1628]">
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#0d2044] to-[#102060]" />
-        <div className="relative mx-auto flex min-h-[calc(100vh-64px)] max-w-7xl flex-col items-start justify-center px-6 py-24 lg:py-32">
+        <div className="relative mx-auto flex min-h-[calc(100vh-64px)] max-w-7xl flex-col items-start justify-center px-6 pt-24 pb-24 lg:pt-32 lg:pb-32">
           <FadeIn>
             <span className="inline-block rounded-full border border-blue-400/40 bg-blue-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-300">
               VIALOCAL 소개
             </span>
-            <h1 className="mt-6 text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
+            <h1 className="mt-14 text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
               K-뷰티 브랜드의 해외 진출을 가장 빠르게
             </h1>
-            <p className="mt-4 max-w-lg text-base leading-relaxed text-slate-300 md:text-lg">
-              이론이 아닌 현장의 언어로, 실무 전문가가 직접 답합니다
+            <p className="mt-14 max-w-lg text-base leading-relaxed text-slate-300 md:text-lg">
+              이론이 아닌 현장의 언어로, 실무 전문가가 직접 답합니다.
             </p>
           </FadeIn>
         </div>
       </section>
 
       {/* ════════════════════════════════════════════
-          섹션 2 — 왜 만들었나  |  라이트
+          섹션 2 — 존재 이유  |  라이트
       ════════════════════════════════════════════ */}
       <section className="bg-[#f0f4f8] py-32">
-        <div className="mx-auto max-w-3xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <FadeIn>
-            <p className="text-base leading-relaxed text-slate-600 md:text-lg">
-              K-뷰티 브랜드는 매일 수많은 해외 진출 결정을 내려야 합니다.
-            </p>
-          </FadeIn>
-          <FadeIn delay={120}>
-            <p className="mt-8 text-base leading-relaxed text-slate-600 md:text-lg">
-              해외 유통, 인증, 마케팅, 이커머스, 투자까지 — 각 분야마다 전혀 다른 전문성이 필요합니다.
-            </p>
-          </FadeIn>
-          <FadeIn delay={240}>
-            <p className="mt-8 text-xl font-bold text-slate-900 md:text-2xl">
-              그 해답은 당신의 경험에 있습니다.
-            </p>
-          </FadeIn>
-          <FadeIn delay={360}>
-            <p className="mt-8 text-base leading-relaxed text-slate-600 md:text-lg">
-              VIALOCAL은 각 분야 실무 전문가와 고민을 가진 모든 분을 직접 연결합니다. 1시간의 전화 자문으로 수개월의 시행착오를 줄입니다.
-            </p>
+            <div className="max-w-3xl space-y-8">
+              <p className="text-base leading-relaxed text-slate-600 md:text-lg">
+                까다로운 글로벌 유통망 확보부터 국가별 복잡한 인증, 그리고 아마존이나 틱톡샵 같은 글로벌 이커머스 최적화까지 — 브랜드가 진출하고자 하는 모든 시장에는 각기 다른 실무 장벽이 존재합니다.
+              </p>
+              <p className="text-base leading-relaxed text-slate-600 md:text-lg">
+                비아로컬은 파편화된 정보를 나열하는 대신, 브랜드의 고민에 가장 정확한 답을 줄 수 있는 실무 전문가를 큐레이션합니다. 전 세계 주요 거점부터 신흥 시장까지, 15개국 이상의 네트워크를 바탕으로 현장의 '리얼리티'를 전달합니다.
+              </p>
+            </div>
           </FadeIn>
         </div>
       </section>
 
       {/* ════════════════════════════════════════════
-          섹션 3 — 숫자 지표  |  다크 네이비
+          섹션 2.5 — 숫자 지표  |  다크 네이비
       ════════════════════════════════════════════ */}
       <section className="bg-[#0d1f3c] py-32">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-12 sm:grid-cols-2">
+          <div className="grid gap-8 sm:grid-cols-3">
             {[
               { delay: 0,   number: "15개국+", label: "자문 가능 국가" },
               { delay: 160, number: "1시간",   label: "기본 자문 시간" },
+              { delay: 320, number: "100%",    label: "현업 실무자 비율" },
             ].map((item) => (
               <FadeIn key={item.label} delay={item.delay}>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-10 text-center backdrop-blur-sm">
@@ -123,7 +114,28 @@ export default function About() {
       </section>
 
       {/* ════════════════════════════════════════════
-          섹션 4 — 3가지 가치  |  라이트
+          섹션 3 — 비즈니스 가교  |  연한 그레이
+      ════════════════════════════════════════════ */}
+      <section className="bg-slate-50 py-32">
+        <div className="mx-auto max-w-7xl px-6">
+          <FadeIn>
+            <div className="rounded-2xl border border-slate-200 bg-white p-10 shadow-sm md:p-14">
+              <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+                비즈니스 가교
+              </p>
+              <h2 className="mt-4 max-w-2xl text-2xl font-bold text-slate-900 md:text-3xl">
+                1시간의 자문, 그 이상의 비즈니스 확장
+              </h2>
+              <p className="mt-6 max-w-3xl text-base leading-relaxed text-slate-600 md:text-lg">
+                단순한 지식 전달에서 끝나지 않습니다. 자문 결과에 따라 현지 유통망 확보, 총판 계약, 파트너십 체결 등 실질적인 비즈니스 협업으로 이어질 수 있도록 VIALOCAL이 가교 역할을 수행합니다.
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════
+          섹션 4 — 3가지 핵심 가치  |  화이트
       ════════════════════════════════════════════ */}
       <section className="bg-white py-32">
         <div className="mx-auto max-w-7xl px-6">
@@ -150,8 +162,8 @@ export default function About() {
               },
               {
                 delay: 120,
-                title: "연결",
-                desc: "해외 진출 고민을 가장 적합한 전문가와 1:1로 연결합니다",
+                title: "연결과 확장",
+                desc: "단순 매칭을 넘어 실질적인 비즈니스 협업으로 가는 브릿지",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -160,7 +172,7 @@ export default function About() {
               },
               {
                 delay: 240,
-                title: "신뢰",
+                title: "철저한 신뢰",
                 desc: "NDA 기반의 안전하고 프라이빗한 정보 교환",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,7 +202,7 @@ export default function About() {
       {/* ════════════════════════════════════════════
           섹션 5 — CTA  |  다크 네이비
       ════════════════════════════════════════════ */}
-      <section className="bg-[#0a1628] py-32">
+      <section className="relative bg-[#0a1628] py-32">
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#0d2044] to-[#102060]" />
         <div className="relative mx-auto max-w-7xl px-6 text-center">
           <FadeIn>
