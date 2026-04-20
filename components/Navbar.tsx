@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { useModal } from "@/context/ModalContext";
 
 const supportItems = [
-  { label: "서비스 개요", href: "/services/overview", modal: false },
-  { label: "VIALOCAL 시작하기", href: "/services/getting-started", modal: false },
-  { label: "VIALOCAL 차별화", href: "/services/differentiation", modal: false },
-  { label: "전화 자문", href: "/services/call-consulting", modal: true },
+  { label: "서비스 개요", href: "/services/overview" },
+  { label: "VIALOCAL 시작하기", href: "/services/getting-started" },
+  { label: "VIALOCAL 차별화", href: "/services/differentiation" },
+  { label: "전화 자문", href: "/contact" },
 ];
 
 const faqItems = [
@@ -29,12 +28,10 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSupportOpen, setMobileSupportOpen] = useState(false);
   const [mobileFaqOpen, setMobileFaqOpen] = useState(false);
-  const { openModal } = useModal();
 
   const supportCloseTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const faqCloseTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  /* 지원 영역 드롭다운 핸들러 */
   const handleSupportEnter = () => {
     if (supportCloseTimeout.current) clearTimeout(supportCloseTimeout.current);
     setSupportOpen(true);
@@ -43,20 +40,12 @@ export default function Navbar() {
     supportCloseTimeout.current = setTimeout(() => setSupportOpen(false), 250);
   };
 
-  /* FAQ 드롭다운 핸들러 */
   const handleFaqEnter = () => {
     if (faqCloseTimeout.current) clearTimeout(faqCloseTimeout.current);
     setFaqOpen(true);
   };
   const handleFaqLeave = () => {
     faqCloseTimeout.current = setTimeout(() => setFaqOpen(false), 250);
-  };
-
-  const handleModalOpen = () => {
-    setSupportOpen(false);
-    setFaqOpen(false);
-    setMobileOpen(false);
-    openModal();
   };
 
   return (
@@ -72,7 +61,7 @@ export default function Navbar() {
 
         {/* 데스크톱 메뉴 */}
         <nav className="hidden items-center gap-1 md:flex">
-          {/* 지원 영역 드롭다운 — onMouseEnter는 버튼에만, onMouseLeave는 래퍼에 */}
+          {/* 지원 영역 드롭다운 */}
           <div className="relative" onMouseLeave={handleSupportLeave}>
             <button
               className="flex items-center gap-1 rounded-md px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
@@ -89,7 +78,6 @@ export default function Navbar() {
               </svg>
             </button>
 
-            {/* pt-2 브릿지로 버튼~패널 사이 투명 히트박스 확보 */}
             <div className="absolute left-0 top-full pt-2">
               <div
                 className={`w-52 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg transition-all duration-200 ${
@@ -99,36 +87,23 @@ export default function Navbar() {
                 }`}
               >
                 <ul className="py-1">
-                  {supportItems.map((item) =>
-                    item.modal ? (
-                      <li key={item.label}>
-                        <button
-                          onClick={handleModalOpen}
-                          className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
-                        >
-                          {item.label}
-                          <span className="ml-auto rounded bg-blue-100 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">
-                            문의
-                          </span>
-                        </button>
-                      </li>
-                    ) : (
-                      <li key={item.href}>
-                        <Link
-                          href={item.href}
-                          className="block px-4 py-2.5 text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
-                        >
-                          {item.label}
-                        </Link>
-                      </li>
-                    )
-                  )}
+                  {supportItems.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={() => setSupportOpen(false)}
+                        className="block px-4 py-2.5 text-sm text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
           </div>
 
-          {/* 일반 링크: 클라이언트, 자문위원, VIALOCAL 소개 */}
+          {/* 일반 링크 */}
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -139,7 +114,7 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {/* FAQ 드롭다운 — VIALOCAL 소개 바로 옆 */}
+          {/* FAQ 드롭다운 */}
           <div className="relative" onMouseLeave={handleFaqLeave}>
             <button
               className="flex items-center gap-1 rounded-md px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
@@ -181,18 +156,10 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* 버튼 그룹 (데스크톱): 로그인 + 문의하기 */}
-        <div className="hidden items-center gap-2 md:flex">
+        {/* 문의하기 버튼 (데스크톱) */}
+        <div className="hidden md:flex">
           <Link
-            href="/login"
-            className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 transition hover:bg-slate-50"
-          >
-            로그인
-          </Link>
-          <Link
-            href="/"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/contact"
             className="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"
           >
             문의하기
@@ -237,31 +204,17 @@ export default function Navbar() {
           </button>
           {mobileSupportOpen && (
             <ul className="mb-2 ml-4 space-y-1 border-l-2 border-blue-100 pl-3">
-              {supportItems.map((item) =>
-                item.modal ? (
-                  <li key={item.label}>
-                    <button
-                      onClick={handleModalOpen}
-                      className="flex w-full items-center gap-2 py-2 text-left text-sm text-slate-600 hover:text-blue-700"
-                    >
-                      {item.label}
-                      <span className="rounded bg-blue-100 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">
-                        문의
-                      </span>
-                    </button>
-                  </li>
-                ) : (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="block py-2 text-sm text-slate-600 hover:text-blue-700"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                )
-              )}
+              {supportItems.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-2 text-sm text-slate-600 hover:text-blue-700"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           )}
 
@@ -307,20 +260,12 @@ export default function Navbar() {
             </ul>
           )}
 
-          {/* 로그인 + 문의하기 */}
-          <div className="mt-3 flex flex-col gap-2">
+          {/* 문의하기 */}
+          <div className="mt-3">
             <Link
-              href="/login"
+              href="/contact"
               onClick={() => setMobileOpen(false)}
-              className="w-full rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-center text-sm font-semibold text-slate-800 hover:bg-slate-50"
-            >
-              로그인
-            </Link>
-            <Link
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-semibold text-white hover:bg-blue-800"
+              className="block w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-semibold text-white hover:bg-blue-800"
             >
               문의하기
             </Link>

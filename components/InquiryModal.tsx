@@ -262,7 +262,7 @@ export default function InquiryModal() {
               ) : (
                 <>
                   <h3 className="text-xl font-bold text-slate-900">
-                    VIALOCAL 자문 문의
+                    VIALOCAL 자문 신청
                   </h3>
                   <p className="mt-1 text-sm text-slate-500">
                     필수 항목(<span className="text-red-500">*</span>)을 모두 입력해주세요.
