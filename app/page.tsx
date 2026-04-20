@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useModal } from "@/context/ModalContext";
 
 /* ── 스크롤 Fade-in 래퍼 ─────────────────────────────────────────── */
 function FadeIn({
@@ -48,6 +48,8 @@ function FadeIn({
 
 /* ── 메인 페이지 ─────────────────────────────────────────────────── */
 export default function Home() {
+  const { openModal } = useModal();
+
   return (
     <main>
       {/* ════════════════════════════════════════════
@@ -73,12 +75,12 @@ export default function Home() {
           </p>
 
           {/* 자문 신청 버튼 */}
-          <Link
-            href="/contact"
-            className="mt-8 inline-block rounded-lg bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
+          <button
+            onClick={openModal}
+            className="mt-8 rounded-lg bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
           >
             자문 신청하기
-          </Link>
+          </button>
         </div>
       </section>
 
@@ -240,22 +242,19 @@ export default function Home() {
           {/* 그리드 (모바일 1열 → md 이상 2×2) */}
           <div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-2">
             {[
-              { delay: 0,   label: "검증", title: "엄격한 경력 검증을 통과한 산업별 실무 전문가 그룹", desc: "학벌이 아닌 실적으로 검증된 현업 전문가만 참여합니다." },
-              { delay: 120, label: "지식", title: "리포트에는 담기지 않는 현장 실무자들의 생생한 노하우", desc: "이론이 아닌 직접 겪은 경험에서 나오는 실질적인 답변을 제공합니다." },
-              { delay: 0,   label: "보안", title: "철저한 비밀유지 의무(NDA) 기반의 안전하고 프라이빗한 정보 교환", desc: "모든 자문은 NDA를 통해 기밀이 보장됩니다." },
-              { delay: 120, label: "효율", title: "시행착오를 줄이는 가장 빠른 방법, 실무자의 경험치를 사는 효율성", desc: "수년간의 시행착오를 단 1시간으로 압축해 드립니다." },
+              { delay: 0,   label: "검증", title: "엄격한 경력 검증을 통과한 산업별 실무 전문가 그룹" },
+              { delay: 120, label: "지식", title: "리포트에는 담기지 않는 현장 실무자들의 생생한 노하우" },
+              { delay: 0,   label: "보안", title: "철저한 비밀유지 의무(NDA) 기반의 안전하고 프라이빗한 정보 교환" },
+              { delay: 120, label: "효율", title: "시행착오를 줄이는 가장 빠른 방법, 실무자의 경험치를 사는 효율성" },
             ].map((item, idx) => (
               <FadeIn key={idx} delay={item.delay} className="h-full">
                 <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:bg-white/10 lg:p-8">
                   <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">
                     {item.label}
                   </p>
-                  <h3 className="mt-3 text-sm font-bold leading-snug text-white md:text-base lg:text-lg">
+                  <h3 className="mt-3 text-xs font-bold leading-snug text-white md:text-sm lg:text-base">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-slate-400 md:text-sm lg:leading-relaxed">
-                    {item.desc}
-                  </p>
                 </div>
               </FadeIn>
             ))}
@@ -263,12 +262,12 @@ export default function Home() {
 
           {/* CTA */}
           <FadeIn className="mt-16 text-center">
-            <Link
-              href="/contact"
-              className="inline-block rounded-lg border border-white/30 bg-white/10 px-8 py-4 text-sm font-semibold text-white transition hover:bg-white/20"
+            <button
+              onClick={openModal}
+              className="rounded-lg border border-white/30 bg-white/10 px-8 py-4 text-sm font-semibold text-white transition hover:bg-white/20"
             >
               자문 신청하기
-            </Link>
+            </button>
           </FadeIn>
         </div>
       </section>

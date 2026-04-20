@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useModal } from "@/context/ModalContext";
 
 function FadeIn({
   children,
@@ -45,6 +45,8 @@ function FadeIn({
 }
 
 export default function About() {
+  const { openModal } = useModal();
+
   return (
     <main>
       {/* ════════════════════════════════════════════
@@ -211,12 +213,12 @@ export default function About() {
               지금 바로 전문가와 연결하세요
             </h2>
             <div className="mt-10">
-              <Link
-                href="/contact"
-                className="inline-block rounded-lg bg-blue-600 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
+              <button
+                onClick={openModal}
+                className="rounded-lg bg-blue-600 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
               >
                 자문 신청하기
-              </Link>
+              </button>
             </div>
           </FadeIn>
         </div>

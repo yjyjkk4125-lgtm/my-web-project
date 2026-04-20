@@ -71,7 +71,6 @@ function ClientForm() {
           <input
             required
             className={`mt-1.5 ${inputCls}`}
-            placeholder="예: 유라"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
@@ -81,7 +80,6 @@ function ClientForm() {
           <input
             required
             className={`mt-1.5 ${inputCls}`}
-            placeholder="예: 김"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
@@ -93,7 +91,6 @@ function ClientForm() {
         <input
           required
           className={`mt-1.5 ${inputCls}`}
-          placeholder="예: VIALOCAL Inc."
           value={company}
           onChange={(e) => setCompany(e.target.value)}
         />
@@ -106,7 +103,6 @@ function ClientForm() {
             required
             type="tel"
             className={`mt-1.5 ${inputCls}`}
-            placeholder="예: 010-0000-0000"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
@@ -117,7 +113,6 @@ function ClientForm() {
             required
             type="email"
             className={`mt-1.5 ${inputCls}`}
-            placeholder="예: email@company.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -130,7 +125,7 @@ function ClientForm() {
           required
           rows={5}
           className={`mt-1.5 ${inputCls} resize-none`}
-          placeholder="자문이 필요한 분야, 현재 상황, 원하는 결과 등을 자유롭게 작성해 주세요."
+          placeholder="무엇을 도와드릴까요?"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
@@ -222,7 +217,6 @@ function AdvisorForm() {
           <input
             required
             className={`mt-1.5 ${inputCls}`}
-            placeholder="예: 유라"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
@@ -232,7 +226,6 @@ function AdvisorForm() {
           <input
             required
             className={`mt-1.5 ${inputCls}`}
-            placeholder="예: 김"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
@@ -246,7 +239,6 @@ function AdvisorForm() {
             required
             type="tel"
             className={`mt-1.5 ${inputCls}`}
-            placeholder="예: 010-0000-0000"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
@@ -257,7 +249,6 @@ function AdvisorForm() {
             required
             type="email"
             className={`mt-1.5 ${inputCls}`}
-            placeholder="예: email@company.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -269,7 +260,6 @@ function AdvisorForm() {
         <input
           required
           className={`mt-1.5 ${inputCls}`}
-          placeholder="예: 북미 뷰티 유통 채널 자문 가능 여부 확인"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
         />
@@ -281,7 +271,7 @@ function AdvisorForm() {
           required
           rows={5}
           className={`mt-1.5 ${inputCls} resize-none`}
-          placeholder="보유하신 경력, 전문 분야, 자문 가능한 내용 등을 자유롭게 작성해 주세요."
+          placeholder="무엇을 도와드릴까요?"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
