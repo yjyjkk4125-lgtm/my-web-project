@@ -189,12 +189,14 @@ export default function Navbar() {
           >
             로그인
           </Link>
-          <button
-            onClick={handleModalOpen}
+          <Link
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"
           >
             문의하기
-          </button>
+          </Link>
         </div>
 
         {/* 모바일 햄버거 버튼 */}
@@ -314,12 +316,14 @@ export default function Navbar() {
             >
               로그인
             </Link>
-            <button
-              onClick={handleModalOpen}
+            <Link
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-semibold text-white hover:bg-blue-800"
             >
               문의하기
-            </button>
+            </Link>
           </div>
         </nav>
       )}

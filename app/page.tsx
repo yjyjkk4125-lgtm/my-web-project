@@ -74,12 +74,12 @@ export default function Home() {
             K-뷰티 브랜드 전문가의 실전 경험, 1시간 1:1 직접 자문
           </p>
 
-          {/* 문의하기 버튼 */}
+          {/* 자문 신청 버튼 */}
           <button
             onClick={openModal}
             className="mt-8 rounded-lg bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
           >
-            문의하기
+            자문 신청하기
           </button>
         </div>
       </section>
@@ -266,7 +266,7 @@ export default function Home() {
               onClick={openModal}
               className="rounded-lg border border-white/30 bg-white/10 px-8 py-4 text-sm font-semibold text-white transition hover:bg-white/20"
             >
-              문의하기
+              자문 신청하기
             </button>
           </FadeIn>
         </div>

@@ -13,7 +13,7 @@ type InquiryInsert = {
   position: string;
   main_task: string;
   experience: string;
-};
+}; // department는 API 호환성을 위해 빈 문자열로 전송
 
 export default function InquiryModal() {
   const { isOpen, closeModal } = useModal();
@@ -23,7 +23,6 @@ export default function InquiryModal() {
   const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [department, setDepartment] = useState("");
   const [title, setTitle] = useState("");
   const [responsibilities, setResponsibilities] = useState("");
   const [expertExperience, setExpertExperience] = useState("");
@@ -55,7 +54,6 @@ export default function InquiryModal() {
       setCompany("");
       setEmail("");
       setPhone("");
-      setDepartment("");
       setTitle("");
       setResponsibilities("");
       setExpertExperience("");
@@ -79,7 +77,7 @@ export default function InquiryModal() {
       company: company.trim(),
       email: email.trim(),
       phone: phone.trim(),
-      department: department.trim(),
+      department: "",
       position: title.trim(),
       main_task: responsibilities.trim(),
       experience: expertExperience.trim(),
@@ -93,7 +91,6 @@ export default function InquiryModal() {
       !payload.company ||
       !payload.email ||
       !payload.phone ||
-      !payload.department ||
       !payload.position ||
       !payload.main_task ||
       !payload.experience
@@ -192,27 +189,12 @@ export default function InquiryModal() {
                 K-뷰티 브랜드 실무 자문 플랫폼
               </p>
               <h2 className="mt-3 text-xl font-bold leading-snug lg:text-2xl">
-                비즈니스 자문 문의를<br />받습니다
+                비즈니스 자문 신청
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-slate-300 lg:mt-3">
                 원하는 경력과 자문 분야를 입력하면 등록 전문가 매칭 가능
-                여부를 안내해드립니다.
+                여부를 안내해 드립니다.
               </p>
-
-              {/* 급한 문의: 항상 노출 */}
-              <div className="mt-5 flex items-center gap-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3 lg:mt-6 lg:block lg:p-5">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
-                    급한 문의
-                  </p>
-                  <p className="mt-1 text-xl font-bold text-white lg:text-2xl">
-                    010-5054-4125
-                  </p>
-                </div>
-                <p className="text-xs text-slate-400 lg:mt-1">
-                  평일 10시 ~ 18시 운영
-                </p>
-              </div>
 
               {/* 문의 예시: 모바일 아코디언 / 데스크탑 항상 노출 */}
               <div className="mt-4 lg:mt-6">
@@ -287,7 +269,7 @@ export default function InquiryModal() {
                   </p>
 
                   <form onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <label className="text-sm">
                         <span className="mb-1 block font-medium text-slate-700">
                           성<span className="ml-0.5 text-red-500">*</span>
@@ -326,7 +308,7 @@ export default function InquiryModal() {
 
                     <label className="block text-sm">
                       <span className="mb-1 block font-medium text-slate-700">
-                        회사 이메일<span className="ml-0.5 text-red-500">*</span>
+                        이메일<span className="ml-0.5 text-red-500">*</span>
                       </span>
                       <input
                         required
@@ -338,30 +320,17 @@ export default function InquiryModal() {
                       />
                     </label>
 
-                    <div className="grid grid-cols-2 gap-3">
-                      <label className="text-sm">
-                        <span className="mb-1 block font-medium text-slate-700">
-                          전화번호<span className="ml-0.5 text-red-500">*</span>
-                        </span>
-                        <input
-                          required
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                        />
-                      </label>
-                      <label className="text-sm">
-                        <span className="mb-1 block font-medium text-slate-700">
-                          부서명<span className="ml-0.5 text-red-500">*</span>
-                        </span>
-                        <input
-                          required
-                          value={department}
-                          onChange={(e) => setDepartment(e.target.value)}
-                          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                        />
-                      </label>
-                    </div>
+                    <label className="block text-sm">
+                      <span className="mb-1 block font-medium text-slate-700">
+                        전화번호<span className="ml-0.5 text-red-500">*</span>
+                      </span>
+                      <input
+                        required
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      />
+                    </label>
 
                     <label className="block text-sm">
                       <span className="mb-1 block font-medium text-slate-700">
@@ -423,7 +392,7 @@ export default function InquiryModal() {
                       disabled={isSubmitting}
                       className="w-full rounded-lg bg-blue-700 px-4 py-3 font-semibold text-white transition hover:bg-blue-800 disabled:opacity-60"
                     >
-                      {isSubmitting ? "전송 중..." : "문의 보내기"}
+                      {isSubmitting ? "전송 중..." : "자문 신청하기"}
                     </button>
 
                     {submitStatus && !submitted && (

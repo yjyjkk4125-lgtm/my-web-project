@@ -217,7 +217,7 @@ export default function About() {
                 onClick={openModal}
                 className="rounded-lg bg-blue-600 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
               >
-                문의하기
+                자문 신청하기
               </button>
             </div>
           </FadeIn>
