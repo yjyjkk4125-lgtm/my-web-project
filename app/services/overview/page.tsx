@@ -24,7 +24,7 @@ function FadeIn({ children, className = "" }: { children: React.ReactNode; class
 }
 
 function Em({ children }: { children: React.ReactNode }) {
-  return <strong className="font-bold text-blue-600">{children}</strong>;
+  return <strong className="font-bold text-black">{children}</strong>;
 }
 
 export default function ServicesOverview() {
@@ -48,16 +48,16 @@ export default function ServicesOverview() {
         </div>
         <div className="relative w-full px-6 py-24 text-left lg:px-16 lg:py-32">
           <FadeIn>
-            <span className="inline-block rounded-full border border-blue-400/40 bg-blue-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-300">
+            <span className="inline-block rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
               Services Overview
             </span>
             <h1 className="mt-6 max-w-3xl text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-              <Em>수천만 원의 시행착오 비용</Em>,<br />
+              <strong className="font-bold text-white">수천만 원의 시행착오 비용</strong>,<br />
               단 1시간의 전문가 자문으로 줄이세요.
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-300 md:text-lg">
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-white md:text-lg">
               K-Beauty 브랜드의 탄생부터 글로벌 스케일업까지,<br />
-              막연한 추측이 아닌 <Em>&lsquo;검증된 실무 통찰&rsquo;</Em>이 성공의 경로를 결정합니다.
+              막연한 추측이 아닌 <strong className="font-bold text-white">&lsquo;검증된 실무 통찰&rsquo;</strong>이 성공의 경로를 결정합니다.
             </p>
           </FadeIn>
         </div>
@@ -69,7 +69,7 @@ export default function ServicesOverview() {
       <section className="bg-slate-50 px-6 py-20 text-left lg:px-16 lg:py-28">
         <FadeIn>
           <div className="max-w-3xl">
-            <span className="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-700">
+            <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-700">
               Why VIALOCAL
             </span>
             <p className="mt-6 text-xl font-bold leading-snug text-slate-900 md:text-2xl">
@@ -94,17 +94,17 @@ export default function ServicesOverview() {
               자문 비용이 아깝다고 생각하시나요?
             </h2>
 
-            <p className="mt-[96px] text-base leading-relaxed text-slate-700 md:mt-[150px] md:text-lg">
+            <p className="mt-8 text-base leading-relaxed text-slate-700 md:mt-10 md:text-lg">
               지금 아끼려는 그 비용보다, 자문 없이 진행했을 때 터질 <Em>&lsquo;실패 비용&rsquo;</Em>이
               수백 배는 더 큽니다.
             </p>
 
-            <p className="mt-[96px] text-base leading-relaxed text-slate-700 md:mt-[150px] md:text-lg">
+            <p className="mt-8 text-base leading-relaxed text-slate-700 md:mt-10 md:text-lg">
               준비되지 않은 시장 진입과 전략은 잘못된 타겟팅, 부적합한 파트너 선정으로 이어져
               결국 <Em>수천만 원의 매몰 비용</Em>과 <Em>1년 이상의 시간 낭비</Em>를 초래합니다.
             </p>
 
-            <p className="mt-[96px] text-base leading-relaxed text-slate-700 md:mt-[150px] md:text-lg">
+            <p className="mt-8 text-base leading-relaxed text-slate-700 md:mt-10 md:text-lg">
               VIALOCAL은 당신이 현장에서 겪을 시행착오를 사전에 차단하고, 불필요한 금전적 손실을 막아주는
               가장 확실한 <Em>&lsquo;비즈니스 안전장치&rsquo;</Em>입니다.
             </p>
@@ -122,7 +122,7 @@ export default function ServicesOverview() {
           <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-16">
             {/* 텍스트 블록 */}
             <div className="w-full text-left lg:w-1/2">
-              <span className="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-700">
+              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-700">
                 Build-up &amp; Scale-up
               </span>
               <h2 className="mt-4 text-2xl font-bold text-slate-900 md:text-3xl">
@@ -160,7 +160,7 @@ export default function ServicesOverview() {
           <div className="flex flex-col gap-10 lg:flex-row-reverse lg:items-center lg:gap-16">
             {/* 텍스트 블록 */}
             <div className="w-full text-left lg:w-1/2">
-              <span className="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-700">
+              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-700">
                 Market Penetration
               </span>
               <h2 className="mt-4 text-2xl font-bold text-slate-900 md:text-3xl">
@@ -198,7 +198,7 @@ export default function ServicesOverview() {
           <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-16">
             {/* 텍스트 블록 */}
             <div className="w-full text-left lg:w-1/2">
-              <span className="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-700">
+              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-700">
                 Total Marketing
               </span>
               <h2 className="mt-4 text-2xl font-bold text-slate-900 md:text-3xl">
@@ -235,7 +235,7 @@ export default function ServicesOverview() {
           <div className="flex flex-col gap-10 lg:flex-row-reverse lg:items-center lg:gap-16">
             {/* 텍스트 블록 */}
             <div className="w-full text-left lg:w-1/2">
-              <span className="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-700">
+              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-700">
                 Ops &amp; Partnership
               </span>
               <h2 className="mt-4 text-2xl font-bold text-slate-900 md:text-3xl">
