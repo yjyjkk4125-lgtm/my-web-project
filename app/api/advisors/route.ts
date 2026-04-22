@@ -45,8 +45,8 @@ export async function POST(request: Request) {
   if (!row.phone) missing.push("phone");
   if (!row.residence_country) missing.push("residence_country");
   if (!row.experience_summary) missing.push("experience_summary");
-  if (row.expert_fields.length === 0) missing.push("expert_fields");
-  if (row.consulting_types.length === 0) missing.push("consulting_types");
+  if ((row.expert_fields as string[]).length === 0) missing.push("expert_fields");
+  if ((row.consulting_types as string[]).length === 0) missing.push("consulting_types");
 
   if (missing.length > 0) {
     return NextResponse.json(
