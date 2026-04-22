@@ -1,55 +1,203 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 /* ══════════════════════════════════════════════════
-   데이터 상수
+   전 세계 국가 리스트 (우선순위 + 전체 알파벳순)
 ══════════════════════════════════════════════════ */
 
 const PRIORITY_COUNTRIES = [
   "한국", "미국", "영국", "독일", "프랑스", "이탈리아", "스페인", "네덜란드",
   "싱가포르", "말레이시아", "태국", "베트남", "인도네시아", "필리핀", "일본", "중국",
 ];
+
 const OTHER_COUNTRIES = [
-  "호주", "캐나다", "뉴질랜드", "인도", "브라질", "멕시코", "아르헨티나",
-  "러시아", "터키", "스위스", "스웨덴", "노르웨이", "덴마크", "핀란드",
-  "폴란드", "체코", "오스트리아", "벨기에", "포르투갈", "그리스",
-  "사우디아라비아", "아랍에미리트", "이스라엘", "이집트", "남아프리카공화국",
+  "가나", "가봉", "가이아나", "감비아", "과테말라", "그레나다", "그리스",
+  "기니", "기니비사우", "나미비아", "나우루", "나이지리아", "남수단", "남아프리카공화국",
+  "네팔", "노르웨이", "뉴질랜드", "니제르", "니카라과",
+  "덴마크", "도미니카", "도미니카공화국", "동티모르",
+  "라오스", "라이베리아", "라트비아", "레바논", "레소토", "루마니아", "룩셈부르크",
+  "르완다", "리비아", "리투아니아", "리히텐슈타인",
+  "마다가스카르", "마샬군도", "말라위", "말리", "멕시코",
+  "모나코", "모로코", "모리셔스", "모리타니아", "모잠비크",
+  "몬테네그로", "몰도바", "몰디브", "몰타", "몽골", "미크로네시아", "미얀마",
+  "바누아투", "바레인", "바베이도스", "바하마", "바티칸",
+  "방글라데시", "벨기에", "벨라루스", "벨리즈", "베냉", "베네수엘라",
+  "보스니아헤르체고비나", "보츠와나", "볼리비아", "부룬디", "부르키나파소", "부탄", "불가리아",
+  "브라질", "브루나이",
+  "산마리노", "상투메프린시페", "사모아", "사우디아라비아",
+  "세네갈", "세르비아", "세이셸", "세인트루시아", "세인트빈센트그레나딘", "세인트키츠네비스",
+  "소말리아", "솔로몬제도", "수단", "수리남", "스리랑카", "스웨덴", "스위스",
+  "슬로바키아", "슬로베니아", "시리아", "시에라리온",
+  "아랍에미리트", "아르메니아", "아르헨티나", "아이슬란드", "아이티",
+  "아일랜드", "아제르바이잔", "아프가니스탄",
+  "안도라", "알바니아", "알제리", "앙골라", "앤티가바부다",
+  "에리트레아", "에스와티니", "에스토니아", "에콰도르", "에티오피아", "엘살바도르",
+  "예멘", "오만", "오스트리아", "온두라스", "요르단",
+  "우간다", "우루과이", "우즈베키스탄", "우크라이나",
+  "이라크", "이란", "이스라엘", "이집트",
+  "자메이카", "잠비아", "적도기니", "조지아",
+  "중앙아프리카공화국", "차드", "칠레",
+  "카메룬", "카보베르데", "카자흐스탄", "카타르", "캄보디아", "캐나다",
+  "케냐", "코모로", "코스타리카", "코트디부아르", "콜롬비아",
+  "콩고공화국", "콩고민주공화국", "쿠바", "쿠웨이트",
+  "키르기스스탄", "키리바시", "키프로스",
+  "타지키스탄", "탄자니아", "터키", "통가", "투르크메니스탄", "투발루", "튀니지",
+  "트리니다드토바고",
+  "파나마", "파라과이", "파키스탄", "파푸아뉴기니", "팔라우", "페루",
+  "포르투갈", "폴란드", "프랑스령폴리네시아",
+  "피지", "핀란드", "헝가리",
+  "호주", "홍콩", "대만", "마카오",
+  "북마케도니아", "북한", "코소보", "팔레스타인", "서사하라",
 ];
+
 const ALL_COUNTRIES = [...PRIORITY_COUNTRIES, "─────────────", ...OTHER_COUNTRIES];
 
+/* ══════════════════════════════════════════════════
+   전 세계 국가 전화 국번 리스트
+══════════════════════════════════════════════════ */
+
 type PhoneCode = { label: string; code: string };
+
 const PHONE_CODES: PhoneCode[] = [
-  { label: "🇰🇷 +82 한국", code: "+82" },
-  { label: "🇺🇸 +1  미국", code: "+1" },
-  { label: "🇬🇧 +44 영국", code: "+44" },
-  { label: "🇩🇪 +49 독일", code: "+49" },
-  { label: "🇫🇷 +33 프랑스", code: "+33" },
-  { label: "🇮🇹 +39 이탈리아", code: "+39" },
-  { label: "🇪🇸 +34 스페인", code: "+34" },
-  { label: "🇳🇱 +31 네덜란드", code: "+31" },
-  { label: "🇸🇬 +65 싱가포르", code: "+65" },
-  { label: "🇲🇾 +60 말레이시아", code: "+60" },
-  { label: "🇹🇭 +66 태국", code: "+66" },
-  { label: "🇻🇳 +84 베트남", code: "+84" },
-  { label: "🇮🇩 +62 인도네시아", code: "+62" },
-  { label: "🇵🇭 +63 필리핀", code: "+63" },
-  { label: "🇯🇵 +81 일본", code: "+81" },
-  { label: "🇨🇳 +86 중국", code: "+86" },
-  { label: "🇦🇺 +61 호주", code: "+61" },
-  { label: "🇨🇦 +1  캐나다", code: "+1" },
-  { label: "🇮🇳 +91 인도", code: "+91" },
-  { label: "🇧🇷 +55 브라질", code: "+55" },
-  { label: "🇨🇭 +41 스위스", code: "+41" },
-  { label: "🇸🇪 +46 스웨덴", code: "+46" },
-  { label: "🇦🇪 +971 UAE", code: "+971" },
-  { label: "🇸🇦 +966 사우디", code: "+966" },
+  { label: "🇰🇷 +82  한국", code: "+82" },
+  { label: "🇺🇸 +1   미국", code: "+1" },
+  { label: "🇬🇧 +44  영국", code: "+44" },
+  { label: "🇩🇪 +49  독일", code: "+49" },
+  { label: "🇫🇷 +33  프랑스", code: "+33" },
+  { label: "🇮🇹 +39  이탈리아", code: "+39" },
+  { label: "🇪🇸 +34  스페인", code: "+34" },
+  { label: "🇳🇱 +31  네덜란드", code: "+31" },
+  { label: "🇸🇬 +65  싱가포르", code: "+65" },
+  { label: "🇲🇾 +60  말레이시아", code: "+60" },
+  { label: "🇹🇭 +66  태국", code: "+66" },
+  { label: "🇻🇳 +84  베트남", code: "+84" },
+  { label: "🇮🇩 +62  인도네시아", code: "+62" },
+  { label: "🇵🇭 +63  필리핀", code: "+63" },
+  { label: "🇯🇵 +81  일본", code: "+81" },
+  { label: "🇨🇳 +86  중국", code: "+86" },
+  { label: "🇦🇺 +61  호주", code: "+61" },
+  { label: "🇨🇦 +1   캐나다", code: "+1-CA" },
+  { label: "🇮🇳 +91  인도", code: "+91" },
+  { label: "🇧🇷 +55  브라질", code: "+55" },
+  { label: "🇲🇽 +52  멕시코", code: "+52" },
+  { label: "🇦🇷 +54  아르헨티나", code: "+54" },
+  { label: "🇨🇭 +41  스위스", code: "+41" },
+  { label: "🇸🇪 +46  스웨덴", code: "+46" },
+  { label: "🇳🇴 +47  노르웨이", code: "+47" },
+  { label: "🇩🇰 +45  덴마크", code: "+45" },
+  { label: "🇫🇮 +358 핀란드", code: "+358" },
+  { label: "🇵🇱 +48  폴란드", code: "+48" },
+  { label: "🇦🇹 +43  오스트리아", code: "+43" },
+  { label: "🇧🇪 +32  벨기에", code: "+32" },
+  { label: "🇵🇹 +351 포르투갈", code: "+351" },
+  { label: "🇬🇷 +30  그리스", code: "+30" },
+  { label: "🇨🇿 +420 체코", code: "+420" },
+  { label: "🇭🇺 +36  헝가리", code: "+36" },
+  { label: "🇷🇴 +40  루마니아", code: "+40" },
+  { label: "🇸🇰 +421 슬로바키아", code: "+421" },
+  { label: "🇸🇮 +386 슬로베니아", code: "+386" },
+  { label: "🇭🇷 +385 크로아티아", code: "+385" },
+  { label: "🇷🇸 +381 세르비아", code: "+381" },
+  { label: "🇧🇬 +359 불가리아", code: "+359" },
+  { label: "🇺🇦 +380 우크라이나", code: "+380" },
+  { label: "🇷🇺 +7   러시아", code: "+7" },
+  { label: "🇹🇷 +90  터키", code: "+90" },
+  { label: "🇦🇪 +971 아랍에미리트", code: "+971" },
+  { label: "🇸🇦 +966 사우디아라비아", code: "+966" },
+  { label: "🇮🇱 +972 이스라엘", code: "+972" },
+  { label: "🇪🇬 +20  이집트", code: "+20" },
+  { label: "🇿🇦 +27  남아프리카공화국", code: "+27" },
+  { label: "🇳🇬 +234 나이지리아", code: "+234" },
+  { label: "🇰🇪 +254 케냐", code: "+254" },
+  { label: "🇬🇭 +233 가나", code: "+233" },
+  { label: "🇵🇰 +92  파키스탄", code: "+92" },
+  { label: "🇧🇩 +880 방글라데시", code: "+880" },
+  { label: "🇱🇰 +94  스리랑카", code: "+94" },
+  { label: "🇳🇵 +977 네팔", code: "+977" },
+  { label: "🇲🇲 +95  미얀마", code: "+95" },
+  { label: "🇰🇭 +855 캄보디아", code: "+855" },
+  { label: "🇱🇦 +856 라오스", code: "+856" },
+  { label: "🇧🇳 +673 브루나이", code: "+673" },
+  { label: "🇹🇼 +886 대만", code: "+886" },
+  { label: "🇭🇰 +852 홍콩", code: "+852" },
+  { label: "🇲🇴 +853 마카오", code: "+853" },
+  { label: "🇲🇳 +976 몽골", code: "+976" },
+  { label: "🇰🇿 +7   카자흐스탄", code: "+7-KZ" },
+  { label: "🇺🇿 +998 우즈베키스탄", code: "+998" },
+  { label: "🇦🇿 +994 아제르바이잔", code: "+994" },
+  { label: "🇬🇪 +995 조지아", code: "+995" },
+  { label: "🇦🇲 +374 아르메니아", code: "+374" },
+  { label: "🇮🇷 +98  이란", code: "+98" },
+  { label: "🇮🇶 +964 이라크", code: "+964" },
+  { label: "🇯🇴 +962 요르단", code: "+962" },
+  { label: "🇱🇧 +961 레바논", code: "+961" },
+  { label: "🇰🇼 +965 쿠웨이트", code: "+965" },
+  { label: "🇶🇦 +974 카타르", code: "+974" },
+  { label: "🇧🇭 +973 바레인", code: "+973" },
+  { label: "🇴🇲 +968 오만", code: "+968" },
+  { label: "🇾🇪 +967 예멘", code: "+967" },
+  { label: "🇸🇾 +963 시리아", code: "+963" },
+  { label: "🇨🇱 +56  칠레", code: "+56" },
+  { label: "🇨🇴 +57  콜롬비아", code: "+57" },
+  { label: "🇵🇪 +51  페루", code: "+51" },
+  { label: "🇻🇪 +58  베네수엘라", code: "+58" },
+  { label: "🇨🇺 +53  쿠바", code: "+53" },
+  { label: "🇪🇨 +593 에콰도르", code: "+593" },
+  { label: "🇧🇴 +591 볼리비아", code: "+591" },
+  { label: "🇵🇾 +595 파라과이", code: "+595" },
+  { label: "🇺🇾 +598 우루과이", code: "+598" },
+  { label: "🇨🇷 +506 코스타리카", code: "+506" },
+  { label: "🇵🇦 +507 파나마", code: "+507" },
+  { label: "🇬🇹 +502 과테말라", code: "+502" },
+  { label: "🇭🇳 +504 온두라스", code: "+504" },
+  { label: "🇸🇻 +503 엘살바도르", code: "+503" },
+  { label: "🇳🇮 +505 니카라과", code: "+505" },
+  { label: "🇩🇴 +1   도미니카공화국", code: "+1-DO" },
+  { label: "🇯🇲 +1   자메이카", code: "+1-JM" },
+  { label: "🇮🇪 +353 아일랜드", code: "+353" },
+  { label: "🇮🇸 +354 아이슬란드", code: "+354" },
+  { label: "🇱🇺 +352 룩셈부르크", code: "+352" },
+  { label: "🇲🇹 +356 몰타", code: "+356" },
+  { label: "🇨🇾 +357 키프로스", code: "+357" },
+  { label: "🇱🇹 +370 리투아니아", code: "+370" },
+  { label: "🇱🇻 +371 라트비아", code: "+371" },
+  { label: "🇪🇪 +372 에스토니아", code: "+372" },
+  { label: "🇧🇾 +375 벨라루스", code: "+375" },
+  { label: "🇲🇩 +373 몰도바", code: "+373" },
+  { label: "🇦🇱 +355 알바니아", code: "+355" },
+  { label: "🇲🇰 +389 북마케도니아", code: "+389" },
+  { label: "🇧🇦 +387 보스니아헤르체고비나", code: "+387" },
+  { label: "🇲🇪 +382 몬테네그로", code: "+382" },
+  { label: "🇽🇰 +383 코소보", code: "+383" },
+  { label: "🇲🇦 +212 모로코", code: "+212" },
+  { label: "🇩🇿 +213 알제리", code: "+213" },
+  { label: "🇹🇳 +216 튀니지", code: "+216" },
+  { label: "🇱🇾 +218 리비아", code: "+218" },
+  { label: "🇸🇩 +249 수단", code: "+249" },
+  { label: "🇪🇹 +251 에티오피아", code: "+251" },
+  { label: "🇹🇿 +255 탄자니아", code: "+255" },
+  { label: "🇺🇬 +256 우간다", code: "+256" },
+  { label: "🇿🇲 +260 잠비아", code: "+260" },
+  { label: "🇿🇼 +263 짐바브웨", code: "+263" },
+  { label: "🇲🇿 +258 모잠비크", code: "+258" },
+  { label: "🇲🇬 +261 마다가스카르", code: "+261" },
+  { label: "🇨🇲 +237 카메룬", code: "+237" },
+  { label: "🇨🇮 +225 코트디부아르", code: "+225" },
+  { label: "🇸🇳 +221 세네갈", code: "+221" },
+  { label: "🇦🇴 +244 앙골라", code: "+244" },
+  { label: "🇷🇼 +250 르완다", code: "+250" },
+  { label: "🇳🇿 +64  뉴질랜드", code: "+64" },
+  { label: "🇫🇯 +679 피지", code: "+679" },
+  { label: "🇵🇬 +675 파푸아뉴기니", code: "+675" },
+  { label: "🇦🇫 +93  아프가니스탄", code: "+93" },
 ];
 
 const SPECIALTIES = [
   "상품 기획/제조", "현지 유통/영업", "마케팅/브랜딩",
-  "인증/규제", "물류/운영", "이커머스 전략", "기타",
+  "인증/규제", "물류/운영", "이커머스 전략",
+  "투자/IR", "사업 전략/GTM", "기타",
 ];
 const CONSULT_TYPES = ["유선전화 자문", "화상전화 자문"];
 const FEE_TABLE = [
@@ -85,7 +233,32 @@ const initialForm: FormData = {
 };
 
 /* ══════════════════════════════════════════════════
-   공용 컴포넌트: SearchableDropdown
+   Toast 컴포넌트
+══════════════════════════════════════════════════ */
+
+function Toast({ message, onClose }: { message: string; onClose: () => void }) {
+  useEffect(() => {
+    const t = setTimeout(onClose, 6000);
+    return () => clearTimeout(t);
+  }, [onClose]);
+
+  return (
+    <div className="fixed bottom-6 right-4 z-[9999] flex max-w-sm items-start gap-3 rounded-xl bg-red-600 px-5 py-4 text-sm font-medium text-white shadow-2xl sm:right-6">
+      <svg className="mt-0.5 h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <span className="flex-1">{message}</span>
+      <button onClick={onClose} className="ml-1 opacity-70 hover:opacity-100">
+        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════
+   SearchableDropdown — 국가 검색
 ══════════════════════════════════════════════════ */
 
 function SearchableDropdown({
@@ -128,7 +301,7 @@ function SearchableDropdown({
         <span className={value ? "text-slate-900" : "text-slate-400"}>
           {value || placeholder}
         </span>
-        <svg className="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="h-4 w-4 flex-shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
@@ -136,13 +309,18 @@ function SearchableDropdown({
       {open && (
         <div className="absolute z-50 mt-1 w-full overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl">
           <div className="border-b border-slate-100 p-2">
-            <input
-              autoFocus
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="검색..."
-              className="w-full rounded-md bg-slate-50 px-3 py-2 text-sm focus:outline-none"
-            />
+            <div className="flex items-center gap-2 rounded-md bg-slate-50 px-3 py-2">
+              <svg className="h-4 w-4 flex-shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                autoFocus
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="국가 검색..."
+                className="flex-1 bg-transparent text-sm focus:outline-none"
+              />
+            </div>
           </div>
           <ul className="max-h-52 overflow-y-auto py-1">
             {filtered.length === 0 ? (
@@ -157,7 +335,9 @@ function SearchableDropdown({
                   <li
                     key={opt}
                     onClick={() => { onChange(opt); setOpen(false); setQuery(""); }}
-                    className={`cursor-pointer px-4 py-2.5 text-sm transition hover:bg-blue-50 hover:text-blue-700 ${value === opt ? "bg-blue-50 font-semibold text-blue-700" : "text-slate-700"}`}
+                    className={`cursor-pointer px-4 py-2.5 text-sm transition hover:bg-blue-50 hover:text-blue-700 ${
+                      value === opt ? "bg-blue-50 font-semibold text-blue-700" : "text-slate-700"
+                    }`}
                   >
                     {opt}
                   </li>
@@ -171,7 +351,7 @@ function SearchableDropdown({
   );
 }
 
-/* ── PhoneCodeDropdown (코드만 표시) */
+/* ── PhoneCodeDropdown — 국번 검색 */
 function PhoneCodeDropdown({
   value,
   onChange,
@@ -195,43 +375,57 @@ function PhoneCodeDropdown({
   }, []);
 
   const filtered = PHONE_CODES.filter((p) =>
-    p.label.toLowerCase().includes(query.toLowerCase())
+    p.label.toLowerCase().includes(query.toLowerCase()) ||
+    p.code.includes(query)
   );
 
+  const displayLabel = PHONE_CODES.find((p) => p.code === value)?.label ?? value;
+
   return (
-    <div ref={ref} className="relative w-36">
+    <div ref={ref} className="relative w-40">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-900 transition hover:border-blue-400 focus:outline-none"
       >
-        <span>{value}</span>
-        <svg className="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <span className="truncate">{displayLabel}</span>
+        <svg className="ml-1 h-3.5 w-3.5 flex-shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {open && (
-        <div className="absolute z-50 mt-1 w-64 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl">
+        <div className="absolute z-50 mt-1 w-72 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl">
           <div className="border-b border-slate-100 p-2">
-            <input
-              autoFocus
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="국가/코드 검색..."
-              className="w-full rounded-md bg-slate-50 px-3 py-2 text-sm focus:outline-none"
-            />
+            <div className="flex items-center gap-2 rounded-md bg-slate-50 px-3 py-2">
+              <svg className="h-4 w-4 flex-shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                autoFocus
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="국가명 또는 국번 검색..."
+                className="flex-1 bg-transparent text-sm focus:outline-none"
+              />
+            </div>
           </div>
           <ul className="max-h-52 overflow-y-auto py-1">
-            {filtered.map((p) => (
-              <li
-                key={p.label}
-                onClick={() => { onChange(p.code); setOpen(false); setQuery(""); }}
-                className={`cursor-pointer px-4 py-2.5 font-mono text-sm transition hover:bg-blue-50 hover:text-blue-700 ${value === p.code ? "bg-blue-50 font-semibold text-blue-700" : "text-slate-700"}`}
-              >
-                {p.label}
-              </li>
-            ))}
+            {filtered.length === 0 ? (
+              <li className="px-4 py-2 text-sm text-slate-400">결과 없음</li>
+            ) : (
+              filtered.map((p) => (
+                <li
+                  key={p.label}
+                  onClick={() => { onChange(p.code); setOpen(false); setQuery(""); }}
+                  className={`cursor-pointer px-4 py-2.5 text-sm transition hover:bg-blue-50 hover:text-blue-700 ${
+                    value === p.code ? "bg-blue-50 font-semibold text-blue-700" : "text-slate-700"
+                  }`}
+                >
+                  {p.label}
+                </li>
+              ))
+            )}
           </ul>
         </div>
       )}
@@ -256,7 +450,11 @@ export default function AdvisorRegisterPage() {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormData>(initialForm);
   const [done, setDone] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const closeToast = useCallback(() => setToast(""), []);
 
   const set = (key: keyof FormData, value: unknown) =>
     setForm((f) => ({ ...f, [key]: value }));
@@ -269,10 +467,44 @@ export default function AdvisorRegisterPage() {
         : [...(form[key] as string[]), val]
     );
 
-  const handleSubmit = () => {
-    const payload = { ...form, resumeFile: form.resumeFile?.name ?? null };
-    console.log("advisor_registrations payload:", payload);
-    setDone(true);
+  const handleSubmit = async () => {
+    if (!form.agreed) { setToast("약관 동의가 필요합니다."); return; }
+    if (form.specialties.length === 0) { setToast("전문 분야를 1개 이상 선택해 주세요."); return; }
+    if (form.consultTypes.length === 0) { setToast("자문 가능 형태를 1개 이상 선택해 주세요."); return; }
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/advisors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.fullName.trim(),
+          email: form.email.trim(),
+          phone: `${form.phoneCode} ${form.phone.trim()}`,
+          residence_country: form.country,
+          linkedin_url: form.linkedinUrl.trim(),
+          experience_summary: form.careerSummary.trim(),
+          expert_fields: form.specialties,
+          consulting_types: form.consultTypes,
+          desired_fee: form.desiredFee.trim(),
+        }),
+      });
+
+      if (!res.ok) {
+        const json = (await res.json()) as { error?: string; missingFields?: string[] };
+        const msg = json.error ?? "저장에 실패했습니다. 다시 시도해 주세요.";
+        console.error("[advisors] 등록 오류:", json);
+        setToast(msg);
+        return;
+      }
+
+      setDone(true);
+    } catch (err) {
+      console.error("[advisors] 네트워크 오류:", err);
+      setToast("네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   /* ── 프로그레스 바 */
@@ -398,7 +630,7 @@ export default function AdvisorRegisterPage() {
                     options={ALL_COUNTRIES}
                     value={form.country}
                     onChange={(v) => set("country", v)}
-                    placeholder="국가를 선택해주세요"
+                    placeholder="국가를 선택하거나 검색하세요"
                   />
                 </div>
               </div>
@@ -426,7 +658,13 @@ export default function AdvisorRegisterPage() {
 
             <div className="pt-4">
               <button
-                onClick={() => setStep(2)}
+                onClick={() => {
+                  if (!form.fullName || !form.email || !form.country || !form.phone) {
+                    setToast("성함, 이메일, 거주 국가, 연락처를 모두 입력해 주세요.");
+                    return;
+                  }
+                  setStep(2);
+                }}
                 className="w-full rounded-lg bg-blue-700 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-800"
               >
                 다음으로 →
@@ -511,7 +749,13 @@ export default function AdvisorRegisterPage() {
                 ← 이전으로
               </button>
               <button
-                onClick={() => setStep(3)}
+                onClick={() => {
+                  if (!form.careerSummary.trim()) {
+                    setToast("경력 및 전문성 소개를 작성해 주세요.");
+                    return;
+                  }
+                  setStep(3);
+                }}
                 className="flex-1 rounded-lg bg-blue-700 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-800"
               >
                 다음으로 →
@@ -531,28 +775,39 @@ export default function AdvisorRegisterPage() {
             </div>
 
             <div className="space-y-8">
-              {/* 전문 분야 */}
+              {/* 전문 분야 — 버튼 클릭 영역 개선 */}
               <div>
                 <label className={labelCls}>
                   전문 분야 <span className="text-red-500">*</span>{" "}
                   <span className="font-normal text-slate-400">(중복 선택 가능)</span>
                 </label>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {SPECIALTIES.map((s) => (
-                    <button
-                      key={s}
-                      type="button"
-                      onClick={() => toggleArr("specialties", s)}
-                      className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
-                        form.specialties.includes(s)
-                          ? "border-blue-700 bg-blue-700 text-white"
-                          : "border-slate-200 bg-white text-slate-600 hover:border-blue-400 hover:text-blue-700"
-                      }`}
-                    >
-                      {s}
-                    </button>
-                  ))}
+                <div className="mt-3 flex flex-wrap gap-2.5">
+                  {SPECIALTIES.map((s) => {
+                    const selected = form.specialties.includes(s);
+                    return (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => toggleArr("specialties", s)}
+                        className={`min-h-[44px] cursor-pointer select-none rounded-full border px-5 py-2.5 text-sm font-medium transition-all active:scale-95 ${
+                          selected
+                            ? "border-blue-700 bg-blue-700 text-white shadow-md ring-2 ring-blue-300"
+                            : "border-slate-200 bg-white text-slate-600 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700"
+                        }`}
+                      >
+                        {selected && (
+                          <span className="mr-1.5">✓</span>
+                        )}
+                        {s}
+                      </button>
+                    );
+                  })}
                 </div>
+                {form.specialties.length > 0 && (
+                  <p className="mt-2 text-xs text-blue-600">
+                    선택됨: {form.specialties.join(", ")}
+                  </p>
+                )}
               </div>
 
               {/* 자문 형태 */}
@@ -561,21 +816,27 @@ export default function AdvisorRegisterPage() {
                   자문 가능 형태 <span className="text-red-500">*</span>{" "}
                   <span className="font-normal text-slate-400">(중복 선택 가능)</span>
                 </label>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {CONSULT_TYPES.map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => toggleArr("consultTypes", t)}
-                      className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
-                        form.consultTypes.includes(t)
-                          ? "border-blue-700 bg-blue-700 text-white"
-                          : "border-slate-200 bg-white text-slate-600 hover:border-blue-400 hover:text-blue-700"
-                      }`}
-                    >
-                      {t}
-                    </button>
-                  ))}
+                <div className="mt-3 flex flex-wrap gap-2.5">
+                  {CONSULT_TYPES.map((t) => {
+                    const selected = form.consultTypes.includes(t);
+                    return (
+                      <button
+                        key={t}
+                        type="button"
+                        onClick={() => toggleArr("consultTypes", t)}
+                        className={`min-h-[44px] cursor-pointer select-none rounded-full border px-5 py-2.5 text-sm font-medium transition-all active:scale-95 ${
+                          selected
+                            ? "border-blue-700 bg-blue-700 text-white shadow-md ring-2 ring-blue-300"
+                            : "border-slate-200 bg-white text-slate-600 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700"
+                        }`}
+                      >
+                        {selected && (
+                          <span className="mr-1.5">✓</span>
+                        )}
+                        {t}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -654,16 +915,18 @@ export default function AdvisorRegisterPage() {
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={!form.agreed || form.specialties.length === 0 || form.consultTypes.length === 0}
+                disabled={isSubmitting || !form.agreed || form.specialties.length === 0 || form.consultTypes.length === 0}
                 className="flex-1 rounded-lg bg-blue-700 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                저장 및 완료
+                {isSubmitting ? "저장 중..." : "저장 및 완료"}
               </button>
             </div>
           </div>
         )}
 
       </div>
+
+      {toast && <Toast message={toast} onClose={closeToast} />}
     </main>
   );
 }

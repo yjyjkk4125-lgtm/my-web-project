@@ -1,17 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-type ContactBody = {
-  type?: "client" | "advisor";
-  first_name?: string;
-  last_name?: string;
-  company?: string;
-  phone?: string;
-  email?: string;
-  subject?: string;
-  message?: string;
-};
-
 function trimStr(value: unknown, max: number): string {
   if (typeof value !== "string") return "";
   return value.trim().slice(0, max);
@@ -28,67 +17,74 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: ContactBody;
+  let body: Record<string, unknown>;
   try {
-    body = (await request.json()) as ContactBody;
+    body = (await request.json()) as Record<string, unknown>;
   } catch {
     return NextResponse.json({ error: "잘못된 요청 본문입니다." }, { status: 400 });
-  }
-
-  const type = body.type === "advisor" ? "advisor" : "client";
-
-  const commonFields = {
-    type,
-    first_name: trimStr(body.first_name, 200),
-    last_name: trimStr(body.last_name, 200),
-    phone: trimStr(body.phone, 100),
-    email: trimStr(body.email, 320),
-    message: trimStr(body.message, 3000),
-  };
-
-  const missing: string[] = [];
-  if (!commonFields.first_name) missing.push("first_name");
-  if (!commonFields.last_name) missing.push("last_name");
-  if (!commonFields.phone) missing.push("phone");
-  if (!commonFields.email) missing.push("email");
-  if (!commonFields.message) missing.push("message");
-
-  const row =
-    type === "client"
-      ? {
-          ...commonFields,
-          company: trimStr(body.company, 500),
-          subject: null,
-        }
-      : {
-          ...commonFields,
-          company: null,
-          subject: trimStr(body.subject, 500),
-        };
-
-  if (type === "client" && !row.company) missing.push("company");
-  if (type === "advisor" && !row.subject) missing.push("subject");
-
-  if (missing.length > 0) {
-    return NextResponse.json(
-      { error: "필수 항목이 비어 있습니다.", missingFields: missing },
-      { status: 400 }
-    );
   }
 
   const admin = createClient(url, serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 
-  const { data, error } = await admin.from("contacts").insert([row]).select();
+  const type = body.type === "advisor" ? "advisor" : "client";
 
-  if (error) {
-    console.error("api/contact Supabase error:", error);
-    return NextResponse.json(
-      { error: error.message, code: error.code },
-      { status: 400 }
-    );
+  if (type === "client") {
+    const row = {
+      first_name: trimStr(body.first_name, 200),
+      last_name: trimStr(body.last_name, 200),
+      brand_name: trimStr(body.brand_name, 500),
+      phone: trimStr(body.phone, 100),
+      email: trimStr(body.email, 320),
+      message: trimStr(body.message, 3000),
+      marketing_consent: !!body.marketing_consent,
+    };
+
+    const missing = (Object.entries(row) as [string, unknown][])
+      .filter(([k, v]) => k !== "marketing_consent" && !v)
+      .map(([k]) => k);
+
+    if (missing.length > 0) {
+      return NextResponse.json(
+        { error: "필수 항목이 비어 있습니다.", missingFields: missing },
+        { status: 400 }
+      );
+    }
+
+    const { data, error } = await admin.from("client_inquiries").insert([row]).select();
+    if (error) {
+      console.error("api/contact → client_inquiries error:", error);
+      return NextResponse.json({ error: error.message, code: error.code }, { status: 400 });
+    }
+    return NextResponse.json({ data }, { status: 201 });
+  } else {
+    const row = {
+      first_name: trimStr(body.first_name, 200),
+      last_name: trimStr(body.last_name, 200),
+      phone: trimStr(body.phone, 100),
+      email: trimStr(body.email, 320),
+      subject: trimStr(body.subject, 500),
+      message: trimStr(body.message, 3000),
+      marketing_consent: !!body.marketing_consent,
+    };
+
+    const missing = (Object.entries(row) as [string, unknown][])
+      .filter(([k, v]) => k !== "marketing_consent" && !v)
+      .map(([k]) => k);
+
+    if (missing.length > 0) {
+      return NextResponse.json(
+        { error: "필수 항목이 비어 있습니다.", missingFields: missing },
+        { status: 400 }
+      );
+    }
+
+    const { data, error } = await admin.from("advisor_inquiries").insert([row]).select();
+    if (error) {
+      console.error("api/contact → advisor_inquiries error:", error);
+      return NextResponse.json({ error: error.message, code: error.code }, { status: 400 });
+    }
+    return NextResponse.json({ data }, { status: 201 });
   }
-
-  return NextResponse.json({ data }, { status: 201 });
 }

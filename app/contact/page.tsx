@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 
 /* ── 공용 인풋 스타일 ─────────────────────────────────── */
 const inputCls =
@@ -9,26 +9,50 @@ const inputCls =
 /* ── 탭 타입 ─────────────────────────────────────────── */
 type Tab = "client" | "advisor";
 
+/* ── Toast 컴포넌트 ────────────────────────────────────── */
+function Toast({ message, onClose }: { message: string; onClose: () => void }) {
+  useEffect(() => {
+    const t = setTimeout(onClose, 5000);
+    return () => clearTimeout(t);
+  }, [onClose]);
+
+  return (
+    <div className="fixed bottom-6 right-4 z-[9999] flex max-w-sm items-start gap-3 rounded-xl bg-red-600 px-5 py-4 text-sm font-medium text-white shadow-2xl sm:right-6">
+      <svg className="mt-0.5 h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <span className="flex-1">{message}</span>
+      <button onClick={onClose} className="ml-1 opacity-70 hover:opacity-100">
+        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
 /* ═══════════════════════════════════════════════════════
-   클라이언트용 문의 폼
+   클라이언트용 문의 폼  →  client_inquiries 테이블
 ═══════════════════════════════════════════════════════ */
 function ClientForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [company, setCompany] = useState("");
+  const [brandName, setBrandName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
+  const [toast, setToast] = useState("");
+
+  const closeToast = useCallback(() => setToast(""), []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError("");
+    setToast("");
     if (!agreed) {
-      setError("개인정보 수집 동의가 필요합니다.");
+      setToast("개인정보 수집 동의가 필요합니다.");
       return;
     }
     setIsSubmitting(true);
@@ -40,123 +64,127 @@ function ClientForm() {
           type: "client",
           first_name: firstName.trim(),
           last_name: lastName.trim(),
-          company: company.trim(),
+          brand_name: brandName.trim(),
           phone: phone.trim(),
           email: email.trim(),
           message: message.trim(),
+          marketing_consent: agreed,
         }),
       });
       if (!res.ok) {
         const json = (await res.json()) as { error?: string };
-        setError(json.error ?? "오류가 발생했습니다. 다시 시도해 주세요.");
+        const msg = json.error ?? "오류가 발생했습니다. 다시 시도해 주세요.";
+        console.error("[client_inquiries] 제출 오류:", json);
+        setToast(msg);
         return;
       }
       setSubmitted(true);
-    } catch {
-      setError("네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+    } catch (err) {
+      console.error("[client_inquiries] 네트워크 오류:", err);
+      setToast("네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (submitted) {
-    return <SuccessMessage />;
-  }
+  if (submitted) return <SuccessMessage />;
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5">
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <>
+      <form onSubmit={handleSubmit} noValidate className="space-y-5">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <label className="block text-sm font-medium text-slate-700">
+            이름 (First Name)<span className="ml-0.5 text-red-500">*</span>
+            <input
+              required
+              className={`mt-1.5 ${inputCls}`}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </label>
+          <label className="block text-sm font-medium text-slate-700">
+            성 (Last Name)<span className="ml-0.5 text-red-500">*</span>
+            <input
+              required
+              className={`mt-1.5 ${inputCls}`}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </label>
+        </div>
+
         <label className="block text-sm font-medium text-slate-700">
-          이름 (First Name)<span className="ml-0.5 text-red-500">*</span>
+          회사명 / 브랜드명<span className="ml-0.5 text-red-500">*</span>
           <input
             required
             className={`mt-1.5 ${inputCls}`}
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            value={brandName}
+            onChange={(e) => setBrandName(e.target.value)}
           />
         </label>
+
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <label className="block text-sm font-medium text-slate-700">
+            전화번호<span className="ml-0.5 text-red-500">*</span>
+            <input
+              required
+              type="tel"
+              className={`mt-1.5 ${inputCls}`}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </label>
+          <label className="block text-sm font-medium text-slate-700">
+            이메일<span className="ml-0.5 text-red-500">*</span>
+            <input
+              required
+              type="email"
+              className={`mt-1.5 ${inputCls}`}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+        </div>
+
         <label className="block text-sm font-medium text-slate-700">
-          성 (Last Name)<span className="ml-0.5 text-red-500">*</span>
-          <input
+          문의 내용<span className="ml-0.5 text-red-500">*</span>
+          <textarea
             required
-            className={`mt-1.5 ${inputCls}`}
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            rows={5}
+            className={`mt-1.5 ${inputCls} resize-none`}
+            placeholder="무엇을 도와드릴까요?"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
         </label>
-      </div>
 
-      <label className="block text-sm font-medium text-slate-700">
-        회사명<span className="ml-0.5 text-red-500">*</span>
-        <input
-          required
-          className={`mt-1.5 ${inputCls}`}
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
-        />
-      </label>
-
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <label className="block text-sm font-medium text-slate-700">
-          전화번호<span className="ml-0.5 text-red-500">*</span>
+        <label className="flex items-start gap-3 text-sm text-slate-600">
           <input
-            required
-            type="tel"
-            className={`mt-1.5 ${inputCls}`}
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            type="checkbox"
+            checked={agreed}
+            onChange={(e) => setAgreed(e.target.checked)}
+            className="mt-0.5 h-4 w-4 flex-shrink-0 accent-blue-600"
           />
+          개인정보 수집 및 이용, 서비스 안내 메일 수신에 동의합니다.
+          <span className="ml-0.5 text-red-500">*</span>
         </label>
-        <label className="block text-sm font-medium text-slate-700">
-          이메일<span className="ml-0.5 text-red-500">*</span>
-          <input
-            required
-            type="email"
-            className={`mt-1.5 ${inputCls}`}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-      </div>
 
-      <label className="block text-sm font-medium text-slate-700">
-        문의 내용<span className="ml-0.5 text-red-500">*</span>
-        <textarea
-          required
-          rows={5}
-          className={`mt-1.5 ${inputCls} resize-none`}
-          placeholder="무엇을 도와드릴까요?"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-      </label>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full rounded-lg bg-blue-700 py-3.5 text-base font-semibold text-white transition hover:bg-blue-800 disabled:opacity-60"
+        >
+          {isSubmitting ? "전송 중..." : "문의 보내기"}
+        </button>
+      </form>
 
-      <label className="flex items-start gap-3 text-sm text-slate-600">
-        <input
-          type="checkbox"
-          checked={agreed}
-          onChange={(e) => setAgreed(e.target.checked)}
-          className="mt-0.5 h-4 w-4 flex-shrink-0 accent-blue-600"
-        />
-        개인정보 수집 및 이용, 서비스 안내 메일 수신에 동의합니다.
-        <span className="ml-0.5 text-red-500">*</span>
-      </label>
-
-      {error && <p className="text-sm font-medium text-red-500">{error}</p>}
-
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full rounded-lg bg-blue-700 py-3.5 text-base font-semibold text-white transition hover:bg-blue-800 disabled:opacity-60"
-      >
-        {isSubmitting ? "전송 중..." : "문의 보내기"}
-      </button>
-    </form>
+      {toast && <Toast message={toast} onClose={closeToast} />}
+    </>
   );
 }
 
 /* ═══════════════════════════════════════════════════════
-   자문위원용 문의 폼
+   자문위원용 문의 폼  →  advisor_inquiries 테이블
 ═══════════════════════════════════════════════════════ */
 function AdvisorForm() {
   const [firstName, setFirstName] = useState("");
@@ -168,13 +196,15 @@ function AdvisorForm() {
   const [agreed, setAgreed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
+  const [toast, setToast] = useState("");
+
+  const closeToast = useCallback(() => setToast(""), []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError("");
+    setToast("");
     if (!agreed) {
-      setError("개인정보 수집 동의가 필요합니다.");
+      setToast("개인정보 수집 동의가 필요합니다.");
       return;
     }
     setIsSubmitting(true);
@@ -190,114 +220,118 @@ function AdvisorForm() {
           email: email.trim(),
           subject: subject.trim(),
           message: message.trim(),
+          marketing_consent: agreed,
         }),
       });
       if (!res.ok) {
         const json = (await res.json()) as { error?: string };
-        setError(json.error ?? "오류가 발생했습니다. 다시 시도해 주세요.");
+        const msg = json.error ?? "오류가 발생했습니다. 다시 시도해 주세요.";
+        console.error("[advisor_inquiries] 제출 오류:", json);
+        setToast(msg);
         return;
       }
       setSubmitted(true);
-    } catch {
-      setError("네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+    } catch (err) {
+      console.error("[advisor_inquiries] 네트워크 오류:", err);
+      setToast("네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (submitted) {
-    return <SuccessMessage />;
-  }
+  if (submitted) return <SuccessMessage />;
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5">
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <>
+      <form onSubmit={handleSubmit} noValidate className="space-y-5">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <label className="block text-sm font-medium text-slate-700">
+            이름 (First Name)<span className="ml-0.5 text-red-500">*</span>
+            <input
+              required
+              className={`mt-1.5 ${inputCls}`}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </label>
+          <label className="block text-sm font-medium text-slate-700">
+            성 (Last Name)<span className="ml-0.5 text-red-500">*</span>
+            <input
+              required
+              className={`mt-1.5 ${inputCls}`}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </label>
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <label className="block text-sm font-medium text-slate-700">
+            전화번호<span className="ml-0.5 text-red-500">*</span>
+            <input
+              required
+              type="tel"
+              className={`mt-1.5 ${inputCls}`}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </label>
+          <label className="block text-sm font-medium text-slate-700">
+            이메일<span className="ml-0.5 text-red-500">*</span>
+            <input
+              required
+              type="email"
+              className={`mt-1.5 ${inputCls}`}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+        </div>
+
         <label className="block text-sm font-medium text-slate-700">
-          이름 (First Name)<span className="ml-0.5 text-red-500">*</span>
+          문의 제목<span className="ml-0.5 text-red-500">*</span>
           <input
             required
             className={`mt-1.5 ${inputCls}`}
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
           />
         </label>
+
         <label className="block text-sm font-medium text-slate-700">
-          성 (Last Name)<span className="ml-0.5 text-red-500">*</span>
-          <input
+          상세 내용<span className="ml-0.5 text-red-500">*</span>
+          <textarea
             required
-            className={`mt-1.5 ${inputCls}`}
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            rows={5}
+            className={`mt-1.5 ${inputCls} resize-none`}
+            placeholder="무엇을 도와드릴까요?"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
         </label>
-      </div>
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <label className="block text-sm font-medium text-slate-700">
-          전화번호<span className="ml-0.5 text-red-500">*</span>
+        <label className="flex items-start gap-3 text-sm text-slate-600">
           <input
-            required
-            type="tel"
-            className={`mt-1.5 ${inputCls}`}
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            type="checkbox"
+            checked={agreed}
+            onChange={(e) => setAgreed(e.target.checked)}
+            className="mt-0.5 h-4 w-4 flex-shrink-0 accent-blue-600"
           />
+          개인정보 수집 및 이용, 서비스 안내 메일 수신에 동의합니다.
+          <span className="ml-0.5 text-red-500">*</span>
         </label>
-        <label className="block text-sm font-medium text-slate-700">
-          이메일<span className="ml-0.5 text-red-500">*</span>
-          <input
-            required
-            type="email"
-            className={`mt-1.5 ${inputCls}`}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-      </div>
 
-      <label className="block text-sm font-medium text-slate-700">
-        문의 제목<span className="ml-0.5 text-red-500">*</span>
-        <input
-          required
-          className={`mt-1.5 ${inputCls}`}
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-        />
-      </label>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full rounded-lg bg-blue-700 py-3.5 text-base font-semibold text-white transition hover:bg-blue-800 disabled:opacity-60"
+        >
+          {isSubmitting ? "전송 중..." : "문의 보내기"}
+        </button>
+      </form>
 
-      <label className="block text-sm font-medium text-slate-700">
-        상세 내용<span className="ml-0.5 text-red-500">*</span>
-        <textarea
-          required
-          rows={5}
-          className={`mt-1.5 ${inputCls} resize-none`}
-          placeholder="무엇을 도와드릴까요?"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-      </label>
-
-      <label className="flex items-start gap-3 text-sm text-slate-600">
-        <input
-          type="checkbox"
-          checked={agreed}
-          onChange={(e) => setAgreed(e.target.checked)}
-          className="mt-0.5 h-4 w-4 flex-shrink-0 accent-blue-600"
-        />
-        개인정보 수집 및 이용, 서비스 안내 메일 수신에 동의합니다.
-        <span className="ml-0.5 text-red-500">*</span>
-      </label>
-
-      {error && <p className="text-sm font-medium text-red-500">{error}</p>}
-
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full rounded-lg bg-blue-700 py-3.5 text-base font-semibold text-white transition hover:bg-blue-800 disabled:opacity-60"
-      >
-        {isSubmitting ? "전송 중..." : "문의 보내기"}
-      </button>
-    </form>
+      {toast && <Toast message={toast} onClose={closeToast} />}
+    </>
   );
 }
 
