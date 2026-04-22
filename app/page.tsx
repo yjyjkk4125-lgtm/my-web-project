@@ -224,6 +224,47 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════════
+          섹션 4.5  |  비즈니스 파트너십 (이미지 + 텍스트)
+      ════════════════════════════════════════════ */}
+      <section className="bg-[#f0f4f8] py-24 lg:py-32">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            {/* 가로형 이미지 */}
+            <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-200">
+              <Image
+                src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&q=80&fit=crop"
+                alt="글로벌 비즈니스 파트너십"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
+
+            {/* 텍스트 */}
+            <FadeIn>
+              <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+                파트너십
+              </p>
+              <h2 className="mt-4 text-2xl font-bold text-slate-900 md:text-3xl">
+                자문을 넘어 비즈니스 파트너십으로
+              </h2>
+              <p className="mt-5 text-base font-medium leading-relaxed text-blue-700">
+                VIALOCAL은 단순한 지식 전달을 넘어 실질적인 비즈니스 기회를 연결합니다.
+              </p>
+              <div className="mt-5 space-y-4 text-base leading-relaxed text-slate-500">
+                <p>
+                  자문 과정에서 양측의 니즈와 비즈니스 적합성이 확인될 경우, VIALOCAL은 이를 놓치지 않고 실질적인 파트너십으로 이어질 수 있도록 가교 역할을 수행합니다.
+                </p>
+                <p>
+                  현지 시장 진출은 물론, 국내 비즈니스 생태계 내의 유망한 브랜드들과 연결되어 전문가님의 영향력을 더욱 넓혀보세요.
+                </p>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════
           섹션 C  |  그리드형  |  다크 네이비
       ════════════════════════════════════════════ */}
       <section className="bg-[#0d1f3c] py-32">
