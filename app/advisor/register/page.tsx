@@ -443,8 +443,54 @@ const inputCls =
 const labelCls = "block text-sm font-medium text-slate-700";
 
 /* ══════════════════════════════════════════════════
+   ProgressBar — 컴포넌트 외부 선언 (re-mount 방지)
+══════════════════════════════════════════════════ */
+
+function ProgressBar({ step }: { step: number }) {
+  return (
+    <div className="mb-12">
+      <div className="flex items-center justify-center gap-0">
+        {[1, 2, 3].map((n) => (
+          <div key={n} className="flex items-center">
+            <div className={`flex h-9 w-9 items-center justify-center rounded-full border-2 text-sm font-bold transition-all ${
+              step > n
+                ? "border-blue-700 bg-blue-700 text-white"
+                : step === n
+                ? "border-blue-700 bg-white text-blue-700"
+                : "border-slate-200 bg-white text-slate-400"
+            }`}>
+              {step > n ? (
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+              ) : n}
+            </div>
+            {n < 3 && (
+              <div className={`h-0.5 w-24 transition-all sm:w-32 ${step > n ? "bg-blue-700" : "bg-slate-200"}`} />
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="mt-4 flex justify-center gap-0">
+        {["기본 정보", "전문성 증빙", "전문 분야 · 자문료"].map((label, i) => (
+          <p
+            key={label}
+            className={`w-28 text-center text-xs sm:w-36 ${step === i + 1 ? "font-semibold text-blue-700" : "text-slate-400"}`}
+          >
+            {label}
+          </p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════
    메인 페이지 컴포넌트
 ══════════════════════════════════════════════════ */
+
+const SESSION_KEY_STEP = "advisor_register_step";
+const SESSION_KEY_FORM = "advisor_register_form";
 
 export default function AdvisorRegisterPage() {
   const [step, setStep] = useState(1);
@@ -455,6 +501,35 @@ export default function AdvisorRegisterPage() {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const closeToast = useCallback(() => setToast(""), []);
+
+  /* ── 새로고침 시 sessionStorage에서 복원 */
+  useEffect(() => {
+    try {
+      const savedStep = sessionStorage.getItem(SESSION_KEY_STEP);
+      const savedForm = sessionStorage.getItem(SESSION_KEY_FORM);
+      if (savedStep) {
+        const n = parseInt(savedStep, 10);
+        if (n >= 1 && n <= 3) setStep(n);
+      }
+      if (savedForm) {
+        const parsed = JSON.parse(savedForm) as Partial<FormData>;
+        setForm((f) => ({ ...f, ...parsed, resumeFile: null }));
+      }
+    } catch {
+      // sessionStorage 파싱 실패 시 기본값 유지
+    }
+  }, []);
+
+  /* ── step 변경 시 저장 */
+  useEffect(() => {
+    sessionStorage.setItem(SESSION_KEY_STEP, String(step));
+  }, [step]);
+
+  /* ── form 변경 시 저장 (File 제외) */
+  useEffect(() => {
+    const { resumeFile: _f, ...rest } = form;
+    sessionStorage.setItem(SESSION_KEY_FORM, JSON.stringify(rest));
+  }, [form]);
 
   const set = (key: keyof FormData, value: unknown) =>
     setForm((f) => ({ ...f, [key]: value }));
@@ -498,6 +573,8 @@ export default function AdvisorRegisterPage() {
         return;
       }
 
+      sessionStorage.removeItem(SESSION_KEY_STEP);
+      sessionStorage.removeItem(SESSION_KEY_FORM);
       setDone(true);
     } catch (err) {
       console.error("[advisors] 네트워크 오류:", err);
@@ -506,44 +583,6 @@ export default function AdvisorRegisterPage() {
       setIsSubmitting(false);
     }
   };
-
-  /* ── 프로그레스 바 */
-  const ProgressBar = () => (
-    <div className="mb-12">
-      <div className="flex items-center justify-center gap-0">
-        {[1, 2, 3].map((n) => (
-          <div key={n} className="flex items-center">
-            <div className={`flex h-9 w-9 items-center justify-center rounded-full border-2 text-sm font-bold transition-all ${
-              step > n
-                ? "border-blue-700 bg-blue-700 text-white"
-                : step === n
-                ? "border-blue-700 bg-white text-blue-700"
-                : "border-slate-200 bg-white text-slate-400"
-            }`}>
-              {step > n ? (
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                </svg>
-              ) : n}
-            </div>
-            {n < 3 && (
-              <div className={`h-0.5 w-24 transition-all sm:w-32 ${step > n ? "bg-blue-700" : "bg-slate-200"}`} />
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="mt-4 flex justify-center gap-0">
-        {["기본 정보", "전문성 증빙", "전문 분야 · 자문료"].map((label, i) => (
-          <p
-            key={label}
-            className={`w-28 text-center text-xs sm:w-36 ${step === i + 1 ? "font-semibold text-blue-700" : "text-slate-400"}`}
-          >
-            {label}
-          </p>
-        ))}
-      </div>
-    </div>
-  );
 
   if (done) {
     return (
@@ -580,7 +619,7 @@ export default function AdvisorRegisterPage() {
           </p>
         </div>
 
-        <ProgressBar />
+        <ProgressBar step={step} />
 
         {/* ────────────────────────────────────────
             Step 1 — 기본 정보

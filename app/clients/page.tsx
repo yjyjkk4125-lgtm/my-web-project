@@ -72,7 +72,7 @@ export default function ClientsPage() {
           <div className="absolute inset-0 bg-black/60" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-6 py-24 lg:py-32">
+        <div className="relative mx-auto max-w-7xl px-6 py-24 text-left lg:py-32">
           <FadeIn>
             <span className="inline-block rounded-full border border-blue-400/40 bg-blue-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-300">
               K-뷰티 브랜드 실무 자문 플랫폼
