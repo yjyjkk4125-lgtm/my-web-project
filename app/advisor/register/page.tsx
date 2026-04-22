@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { supabase } from "@/lib/supabaseClient";
 
 /* ══════════════════════════════════════════════════
    전 세계 국가 리스트 (우선순위 + 전체 알파벳순)
@@ -549,6 +550,23 @@ export default function AdvisorRegisterPage() {
 
     setIsSubmitting(true);
     try {
+      let resumeUrl: string | null = null;
+      if (form.resumeFile) {
+        const ext = form.resumeFile.name.split(".").pop() ?? "bin";
+        const filePath = `resumes/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+        const { error: uploadError } = await supabase.storage
+          .from("advisors")
+          .upload(filePath, form.resumeFile, { cacheControl: "3600", upsert: false });
+        if (uploadError) {
+          console.error("[advisors] 파일 업로드 오류:", uploadError);
+          setToast("이력서 업로드에 실패했습니다. 파일을 확인하고 다시 시도해 주세요.");
+          setIsSubmitting(false);
+          return;
+        }
+        const { data: urlData } = supabase.storage.from("advisors").getPublicUrl(filePath);
+        resumeUrl = urlData.publicUrl;
+      }
+
       const res = await fetch("/api/advisors", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -562,6 +580,7 @@ export default function AdvisorRegisterPage() {
           expert_fields: form.specialties,
           consulting_types: form.consultTypes,
           desired_fee: form.desiredFee.trim(),
+          resume_url: resumeUrl,
         }),
       });
 

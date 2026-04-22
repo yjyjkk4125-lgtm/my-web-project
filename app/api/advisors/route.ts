@@ -24,7 +24,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "잘못된 요청 본문입니다." }, { status: 400 });
   }
 
-  const row = {
+  const resumeUrl = typeof body.resume_url === "string" && body.resume_url.trim() ? body.resume_url.trim() : null;
+
+  const row: Record<string, unknown> = {
     name: trimStr(body.name, 200),
     email: trimStr(body.email, 320),
     phone: trimStr(body.phone, 100),
@@ -35,6 +37,7 @@ export async function POST(request: Request) {
     consulting_types: Array.isArray(body.consulting_types) ? body.consulting_types as string[] : [],
     desired_fee: trimStr(body.desired_fee, 100),
   };
+  if (resumeUrl) row.resume_url = resumeUrl;
 
   const missing: string[] = [];
   if (!row.name) missing.push("name");

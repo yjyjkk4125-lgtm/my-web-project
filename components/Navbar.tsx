@@ -5,9 +5,7 @@ import { useRef, useState } from "react";
 
 const supportItems = [
   { label: "서비스 개요", href: "/services/overview" },
-  { label: "VIALOCAL 시작하기", href: "/services/getting-started" },
-  { label: "VIALOCAL 차별화", href: "/services/differentiation" },
-  { label: "전화 자문", href: "/contact" },
+  { label: "VIALOCAL 차별점", href: "/services/differentiation" },
 ];
 
 const faqItems = [
@@ -79,8 +77,8 @@ export default function Navbar() {
             </button>
 
             <div className="absolute left-0 top-full pt-2">
-              <div
-                className={`w-52 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg transition-all duration-200 ${
+                <div
+                className={`w-44 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg transition-all duration-200 ${
                   supportOpen
                     ? "pointer-events-auto translate-y-0 opacity-100"
                     : "pointer-events-none -translate-y-1 opacity-0"
