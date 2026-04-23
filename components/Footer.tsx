@@ -9,11 +9,9 @@ export default function Footer() {
           사업자등록번호: 369-26-01820&nbsp;&nbsp;|&nbsp;&nbsp;주소: 대전광역시 유성구&nbsp;&nbsp;|&nbsp;&nbsp;Email: yjyjkk4125@gmail.com
         </p>
         <p className="flex gap-3">
-          <Link href="#" className="hover:text-slate-700">개인정보처리방침</Link>
+          <Link href="/privacy" className="hover:text-slate-700">개인정보처리방침</Link>
           <span>|</span>
-          <Link href="#" className="hover:text-slate-700">이용약관</Link>
-          <span>|</span>
-          <Link href="#" className="hover:text-slate-700">사업자정보확인</Link>
+          <Link href="/terms" className="hover:text-slate-700">이용약관</Link>
         </p>
         <p className="pt-4">Copyright ⓒ 2026 VIALOCAL. All rights reserved.</p>
       </div>
