@@ -19,7 +19,7 @@ export default function PrivacyPage() {
             <h2 className="text-base font-bold text-slate-900">2. 처리하는 개인정보 항목</h2>
             <ul className="mt-3 space-y-1 text-sm leading-relaxed text-slate-500 list-disc list-inside">
               <li>일반 이용자(고객): 성명, 연락처(휴대폰 번호), 이메일 주소, 소속 회사/기관명, 직책</li>
-              <li>자문위원(전문가): 위 항목을 포함하여 연차 및 경력사항(이력서), 링크드인 프로필 URL, 주요 자문 분야, 전문성 증빙 자료, 경력 연차, 포트폴리오</li>></>
+              <li>자문위원(전문가): 위 항목을 포함하여 연차 및 경력사항(이력서), 링크드인 프로필 URL, 주요 자문 분야, 전문성 증빙 자료, 경력 연차, 포트폴리오</li>>
               <li>자동수집항목: 서비스 이용 기록, 접속 로그, 쿠키, 접속 IP 정보</li>
             </ul>
           </div>
