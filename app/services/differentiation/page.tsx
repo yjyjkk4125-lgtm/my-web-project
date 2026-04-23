@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useModal } from "@/context/ModalContext";
+import { Repeat, Globe, ShieldCheck, Zap } from "lucide-react";
 
 /* ── FadeIn ───────────────────────────────────────────── */
 function FadeIn({
@@ -46,88 +47,14 @@ function FadeIn({
   );
 }
 
-/* ── Inline Icons (lucide-style) ──────────────────────── */
-function IconRepeat() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="120"
-      height="120"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="text-slate-300"
-    >
-      <path d="M17 1l4 4-4 4" />
-      <path d="M3 11V9a4 4 0 014-4h14" />
-      <path d="M7 23l-4-4 4-4" />
-      <path d="M21 13v2a4 4 0 01-4 4H3" />
-    </svg>
-  );
-}
+/* ── Icon wrappers ────────────────────────────────────── */
+const ICON_SIZE = 96;
+const ICON_CLS = "text-slate-800";
 
-function IconGlobe() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="120"
-      height="120"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="text-slate-300"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <line x1="2" y1="12" x2="22" y2="12" />
-      <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
-    </svg>
-  );
-}
-
-function IconShieldCheck() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="120"
-      height="120"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="text-slate-300"
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      <path d="M9 12l2 2 4-4" />
-    </svg>
-  );
-}
-
-function IconZap() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="120"
-      height="120"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="text-slate-300"
-    >
-      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-    </svg>
-  );
-}
+function IconRepeat() { return <Repeat size={ICON_SIZE} className={ICON_CLS} strokeWidth={1.25} />; }
+function IconGlobe() { return <Globe size={ICON_SIZE} className={ICON_CLS} strokeWidth={1.25} />; }
+function IconShieldCheck() { return <ShieldCheck size={ICON_SIZE} className={ICON_CLS} strokeWidth={1.25} />; }
+function IconZap() { return <Zap size={ICON_SIZE} className={ICON_CLS} strokeWidth={1.25} />; }
 
 /* ── Section data ─────────────────────────────────────── */
 const sections = [
@@ -239,13 +166,11 @@ export default function DifferentiationPage() {
 
                 {/* 아이콘 (3/10) */}
                 <div
-                  className={`flex w-full items-center justify-center lg:col-span-3 ${
+                  className={`flex w-full items-center justify-center py-4 lg:col-span-3 lg:py-0 ${
                     sec.reverse ? "lg:order-1" : "lg:order-2"
                   }`}
                 >
-                  <div className="rounded-2xl shadow-sm bg-slate-100 p-10">
-                    <sec.Icon />
-                  </div>
+                  <sec.Icon />
                 </div>
               </div>
             </FadeIn>

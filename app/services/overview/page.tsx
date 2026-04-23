@@ -69,7 +69,7 @@ export default function ServicesOverview() {
       <section className="bg-slate-50 px-6 py-20 text-left lg:px-16 lg:py-28">
         <FadeIn>
           <div className="max-w-3xl">
-            <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-700">
+            <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[#2563EB]">
               Why VIALOCAL
             </span>
             <p className="mt-6 text-xl font-bold leading-snug text-slate-900 md:text-2xl">
@@ -122,7 +122,7 @@ export default function ServicesOverview() {
           <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-16">
             {/* 텍스트 블록 */}
             <div className="w-full text-left lg:w-1/2">
-              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-700">
+              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[#2563EB]">
                 Build-up &amp; Scale-up
               </span>
               <h2 className="mt-4 text-2xl font-bold text-slate-900 md:text-3xl">
@@ -160,7 +160,7 @@ export default function ServicesOverview() {
           <div className="flex flex-col gap-10 lg:flex-row-reverse lg:items-center lg:gap-16">
             {/* 텍스트 블록 */}
             <div className="w-full text-left lg:w-1/2">
-              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-700">
+              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[#2563EB]">
                 Market Penetration
               </span>
               <h2 className="mt-4 text-2xl font-bold text-slate-900 md:text-3xl">
@@ -198,7 +198,7 @@ export default function ServicesOverview() {
           <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-16">
             {/* 텍스트 블록 */}
             <div className="w-full text-left lg:w-1/2">
-              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-700">
+              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[#2563EB]">
                 Total Marketing
               </span>
               <h2 className="mt-4 text-2xl font-bold text-slate-900 md:text-3xl">
@@ -235,7 +235,7 @@ export default function ServicesOverview() {
           <div className="flex flex-col gap-10 lg:flex-row-reverse lg:items-center lg:gap-16">
             {/* 텍스트 블록 */}
             <div className="w-full text-left lg:w-1/2">
-              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-slate-700">
+              <span className="inline-block rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[#2563EB]">
                 Ops &amp; Partnership
               </span>
               <h2 className="mt-4 text-2xl font-bold text-slate-900 md:text-3xl">
