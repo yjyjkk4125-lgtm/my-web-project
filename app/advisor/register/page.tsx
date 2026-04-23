@@ -225,12 +225,13 @@ type FormData = {
   consultTypes: string[];
   desiredFee: string;
   agreed: boolean;
+  agreedPolicy: boolean;
 };
 
 const initialForm: FormData = {
   fullName: "", email: "", country: "", phoneCode: "+82", phone: "",
   linkedinUrl: "", resumeFile: null, careerSummary: "",
-  specialties: [], consultTypes: [], desiredFee: "", agreed: false,
+  specialties: [], consultTypes: [], desiredFee: "", agreed: false, agreedPolicy: false,
 };
 
 /* ══════════════════════════════════════════════════
@@ -544,7 +545,8 @@ export default function AdvisorRegisterPage() {
     );
 
   const handleSubmit = async () => {
-    if (!form.agreed) { setToast("약관 동의가 필요합니다."); return; }
+    if (!form.agreed) { setToast("비밀유지 의무 및 전문가 자문 수행 원칙 동의가 필요합니다."); return; }
+    if (!form.agreedPolicy) { setToast("개인정보처리방침 및 이용약관 동의가 필요합니다."); return; }
     if (form.specialties.length === 0) { setToast("전문 분야를 1개 이상 선택해 주세요."); return; }
     if (form.consultTypes.length === 0) { setToast("자문 가능 형태를 1개 이상 선택해 주세요."); return; }
 
@@ -941,7 +943,7 @@ export default function AdvisorRegisterPage() {
               </div>
 
               {/* 약관 동의 */}
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+              <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50 p-5">
                 <label className="flex cursor-pointer items-start gap-3">
                   <input
                     type="checkbox"
@@ -950,14 +952,33 @@ export default function AdvisorRegisterPage() {
                     className="mt-0.5 h-4 w-4 flex-shrink-0 accent-blue-700"
                   />
                   <span className="text-sm leading-relaxed text-slate-700">
-                    <span className="underline decoration-slate-400 underline-offset-2 hover:text-blue-700 cursor-pointer">
+                    <Link href="/nda" target="_blank" className="underline underline-offset-2 hover:text-blue-700">
                       비밀유지 의무
-                    </span>{" "}
-                    및 자문 내용에 대한{" "}
-                    <span className="underline decoration-slate-400 underline-offset-2 hover:text-blue-700 cursor-pointer">
-                      자문위원 본인 책임 원칙
-                    </span>
+                    </Link>{" "}
+                    및{" "}
+                    <Link href="/liability" target="_blank" className="underline underline-offset-2 hover:text-blue-700">
+                      전문가 자문 수행 원칙
+                    </Link>
                     에 동의합니다.{" "}
+                    <span className="text-red-500">*</span>
+                  </span>
+                </label>
+                <label className="flex cursor-pointer items-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={form.agreedPolicy}
+                    onChange={(e) => set("agreedPolicy", e.target.checked)}
+                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-blue-700"
+                  />
+                  <span className="text-sm leading-relaxed text-slate-700">
+                    <Link href="/privacy" target="_blank" className="underline underline-offset-2 hover:text-blue-700">
+                      개인정보처리방침
+                    </Link>{" "}
+                    및{" "}
+                    <Link href="/terms" target="_blank" className="underline underline-offset-2 hover:text-blue-700">
+                      이용약관
+                    </Link>
+                    을 확인하였으며, 이에 동의합니다.{" "}
                     <span className="text-red-500">*</span>
                   </span>
                 </label>
@@ -973,7 +994,7 @@ export default function AdvisorRegisterPage() {
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={isSubmitting || !form.agreed || form.specialties.length === 0 || form.consultTypes.length === 0}
+                disabled={isSubmitting || !form.agreed || !form.agreedPolicy || form.specialties.length === 0 || form.consultTypes.length === 0}
                 className="flex-1 rounded-lg bg-blue-700 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isSubmitting ? "저장 중..." : "저장 및 완료"}

@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState, useCallback } from "react";
+import Link from "next/link";
 import { useModal } from "@/context/ModalContext";
 
 type InquiryInsert = {
@@ -382,7 +383,14 @@ export default function InquiryModal() {
                         className="mt-1 h-4 w-4 accent-blue-600"
                       />
                       <span className="text-slate-600">
-                        개인정보 수집 및 서비스 안내 메일 수신에 동의합니다.
+                        <Link href="/privacy" target="_blank" className="underline underline-offset-2 hover:text-blue-700">
+                          개인정보처리방침
+                        </Link>{" "}
+                        및{" "}
+                        <Link href="/terms" target="_blank" className="underline underline-offset-2 hover:text-blue-700">
+                          이용약관
+                        </Link>
+                        을 확인하였으며, 이에 동의합니다.
                         <span className="ml-0.5 text-red-500">*</span>
                       </span>
                     </label>
