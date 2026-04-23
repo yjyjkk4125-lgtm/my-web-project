@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabaseClient";
 
 /* ══════════════════════════════════════════════════
    전 세계 국가 리스트 (우선순위 + 전체 알파벳순)
@@ -550,23 +549,30 @@ export default function AdvisorRegisterPage() {
     if (form.specialties.length === 0) { setToast("전문 분야를 1개 이상 선택해 주세요."); return; }
     if (form.consultTypes.length === 0) { setToast("자문 가능 형태를 1개 이상 선택해 주세요."); return; }
 
+    const MAX_FILE_SIZE = 20 * 1024 * 1024;
+    if (form.resumeFile && form.resumeFile.size > MAX_FILE_SIZE) {
+      setToast("파일이 너무 큽니다 (최대 20MB)");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       let resumeUrl: string | null = null;
       if (form.resumeFile) {
-        const ext = form.resumeFile.name.split(".").pop() ?? "bin";
-        const filePath = `resumes/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-        const { error: uploadError } = await supabase.storage
-          .from("advisors")
-          .upload(filePath, form.resumeFile, { cacheControl: "3600", upsert: false });
-        if (uploadError) {
-          console.error("[advisors] 파일 업로드 오류:", uploadError);
-          setToast("이력서 업로드에 실패했습니다. 파일을 확인하고 다시 시도해 주세요.");
+        const fd = new FormData();
+        fd.append("file", form.resumeFile);
+        const uploadRes = await fetch("/api/upload-resume", {
+          method: "POST",
+          body: fd,
+        });
+        const uploadJson = (await uploadRes.json()) as { url?: string; error?: string };
+        if (!uploadRes.ok) {
+          console.error("[advisors] 파일 업로드 오류:", uploadJson.error);
+          setToast(uploadJson.error ?? "이력서 업로드에 실패했습니다. 파일을 확인하고 다시 시도해 주세요.");
           setIsSubmitting(false);
           return;
         }
-        const { data: urlData } = supabase.storage.from("advisors").getPublicUrl(filePath);
-        resumeUrl = urlData.publicUrl;
+        resumeUrl = uploadJson.url ?? null;
       }
 
       const res = await fetch("/api/advisors", {
@@ -766,18 +772,39 @@ export default function AdvisorRegisterPage() {
                   type="file"
                   accept=".pdf,.doc,.docx"
                   className="hidden"
-                  onChange={(e) => set("resumeFile", e.target.files?.[0] ?? null)}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] ?? null;
+                    if (file && file.size > 20 * 1024 * 1024) {
+                      setToast("파일이 너무 큽니다 (최대 20MB)");
+                      e.target.value = "";
+                      return;
+                    }
+                    set("resumeFile", file);
+                  }}
                 />
                 <div className="mt-1.5 flex items-center gap-3">
                   <button
                     type="button"
+                    disabled={isSubmitting}
                     onClick={() => fileRef.current?.click()}
-                    className="rounded-lg border border-slate-200 bg-slate-50 px-5 py-2.5 text-sm text-slate-700 transition hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700"
+                    className="rounded-lg border border-slate-200 bg-slate-50 px-5 py-2.5 text-sm text-slate-700 transition hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 disabled:opacity-50"
                   >
                     파일 선택
                   </button>
                   <span className="text-sm text-slate-400">
-                    {form.resumeFile ? form.resumeFile.name : "PDF 또는 Word 파일 (.pdf, .doc, .docx)"}
+                    {isSubmitting && form.resumeFile ? (
+                      <span className="flex items-center gap-2 text-blue-600">
+                        <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                        </svg>
+                        업로드 중...
+                      </span>
+                    ) : form.resumeFile ? (
+                      form.resumeFile.name
+                    ) : (
+                      "PDF 또는 Word 파일 (.pdf, .doc, .docx) · 최대 20MB"
+                    )}
                   </span>
                 </div>
               </div>
@@ -995,9 +1022,15 @@ export default function AdvisorRegisterPage() {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting || !form.agreed || !form.agreedPolicy || form.specialties.length === 0 || form.consultTypes.length === 0}
-                className="flex-1 rounded-lg bg-blue-700 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-blue-700 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {isSubmitting ? "저장 중..." : "저장 및 완료"}
+                {isSubmitting && (
+                  <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                  </svg>
+                )}
+                {isSubmitting ? (form.resumeFile ? "이력서 업로드 중..." : "저장 중...") : "저장 및 완료"}
               </button>
             </div>
           </div>

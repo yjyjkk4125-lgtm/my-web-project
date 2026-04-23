@@ -48,7 +48,6 @@ export async function POST(request: Request) {
     company: trimStr(body.company, 500),
     email: trimStr(body.email, 320),
     phone: trimStr(body.phone, 100),
-    department: trimStr(body.department, 500),
     position: trimStr(body.position, 500),
     main_task: trimStr(body.main_task, 1000),
     experience: trimStr(body.experience, 2000),

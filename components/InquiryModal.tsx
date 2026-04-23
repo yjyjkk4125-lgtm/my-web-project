@@ -10,11 +10,10 @@ type InquiryInsert = {
   company: string;
   email: string;
   phone: string;
-  department: string;
   position: string;
   main_task: string;
   experience: string;
-}; // department는 API 호환성을 위해 빈 문자열로 전송
+};
 
 export default function InquiryModal() {
   const { isOpen, closeModal } = useModal();
@@ -78,7 +77,6 @@ export default function InquiryModal() {
       company: company.trim(),
       email: email.trim(),
       phone: phone.trim(),
-      department: "",
       position: title.trim(),
       main_task: responsibilities.trim(),
       experience: expertExperience.trim(),
