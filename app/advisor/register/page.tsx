@@ -197,14 +197,14 @@ const PHONE_CODES: PhoneCode[] = [
 const SPECIALTIES = [
   "상품 기획/제조", "현지 유통/영업", "마케팅/브랜딩",
   "인증/규제", "물류/운영", "이커머스 전략",
-  "투자/IR", "사업 전략/GTM", "기타",
+  "현지 바이어 매칭", "기타",
 ];
 const CONSULT_TYPES = ["유선전화 자문", "화상전화 자문"];
-const FEE_TABLE = [
-  { range: "3,000 ~ 5,000만원", fee: "3 ~ 5만원" },
-  { range: "5,000 ~ 8,000만원", fee: "5 ~ 8만원" },
-  { range: "8,000만 ~ 1억원", fee: "8 ~ 12만원" },
-  { range: "1억원 이상", fee: "12만원 이상" },
+const CONSULTING_COUNTRIES = [
+  "미국", "캐나다", "일본", "영국", "독일", "프랑스", "이탈리아", "스위스", "네덜란드", "스페인",
+  "호주", "뉴질랜드", "아랍에미리트(두바이)", "사우디아라비아", "카타르", "이스라엘",
+  "중국", "홍콩", "대만", "싱가포르", "베트남", "태국", "인도네시아", "인도",
+  "브라질", "멕시코", "기타(직접 입력)",
 ];
 
 /* ══════════════════════════════════════════════════
@@ -217,20 +217,20 @@ type FormData = {
   country: string;
   phoneCode: string;
   phone: string;
-  linkedinUrl: string;
-  resumeFile: File | null;
-  careerSummary: string;
   specialties: string[];
+  otherSpecialty: string;
   consultTypes: string[];
-  desiredFee: string;
+  consultingCountries: string[];
+  otherCountry: string;
   agreed: boolean;
   agreedPolicy: boolean;
 };
 
 const initialForm: FormData = {
   fullName: "", email: "", country: "", phoneCode: "+82", phone: "",
-  linkedinUrl: "", resumeFile: null, careerSummary: "",
-  specialties: [], consultTypes: [], desiredFee: "", agreed: false, agreedPolicy: false,
+  specialties: [], otherSpecialty: "",
+  consultTypes: [], consultingCountries: [], otherCountry: "",
+  agreed: false, agreedPolicy: false,
 };
 
 /* ══════════════════════════════════════════════════
@@ -352,6 +352,132 @@ function SearchableDropdown({
   );
 }
 
+/* ── SearchableMultiDropdown — 자문 가능 국가 멀티 선택 */
+function SearchableMultiDropdown({
+  options,
+  values,
+  onChange,
+  placeholder,
+  onOtherChange,
+  otherValue,
+}: {
+  options: string[];
+  values: string[];
+  onChange: (v: string[]) => void;
+  placeholder: string;
+  onOtherChange?: (v: string) => void;
+  otherValue?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+        setQuery("");
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const filtered = options.filter((o) => o.toLowerCase().includes(query.toLowerCase()));
+
+  const toggle = (opt: string) => {
+    if (values.includes(opt)) {
+      onChange(values.filter((v) => v !== opt));
+    } else {
+      onChange([...values, opt]);
+    }
+  };
+
+  const hasOther = values.includes("기타(직접 입력)");
+
+  return (
+    <div ref={ref} className="relative">
+      <div
+        onClick={() => setOpen((v) => !v)}
+        className="min-h-[46px] cursor-pointer flex flex-wrap gap-2 rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 transition hover:border-blue-400"
+      >
+        {values.length === 0 ? (
+          <span className="self-center text-sm text-slate-400">{placeholder}</span>
+        ) : (
+          values.map((v) => (
+            <span
+              key={v}
+              className="inline-flex items-center gap-1 rounded-full border border-blue-700 bg-blue-700 px-3 py-1 text-xs font-medium text-white shadow-md ring-2 ring-blue-300"
+            >
+              {v}
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); toggle(v); }}
+                className="ml-0.5 opacity-80 hover:opacity-100"
+              >
+                <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </span>
+          ))
+        )}
+        <span className="ml-auto self-center">
+          <svg className="h-4 w-4 flex-shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </span>
+      </div>
+
+      {open && (
+        <div className="absolute z-50 mt-1 w-full overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl">
+          <div className="border-b border-slate-100 p-2">
+            <div className="flex items-center gap-2 rounded-md bg-slate-50 px-3 py-2">
+              <svg className="h-4 w-4 flex-shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                autoFocus
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="국가 검색..."
+                className="flex-1 bg-transparent text-sm focus:outline-none"
+              />
+            </div>
+          </div>
+          <ul className="max-h-52 overflow-y-auto py-1">
+            {filtered.length === 0 ? (
+              <li className="px-4 py-2 text-sm text-slate-400">결과 없음</li>
+            ) : (
+              filtered.map((opt) => (
+                <li
+                  key={opt}
+                  onClick={() => toggle(opt)}
+                  className={`cursor-pointer px-4 py-2.5 text-sm transition hover:bg-blue-50 hover:text-blue-700 ${
+                    values.includes(opt) ? "bg-blue-50 font-semibold text-blue-700" : "text-slate-700"
+                  }`}
+                >
+                  {values.includes(opt) && <span className="mr-1.5">✓</span>}
+                  {opt}
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+      )}
+
+      {hasOther && onOtherChange && (
+        <input
+          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 transition focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 mt-2"
+          placeholder="직접 입력해 주세요"
+          value={otherValue ?? ""}
+          onChange={(e) => onOtherChange(e.target.value)}
+        />
+      )}
+    </div>
+  );
+}
+
 /* ── PhoneCodeDropdown — 국번 검색 */
 function PhoneCodeDropdown({
   value,
@@ -451,7 +577,7 @@ function ProgressBar({ step }: { step: number }) {
   return (
     <div className="mb-12">
       <div className="flex items-center justify-center gap-0">
-        {[1, 2, 3].map((n) => (
+        {[1, 2].map((n) => (
           <div key={n} className="flex items-center">
             <div className={`flex h-9 w-9 items-center justify-center rounded-full border-2 text-sm font-bold transition-all ${
               step > n
@@ -466,14 +592,14 @@ function ProgressBar({ step }: { step: number }) {
                 </svg>
               ) : n}
             </div>
-            {n < 3 && (
+            {n < 2 && (
               <div className={`h-0.5 w-24 transition-all sm:w-32 ${step > n ? "bg-blue-700" : "bg-slate-200"}`} />
             )}
           </div>
         ))}
       </div>
       <div className="mt-4 flex justify-center gap-0">
-        {["기본 정보", "전문성 증빙", "전문 분야 · 자문료"].map((label, i) => (
+        {["기본 정보", "전문 분야 · 약관"].map((label, i) => (
           <p
             key={label}
             className={`w-28 text-center text-xs sm:w-36 ${step === i + 1 ? "font-semibold text-blue-700" : "text-slate-400"}`}
@@ -499,7 +625,6 @@ export default function AdvisorRegisterPage() {
   const [done, setDone] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toast, setToast] = useState("");
-  const fileRef = useRef<HTMLInputElement>(null);
 
   const closeToast = useCallback(() => setToast(""), []);
 
@@ -510,11 +635,11 @@ export default function AdvisorRegisterPage() {
       const savedForm = sessionStorage.getItem(SESSION_KEY_FORM);
       if (savedStep) {
         const n = parseInt(savedStep, 10);
-        if (n >= 1 && n <= 3) setStep(n);
+        if (n >= 1 && n <= 2) setStep(n);
       }
       if (savedForm) {
         const parsed = JSON.parse(savedForm) as Partial<FormData>;
-        setForm((f) => ({ ...f, ...parsed, resumeFile: null }));
+        setForm((f) => ({ ...f, ...parsed }));
       }
     } catch {
       // sessionStorage 파싱 실패 시 기본값 유지
@@ -526,16 +651,15 @@ export default function AdvisorRegisterPage() {
     sessionStorage.setItem(SESSION_KEY_STEP, String(step));
   }, [step]);
 
-  /* ── form 변경 시 저장 (File 제외) */
+  /* ── form 변경 시 저장 */
   useEffect(() => {
-    const { resumeFile: _f, ...rest } = form;
-    sessionStorage.setItem(SESSION_KEY_FORM, JSON.stringify(rest));
+    sessionStorage.setItem(SESSION_KEY_FORM, JSON.stringify(form));
   }, [form]);
 
   const set = (key: keyof FormData, value: unknown) =>
     setForm((f) => ({ ...f, [key]: value }));
 
-  const toggleArr = (key: "specialties" | "consultTypes", val: string) =>
+  const toggleArr = (key: "specialties" | "consultTypes" | "consultingCountries", val: string) =>
     set(
       key,
       (form[key] as string[]).includes(val)
@@ -548,32 +672,16 @@ export default function AdvisorRegisterPage() {
     if (!form.agreedPolicy) { setToast("개인정보처리방침 및 이용약관 동의가 필요합니다."); return; }
     if (form.specialties.length === 0) { setToast("전문 분야를 1개 이상 선택해 주세요."); return; }
     if (form.consultTypes.length === 0) { setToast("자문 가능 형태를 1개 이상 선택해 주세요."); return; }
-
-    const MAX_FILE_SIZE = 20 * 1024 * 1024;
-    if (form.resumeFile && form.resumeFile.size > MAX_FILE_SIZE) {
-      setToast("파일이 너무 큽니다 (최대 20MB)");
-      return;
-    }
+    if (form.consultingCountries.length === 0) { setToast("자문 가능 국가를 1개 이상 선택해 주세요."); return; }
 
     setIsSubmitting(true);
     try {
-      let resumeUrl: string | null = null;
-      if (form.resumeFile) {
-        const fd = new FormData();
-        fd.append("file", form.resumeFile);
-        const uploadRes = await fetch("/api/upload-resume", {
-          method: "POST",
-          body: fd,
-        });
-        const uploadJson = (await uploadRes.json()) as { url?: string; error?: string };
-        if (!uploadRes.ok) {
-          console.error("[advisors] 파일 업로드 오류:", uploadJson.error);
-          setToast(uploadJson.error ?? "이력서 업로드에 실패했습니다. 파일을 확인하고 다시 시도해 주세요.");
-          setIsSubmitting(false);
-          return;
-        }
-        resumeUrl = uploadJson.url ?? null;
-      }
+      const consultingCountriesFinal = form.consultingCountries.map((c) =>
+        c === "기타(직접 입력)" && form.otherCountry.trim() ? `기타: ${form.otherCountry.trim()}` : c
+      );
+      const expertFieldsFinal = form.specialties.map((s) =>
+        s === "기타" && form.otherSpecialty.trim() ? `기타: ${form.otherSpecialty.trim()}` : s
+      );
 
       const res = await fetch("/api/advisors", {
         method: "POST",
@@ -583,12 +691,9 @@ export default function AdvisorRegisterPage() {
           email: form.email.trim(),
           phone: `${form.phoneCode} ${form.phone.trim()}`,
           residence_country: form.country,
-          linkedin_url: form.linkedinUrl.trim(),
-          experience_summary: form.careerSummary.trim(),
-          expert_fields: form.specialties,
+          expert_fields: expertFieldsFinal,
           consulting_types: form.consultTypes,
-          desired_fee: form.desiredFee.trim(),
-          resume_url: resumeUrl,
+          consulting_countries: consultingCountriesFinal,
         }),
       });
 
@@ -620,8 +725,8 @@ export default function AdvisorRegisterPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="mt-6 text-2xl font-bold text-slate-900">등록 신청이 완료되었습니다</h2>
-          <p className="mt-3 text-slate-500">VIALOCAL팀이 검토 후 이메일로 연락드립니다.</p>
+          <h2 className="mt-6 text-2xl font-bold text-slate-900">등록이 완료되었습니다!</h2>
+          <p className="mt-3 text-slate-500">전문가님의 가치를 정확히 평가해 드리기 위해, 비아로컬 운영 대표가 24시간 이내에 직접 연락드려 상세 경력 확인 및 자문료 협의를 진행해 드릴 예정입니다. 잠시만 기다려 주세요!</p>
           <Link
             href="/advisor"
             className="mt-8 inline-block rounded-lg bg-blue-700 px-7 py-3 text-sm font-semibold text-white hover:bg-blue-800"
@@ -740,129 +845,17 @@ export default function AdvisorRegisterPage() {
         )}
 
         {/* ────────────────────────────────────────
-            Step 2 — 전문성 및 증빙
+            Step 2 — 전문 분야 · 약관
         ──────────────────────────────────────── */}
         {step === 2 && (
           <div className="space-y-8 rounded-2xl bg-white p-8 shadow-sm lg:p-10">
             <div>
-              <h2 className="text-lg font-bold text-slate-900">전문성 및 증빙</h2>
-              <p className="mt-1 text-sm text-slate-500">
-                링크드인 프로필 또는 이력서가 있다면 등록해 주세요.{" "}
-                <span className="text-slate-400">(선택 사항)</span>
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              {/* 링크드인 */}
-              <div>
-                <label className={labelCls}>링크드인 프로필 URL</label>
-                <input
-                  className={`${inputCls} mt-1.5`}
-                  placeholder="https://www.linkedin.com/in/..."
-                  value={form.linkedinUrl}
-                  onChange={(e) => set("linkedinUrl", e.target.value)}
-                />
-              </div>
-
-              {/* 이력서 업로드 */}
-              <div>
-                <label className={labelCls}>이력서 업로드</label>
-                <input
-                  ref={fileRef}
-                  type="file"
-                  accept=".pdf,.doc,.docx"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0] ?? null;
-                    if (file && file.size > 20 * 1024 * 1024) {
-                      setToast("파일이 너무 큽니다 (최대 20MB)");
-                      e.target.value = "";
-                      return;
-                    }
-                    set("resumeFile", file);
-                  }}
-                />
-                <div className="mt-1.5 flex items-center gap-3">
-                  <button
-                    type="button"
-                    disabled={isSubmitting}
-                    onClick={() => fileRef.current?.click()}
-                    className="rounded-lg border border-slate-200 bg-slate-50 px-5 py-2.5 text-sm text-slate-700 transition hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 disabled:opacity-50"
-                  >
-                    파일 선택
-                  </button>
-                  <span className="text-sm text-slate-400">
-                    {isSubmitting && form.resumeFile ? (
-                      <span className="flex items-center gap-2 text-blue-600">
-                        <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                        </svg>
-                        업로드 중...
-                      </span>
-                    ) : form.resumeFile ? (
-                      form.resumeFile.name
-                    ) : (
-                      "PDF 또는 Word 파일 (.pdf, .doc, .docx) · 최대 20MB"
-                    )}
-                  </span>
-                </div>
-              </div>
-
-              {/* 경력 요약 */}
-              <div>
-                <label className={labelCls}>
-                  경력 및 전문성 소개 <span className="text-red-500">*</span>
-                </label>
-                <p className="mb-1.5 mt-1 text-xs text-slate-400">
-                  주요 경력, 담당 업무, 핵심 스킬 및 프로젝트 경험을 자유롭게 입력해 주세요.
-                  증빙 자료가 없는 경우에도 상세히 작성하시면 충분합니다.
-                </p>
-                <textarea
-                  rows={10}
-                  className={inputCls}
-                  placeholder={`예시)\n• OO뷰티 해외사업팀 5년 근무 (미국/동남아 유통 담당)\n• 아마존/쇼피파이 브랜드 론칭 5건 경험\n• FDA, HALAL 인증 절차 실무 경험\n• 현재 프리랜서 컨설턴트로 활동 중`}
-                  value={form.careerSummary}
-                  onChange={(e) => set("careerSummary", e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="flex gap-3 pt-4">
-              <button
-                onClick={() => setStep(1)}
-                className="w-1/3 rounded-lg border border-slate-200 py-3.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
-              >
-                ← 이전으로
-              </button>
-              <button
-                onClick={() => {
-                  if (!form.careerSummary.trim()) {
-                    setToast("경력 및 전문성 소개를 작성해 주세요.");
-                    return;
-                  }
-                  setStep(3);
-                }}
-                className="flex-1 rounded-lg bg-blue-700 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-800"
-              >
-                다음으로 →
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* ────────────────────────────────────────
-            Step 3 — 전문 분야 · 자문료 · 약관
-        ──────────────────────────────────────── */}
-        {step === 3 && (
-          <div className="space-y-8 rounded-2xl bg-white p-8 shadow-sm lg:p-10">
-            <div>
-              <h2 className="text-lg font-bold text-slate-900">전문 분야 · 자문료 · 약관</h2>
-              <p className="mt-1 text-sm text-slate-500">자문 가능한 분야와 희망 자문료를 설정해주세요.</p>
+              <h2 className="text-lg font-bold text-slate-900">전문 분야 · 약관</h2>
+              <p className="mt-1 text-sm text-slate-500">자문 가능한 분야와 국가를 설정해주세요.</p>
             </div>
 
             <div className="space-y-8">
-              {/* 전문 분야 — 버튼 클릭 영역 개선 */}
+              {/* 전문 분야 */}
               <div>
                 <label className={labelCls}>
                   전문 분야 <span className="text-red-500">*</span>{" "}
@@ -895,6 +888,34 @@ export default function AdvisorRegisterPage() {
                     선택됨: {form.specialties.join(", ")}
                   </p>
                 )}
+                {form.specialties.includes("기타") && (
+                  <div className="mt-3">
+                    <input
+                      className={inputCls}
+                      placeholder="기타 전문 분야를 입력해 주세요"
+                      value={form.otherSpecialty}
+                      onChange={(e) => set("otherSpecialty", e.target.value)}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* 자문 가능 국가 */}
+              <div>
+                <label className={labelCls}>
+                  자문 가능 국가 <span className="text-red-500">*</span>{" "}
+                  <span className="font-normal text-slate-400">(중복 선택 가능)</span>
+                </label>
+                <div className="mt-3">
+                  <SearchableMultiDropdown
+                    options={CONSULTING_COUNTRIES}
+                    values={form.consultingCountries}
+                    onChange={(v) => set("consultingCountries", v)}
+                    placeholder="국가를 선택하거나 검색하세요"
+                    onOtherChange={(v) => set("otherCountry", v)}
+                    otherValue={form.otherCountry}
+                  />
+                </div>
               </div>
 
               {/* 자문 형태 */}
@@ -924,48 +945,6 @@ export default function AdvisorRegisterPage() {
                       </button>
                     );
                   })}
-                </div>
-              </div>
-
-              {/* 자문료 추천 표 */}
-              <div>
-                <label className={labelCls}>자문료 설정</label>
-                <div className="mt-3 overflow-hidden rounded-xl border border-slate-200">
-                  <table className="w-full text-sm">
-                    <thead className="bg-slate-50">
-                      <tr>
-                        <th className="px-5 py-3 text-left font-semibold text-slate-600">연봉 구간</th>
-                        <th className="px-5 py-3 text-left font-semibold text-slate-600">추천 자문료 (시간당)</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {FEE_TABLE.map((row) => (
-                        <tr key={row.range} className="hover:bg-slate-50">
-                          <td className="px-5 py-3.5 text-slate-700">{row.range}</td>
-                          <td className="px-5 py-3.5 font-semibold text-blue-700">{row.fee}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <p className="mt-2.5 text-xs text-slate-400">
-                  위 금액은 참고용 추천 자문료입니다. 실제 자문료는 경력과 전문 분야에 따라 브랜드사와 매칭 시 최종 확정됩니다.
-                </p>
-
-                {/* 희망 자문료 입력 */}
-                <div className="mt-4 flex items-center gap-3">
-                  <label className={`${labelCls} flex-shrink-0`}>희망 자문료</label>
-                  <div className="flex flex-1 items-center gap-2">
-                    <input
-                      type="number"
-                      min={0}
-                      className={`${inputCls} w-36 text-right`}
-                      placeholder="50,000"
-                      value={form.desiredFee}
-                      onChange={(e) => set("desiredFee", e.target.value)}
-                    />
-                    <span className="text-sm text-slate-500">원 / 시간당</span>
-                  </div>
                 </div>
               </div>
 
@@ -1014,14 +993,14 @@ export default function AdvisorRegisterPage() {
 
             <div className="flex gap-3 pt-4">
               <button
-                onClick={() => setStep(2)}
+                onClick={() => setStep(1)}
                 className="w-1/3 rounded-lg border border-slate-200 py-3.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
               >
                 ← 이전으로
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={isSubmitting || !form.agreed || !form.agreedPolicy || form.specialties.length === 0 || form.consultTypes.length === 0}
+                disabled={isSubmitting || !form.agreed || !form.agreedPolicy || form.specialties.length === 0 || form.consultTypes.length === 0 || form.consultingCountries.length === 0}
                 className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-blue-700 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isSubmitting && (
@@ -1030,7 +1009,7 @@ export default function AdvisorRegisterPage() {
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                   </svg>
                 )}
-                {isSubmitting ? (form.resumeFile ? "이력서 업로드 중..." : "저장 중...") : "저장 및 완료"}
+                {isSubmitting ? "저장 중..." : "저장 및 완료"}
               </button>
             </div>
           </div>

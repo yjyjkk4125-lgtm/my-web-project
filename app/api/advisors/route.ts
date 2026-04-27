@@ -31,11 +31,9 @@ export async function POST(request: Request) {
     email: trimStr(body.email, 320),
     phone: trimStr(body.phone, 100),
     residence_country: trimStr(body.residence_country, 200),
-    linkedin_url: trimStr(body.linkedin_url, 500),
-    experience_summary: trimStr(body.experience_summary, 5000),
     expert_fields: Array.isArray(body.expert_fields) ? body.expert_fields as string[] : [],
     consulting_types: Array.isArray(body.consulting_types) ? body.consulting_types as string[] : [],
-    desired_fee: trimStr(body.desired_fee, 100),
+    consulting_countries: Array.isArray(body.consulting_countries) ? body.consulting_countries as string[] : [],
   };
   if (resumeUrl) row.resume_url = resumeUrl;
 
@@ -44,9 +42,9 @@ export async function POST(request: Request) {
   if (!row.email) missing.push("email");
   if (!row.phone) missing.push("phone");
   if (!row.residence_country) missing.push("residence_country");
-  if (!row.experience_summary) missing.push("experience_summary");
   if ((row.expert_fields as string[]).length === 0) missing.push("expert_fields");
   if ((row.consulting_types as string[]).length === 0) missing.push("consulting_types");
+  if ((row.consulting_countries as string[]).length === 0) missing.push("consulting_countries");
 
   if (missing.length > 0) {
     return NextResponse.json(
