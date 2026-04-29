@@ -66,7 +66,7 @@ export default function Home() {
 
           {/* 타이틀 */}
           <h1 className="mt-14 text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-            해외 진출, 전문가 인사이트로 더 빠른 결정
+            전문가의 실무 자문으로 비즈니스 성장을 돕는 VIALOCAL
           </h1>
 
           {/* 설명 */}
