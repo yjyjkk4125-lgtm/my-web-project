@@ -20,7 +20,10 @@ const geistMono = Geist_Mono({
 });
 
 const siteDescription =
-  "비아로컬은 K-뷰티 브랜드의 성공적인 글로벌 성장을 돕습니다. 국가별 인증 및 규제 대응부터 이커머스 입점, 인플루언서 시딩, 마케팅, 오프라인 팝업, 투자 유치까지 해외 진출 전 과정의 고민을 해결해 드립니다. 실전 경험이 풍부한 글로벌 전문가와 1:1 상담을 통해 브랜드 맞춤형 성장 전략을 수립하고 실패 없는 해외 사업을 시작하세요.";
+  "K-뷰티 브랜드의 성공적인 글로벌 진출을 위한 실무 전문가 자문 및 매칭 플랫폼, 비아로컬.";
+
+const ogImage =
+  "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&h=630&fit=crop&q=80";
 
 export const metadata: Metadata = {
   title: "VIALOCAL | 전문가의 실무 자문으로 완성하는 K-뷰티 비즈니스",
@@ -29,6 +32,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: "https://vialocal.vercel.app/",
+  },
   openGraph: {
     title: "VIALOCAL | K-뷰티 브랜드 실무 자문 플랫폼",
     description: siteDescription,
@@ -36,6 +42,20 @@ export const metadata: Metadata = {
     siteName: "VIALOCAL",
     locale: "ko_KR",
     type: "website",
+    images: [
+      {
+        url: ogImage,
+        width: 1200,
+        height: 630,
+        alt: "VIALOCAL - K-뷰티 브랜드 실무 자문 플랫폼",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VIALOCAL | K-뷰티 브랜드 실무 자문 플랫폼",
+    description: siteDescription,
+    images: [ogImage],
   },
 };
 
