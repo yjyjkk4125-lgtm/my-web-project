@@ -389,7 +389,7 @@ export default function Home() {
               전문 자문위원단
             </p>
             <h2 className="mt-3 max-w-3xl text-3xl font-bold text-slate-900 md:text-4xl">
-              비아로컬은 각 국가별 시장에 정통한 실무 전문가 그룹과 함께합니다.
+              비아로컬은 각 국가별 시장에 정통한 자문위원과 함께합니다.
             </h2>
             <p className="mt-3 text-sm text-slate-500">
               (분야별 대표 자문위원 일부를 소개합니다.)
