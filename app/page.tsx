@@ -46,9 +46,124 @@ function FadeIn({
   );
 }
 
+/* ── 자문위원단 데이터 ───────────────────────────────────────────── */
+const advisors = [
+  {
+    id: 1,
+    region: "필리핀/동남아",
+    title: "실무 자문위원",
+    summary: [
+      "500개 이상의 브랜드 자문 및 필리핀 식약처(FDA)/IOR 실무 총괄",
+      "KOTRA 마닐라 대한화장품협회 필리핀 자문위원",
+      "에스터포뮬라·메디힐·VT 등 국내 톱 브랜드 현지 운영 및 이커머스 대행",
+    ],
+    detail: {
+      mainFields: [
+        { label: "필리핀 유통 총괄", desc: "20년 경력의 현지 유통 및 500개 이상 브랜드 자문" },
+        { label: "규제 및 인증", desc: "필리핀 식약처 등록 실무 및 수입 대행(IOR) 운영 총괄" },
+        { label: "이커머스/라이브", desc: "쇼피·틱톡샵·라자다 공식 스토어 운영 및 라이브 커머스 실행" },
+        { label: "마케팅", desc: "현지 인플루언서 네트워크 기반 마케팅 및 브랜딩 전략 수립" },
+      ],
+      career: [
+        { label: "공식 자문", desc: "무역 진흥 기관 및 공신력 있는 화장품 협회 필리핀 자문위원" },
+        { label: "브랜드 파트너", desc: "국내 톱티어 코스메틱 브랜드(M사, V사, R사 등) 현지 운영 대행" },
+        { label: "저서", desc: "글로벌 뷰티 시장 진출 및 유통 실무 가이드북 저자" },
+        { label: "경력", desc: "20년 실무 경력의 현지 비즈니스 전문가" },
+      ],
+      history: [
+        "글로벌 마케팅 및 유통 전문 기업 대표이사",
+        "필리핀 뷰티 & 헬스케어 독점 유통 및 인증 실무 총괄",
+        "현지 대형 드럭스토어 입점 및 온·오프라인 유통망 구축",
+        "국내 주요 코스메틱 브랜드 필리핀 지사 대표이사 및 현지 법인 운영",
+      ],
+    },
+  },
+  {
+    id: 2,
+    region: "유럽",
+    title: "현지 유통 및 물류 자문위원",
+    summary: [
+      "이탈리아 기반 유럽 전역 온·오프라인 유통망 입점 지원",
+      "현지 법인 설립 세팅 및 브랜드 현지화 전략 수립",
+      "26년 차 유럽 시장 진출 실무 및 대기업 장기 파트너십 보유",
+    ],
+    detail: {
+      mainFields: [
+        { label: "유럽 진출 전략", desc: "유럽 현지 유통망 입점, 브랜드 현지화, 현지 법인 설립 세팅 전문" },
+        { label: "물류/통관 실무", desc: "26년 차 이탈리아 관련 인/아웃바운드 유통 및 물류 통관 실무" },
+        { label: "전문 수출 서비스", desc: "해외직구 및 유럽 명품, 코스메틱 수출 전문 자문" },
+      ],
+      career: [
+        { label: "연차", desc: "26년 차 유럽 현지 유통 및 물류 전문가" },
+        { label: "주요 이력", desc: "유럽 현지 유통 및 물류 전문 법인 대표 역임" },
+        { label: "핵심 역량", desc: "국내 대기업과 장기적 파트너십 보유, 현지 기반의 체계적인 유통 인프라 활용 전문가" },
+      ],
+      history: [
+        "유럽 내 K-뷰티 전문 유통망 구축 및 운영 총괄",
+        "현지 시장 특성에 맞춘 브랜드 포지셔닝 및 현지화 전략 컨설팅",
+        "복잡한 유럽 물류 및 관세 체계 최적화 솔루션 제공",
+      ],
+    },
+  },
+  {
+    id: 3,
+    region: "중동/글로벌",
+    title: "마케팅 자문위원",
+    summary: [
+      "사우디/중동(GCC) 현지 비즈니스 네트워크 및 바이어 매칭",
+      "틱톡샵 및 인플루언서 시딩 기반의 글로벌 마케팅 최적화",
+      "브랜드 스토리텔링 중심의 현지 맞춤형 GTM 전략 수립",
+    ],
+    detail: {
+      mainFields: [
+        { label: "중동 네트워크", desc: "사우디아라비아 및 중동(GCC) 현지 네트워크 매칭 및 협업 지원" },
+        { label: "시장 조사", desc: "현지 소비자 반응 확인을 위한 포커스 그룹 조사(FGI) 설계 및 운영" },
+        { label: "마케팅 전략", desc: "글로벌 숏폼 마케팅, GTM 플랜 구축, 글로벌 인플루언서 시딩 총괄" },
+      ],
+      career: [
+        { label: "연차", desc: "15년 경력의 글로벌 비즈니스 커뮤니케이션 전문가" },
+        { label: "주요 이력", desc: "글로벌 마케팅 및 브랜딩 에이전시 대표" },
+        { label: "브랜드 스토리텔링", desc: "브랜드 고유의 가치를 현지 맥락에 맞게 재구성하는 전략 전문가" },
+      ],
+      history: [
+        "중동 지역 인플루언서 시딩 프로젝트 총괄 및 20여 개 브랜드 매칭 성공",
+        "두바이 현지 인프라 협업을 통한 맞춤형 비주얼 콘텐츠 촬영 및 홍보",
+        "중동 진출 전략 세미나 호스트 및 글로벌 이커머스 실무 교육 기획",
+      ],
+    },
+  },
+  {
+    id: 4,
+    region: "베트남",
+    title: "B2B 및 물류 최적화 자문위원",
+    summary: [
+      "베트남 시장 진입을 위한 데이터 기반 B2B 바이어 매칭",
+      "베트남향 통합 물류 경로 설계 및 공급망 관리(SCM) 자문",
+      "정부 유관기관 수출상담회 초청 바이어 등 공공 협력 사업 수행",
+    ],
+    detail: {
+      mainFields: [
+        { label: "B2B 바이어 매칭", desc: "데이터 분석 기반의 한국 유망 상품(건기식, 뷰티 등) 매칭 전략" },
+        { label: "물류 프로세스 최적화", desc: "베트남향 물류 경로 설계 및 공급망 관리(SCM)를 통한 비용 절감" },
+        { label: "유통/판매 전략", desc: "베트남 온·오프라인 유통 구조를 활용한 판매 활성화 방안 수립" },
+      ],
+      career: [
+        { label: "연차", desc: "7년 이상의 글로벌 이커머스 및 수출 실무 전문가" },
+        { label: "주요 이력", desc: "한국-베트남 비즈니스 매칭 및 통합 물류 서비스 운영사 대표" },
+        { label: "대외 활동", desc: "정부 산하 유관기관 수출상담회 초청 바이어 등 공공기관 협력 사업 다수 수행" },
+      ],
+      history: [
+        "누적 판매량 42,000건 이상 및 100여 개 이상의 클라이언트 관리 실적 보유",
+        "베트남 시장 특화 비즈니스 매칭 플랫폼 기획 및 총괄 운영",
+      ],
+    },
+  },
+];
+
 /* ── 메인 페이지 ─────────────────────────────────────────────────── */
 export default function Home() {
   const { openModal } = useModal();
+  const [selectedAdvisor, setSelectedAdvisor] = useState<(typeof advisors)[0] | null>(null);
 
   return (
     <main>
@@ -265,6 +380,60 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════════
+          자문위원단  |  Footer 배경색 (#faf5f5)
+      ════════════════════════════════════════════ */}
+      <section className="bg-[#faf5f5] py-24 lg:py-32">
+        <div className="mx-auto max-w-7xl px-6">
+          <FadeIn>
+            <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+              전문 자문위원단
+            </p>
+            <h2 className="mt-3 max-w-3xl text-3xl font-bold text-slate-900 md:text-4xl">
+              비아로컬은 각 국가별 시장에 정통한 실무 전문가 그룹과 함께합니다.
+            </h2>
+            <p className="mt-3 text-sm text-slate-500">
+              (분야별 대표 자문위원 일부를 소개합니다.)
+            </p>
+          </FadeIn>
+
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {advisors.map((advisor, idx) => (
+              <FadeIn key={advisor.id} delay={idx * 100}>
+                <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+                    {advisor.region}
+                  </p>
+                  <h3 className="mt-2 text-base font-bold text-slate-900">
+                    {advisor.title}
+                  </h3>
+                  <ul className="mt-4 flex-1 space-y-2">
+                    {advisor.summary.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs leading-relaxed text-slate-500">
+                        <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <button
+                    onClick={() => setSelectedAdvisor(advisor)}
+                    className="mt-5 rounded-lg border border-blue-200 px-4 py-2 text-xs font-semibold text-blue-600 transition hover:bg-blue-50"
+                  >
+                    상세보기
+                  </button>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          <FadeIn className="mt-14">
+            <p className="text-sm leading-relaxed text-slate-500">
+              비아로컬은 이외에도 국가별·분야별로 세분화된 전문 위원단을 통해 귀사의 가장 확실한 글로벌 파트너가 되어 드립니다.
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════
           섹션 C  |  그리드형  |  다크 네이비
       ════════════════════════════════════════════ */}
       <section className="bg-[#0d1f3c] py-32">
@@ -312,6 +481,71 @@ export default function Home() {
           </FadeIn>
         </div>
       </section>
+      {/* ═══ 자문위원 상세 모달 ═══ */}
+      {selectedAdvisor && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          onClick={() => setSelectedAdvisor(null)}
+        >
+          <div
+            className="relative max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl md:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedAdvisor(null)}
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200"
+              aria-label="닫기"
+            >
+              ✕
+            </button>
+
+            <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+              {selectedAdvisor.region}
+            </p>
+            <h3 className="mt-1 text-xl font-bold text-slate-900">
+              {selectedAdvisor.title}
+            </h3>
+
+            <div className="mt-6 space-y-6 text-left">
+              <div>
+                <p className="font-bold text-slate-900">주요 자문 분야</p>
+                <ul className="mt-3 space-y-2">
+                  {selectedAdvisor.detail.mainFields.map((f, i) => (
+                    <li key={i} className="text-sm leading-relaxed text-slate-600">
+                      <span className="font-semibold text-slate-800">{f.label}:</span>{" "}
+                      {f.desc}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-bold text-slate-900">연차 및 경력</p>
+                <ul className="mt-3 space-y-2">
+                  {selectedAdvisor.detail.career.map((c, i) => (
+                    <li key={i} className="text-sm leading-relaxed text-slate-600">
+                      <span className="font-semibold text-slate-800">{c.label}:</span>{" "}
+                      {c.desc}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-bold text-slate-900">주요 이력</p>
+                <ul className="mt-3 space-y-2">
+                  {selectedAdvisor.detail.history.map((h, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm leading-relaxed text-slate-600">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
