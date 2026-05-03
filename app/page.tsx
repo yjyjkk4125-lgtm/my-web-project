@@ -181,12 +181,12 @@ export default function Home() {
 
           {/* 타이틀 */}
           <h1 className="mt-14 text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-            전문가의 실무 자문으로 비즈니스 성장을 돕는 VIALOCAL
+            K-뷰티 브랜드 컨설팅, 성장 문제를 해결합니다
           </h1>
 
           {/* 설명 */}
           <p className="mt-14 max-w-lg text-base leading-relaxed text-slate-300 md:text-lg">
-            K-뷰티 브랜드 전문가의 실전 경험, 1시간 1:1 직접 자문
+            전문가 1:1 자문으로 핵심 문제만 빠르게 정리합니다
           </p>
 
           {/* 자문 신청 버튼 */}
