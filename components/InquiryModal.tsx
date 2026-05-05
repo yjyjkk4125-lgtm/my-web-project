@@ -11,7 +11,6 @@ export default function InquiryModal() {
 
   const [step, setStep] = useState<1 | 2>(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [guideOpen, setGuideOpen] = useState(false);
 
   /* Step 1 */
   const [problemText, setProblemText] = useState("");
@@ -57,7 +56,6 @@ export default function InquiryModal() {
       setIsSubmitting(false);
       setSubmitted(false);
       setErrorMsg("");
-      setGuideOpen(false);
     }
   }, [isOpen]);
 
@@ -162,95 +160,14 @@ export default function InquiryModal() {
           {/* ── 모달 패널 ── */}
           <div className="w-full max-w-5xl overflow-hidden rounded-2xl shadow-2xl flex flex-col lg:flex-row">
 
-            {/* ── 가이드 패널 (모바일: 상단 / 데스크탑: 왼쪽) ── */}
-            <div className="bg-[#0a1628] px-6 py-7 text-white lg:w-[42%] lg:px-8 lg:py-10">
-              {/* 항상 노출: 타이틀 + 전화번호 */}
-              <p className="text-xs font-semibold uppercase tracking-widest text-blue-300">
-                K-뷰티 브랜드 실무 자문 플랫폼
-              </p>
-              <h2 className="mt-3 text-xl font-bold leading-snug lg:text-2xl">
+            {/* ── 가이드 패널 ── */}
+            <div className="flex flex-col justify-center bg-[#0a1628] px-6 py-8 text-white lg:w-[38%] lg:px-10 lg:py-12">
+              <h2 className="text-2xl font-bold leading-snug lg:text-3xl">
                 비즈니스 자문 신청
               </h2>
-              <p className="mt-2 text-sm leading-relaxed text-slate-300 lg:mt-3">
-                원하는 경력과 자문 분야를 입력하면 등록 전문가 매칭 가능
-                여부를 안내해 드립니다.
+              <p className="mt-3 text-base text-slate-300">
+                실무자와 직접 연결됩니다
               </p>
-
-              {/* 문의 예시: 모바일 아코디언 / 데스크탑 항상 노출 */}
-              <div className="mt-4 lg:mt-6">
-                {/* 모바일 토글 버튼 */}
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white lg:hidden"
-                  onClick={() => setGuideOpen((v) => !v)}
-                >
-                  문의 예시 보기
-                  <svg
-                    className={`h-4 w-4 transition-transform duration-200 ${guideOpen ? "rotate-180" : ""}`}
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-
-                {/* 체크리스트: 모바일-아코디언, 데스크탑-항상 */}
-                <div className={`${guideOpen ? "block" : "hidden"} lg:block`}>
-                  <div className="mt-2 rounded-xl border border-white/10 bg-white/5 p-4 lg:mt-0 lg:p-5">
-                    <p className="hidden text-sm font-semibold text-white lg:block">문의 예시</p>
-                    <ul className="mt-2 space-y-3 text-sm text-slate-300 lg:mt-3">
-                      <li className="flex gap-2">
-                        <span className="mt-0.5 flex-shrink-0 text-blue-400">✓</span>
-                        미국/동남아 유통 채널 진입 전략 자문 가능 여부
-                      </li>
-                      <li className="flex gap-2">
-                        <span className="mt-0.5 flex-shrink-0 text-blue-400">✓</span>
-                        브랜드 리포지셔닝 및 제품 포트폴리오 점검 요청
-                      </li>
-                      <li className="flex gap-2">
-                        <span className="mt-0.5 flex-shrink-0 text-blue-400">✓</span>
-                        ODM 협업 프로세스 및 양산 전 체크리스트 검토
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Step progress (데스크탑 좌측 패널 하단) */}
-              <div className="mt-6 hidden lg:block">
-                <div className="flex items-center gap-2">
-                  <div
-                    className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 ${
-                      step >= 1 ? "bg-blue-500 text-white" : "bg-white/20 text-white/60"
-                    }`}
-                  >
-                    {step > 1 ? (
-                      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                      </svg>
-                    ) : "1"}
-                  </div>
-                  <span className={`text-xs font-medium ${step === 1 ? "text-white" : "text-white/50"}`}>
-                    문제 입력
-                  </span>
-                  <div className="mx-2 h-0.5 flex-1 rounded-full bg-white/20">
-                    <div
-                      className={`h-full rounded-full bg-blue-400 transition-all duration-500 ${
-                        step === 2 ? "w-full" : "w-0"
-                      }`}
-                    />
-                  </div>
-                  <div
-                    className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 ${
-                      step === 2 ? "bg-blue-500 text-white" : "bg-white/20 text-white/60"
-                    }`}
-                  >
-                    2
-                  </div>
-                  <span className={`text-xs font-medium ${step === 2 ? "text-white" : "text-white/50"}`}>
-                    연락처 입력
-                  </span>
-                </div>
-              </div>
             </div>
 
             {/* ── 폼 패널 (모바일: 하단 / 데스크탑: 오른쪽) ── */}
@@ -295,51 +212,13 @@ export default function InquiryModal() {
               ) : (
                 <>
                   {/* Hero */}
-                  <div className="mb-5">
+                  <div className="mb-6">
                     <h3 className="text-xl font-bold leading-snug text-slate-900">
-                      해결하고 싶은 K-뷰티 성장 과제를 알려주세요.
+                      해결하고 싶은 문제를 입력해 주세요
                     </h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-slate-500">
-                      간단한 입력만으로 전문가 연결 가능 여부를 빠르게 확인할 수 있습니다.{" "}
-                      <span className="font-medium text-blue-600">평균 12시간 이내 응답</span>
+                    <p className="mt-1.5 text-sm text-slate-400">
+                      간단히 작성해도 괜찮습니다
                     </p>
-                  </div>
-
-                  {/* Progress Bar (모바일 전용) */}
-                  <div className="mb-5 lg:hidden">
-                    <div className="flex items-center">
-                      <div
-                        className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 ${
-                          step >= 1 ? "bg-blue-700 text-white" : "bg-slate-200 text-slate-500"
-                        }`}
-                      >
-                        {step > 1 ? (
-                          <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                          </svg>
-                        ) : "1"}
-                      </div>
-                      <span className={`ml-1.5 text-xs font-medium ${step === 1 ? "text-blue-700" : "text-slate-400"}`}>
-                        문제 입력
-                      </span>
-                      <div className="mx-2 h-0.5 flex-1 rounded-full bg-slate-200">
-                        <div
-                          className={`h-full rounded-full bg-blue-700 transition-all duration-500 ${
-                            step === 2 ? "w-full" : "w-0"
-                          }`}
-                        />
-                      </div>
-                      <div
-                        className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 ${
-                          step === 2 ? "bg-blue-700 text-white" : "bg-slate-200 text-slate-500"
-                        }`}
-                      >
-                        2
-                      </div>
-                      <span className={`ml-1.5 text-xs font-medium ${step === 2 ? "text-blue-700" : "text-slate-400"}`}>
-                        연락처 입력
-                      </span>
-                    </div>
                   </div>
 
                   {/* 폼 영역 (fade 전환) */}
@@ -350,44 +229,20 @@ export default function InquiryModal() {
                   >
                     {/* ── Step 1 ── */}
                     {step === 1 && (
-                      <div className="space-y-5">
-                        <div>
-                          <p className="mb-2 text-sm font-semibold text-slate-800">
-                            현재 어떤 문제를 해결하고 싶으신가요?
-                            <span className="ml-1 text-red-500">*</span>
-                          </p>
-                          <textarea
-                            ref={textareaRef}
-                            value={problemText}
-                            onChange={handleTextareaChange}
-                            onFocus={(e) => {
-                              setTimeout(() => {
-                                e.target.scrollIntoView({ behavior: "smooth", block: "nearest" });
-                              }, 350);
-                            }}
-                            placeholder={
-                              "예:\n미국 틱톡샵 초기 세팅과 어필리에이트 확보 전략이 궁금합니다.\n동남아 유통 파트너를 찾고 있는데 접근 방법이 고민입니다.\n광고는 집행 중인데 상세페이지 전환율이 낮습니다."
-                            }
-                            className={`${inputCls} min-h-[128px] resize-none leading-relaxed`}
-                            style={{ overflow: "hidden" }}
-                          />
-                          <p className="mt-2 text-xs text-slate-400">
-                            입력해주신 내용은 전문가 매칭 목적 외에는 사용되지 않습니다.
-                          </p>
-                        </div>
-
-                        {/* Trust signals */}
-                        <div className="flex flex-wrap gap-2">
-                          {["평균 응답 시간: 12시간", "실무자 직접 연결", "핵심 중심 자문"].map((item) => (
-                            <span
-                              key={item}
-                              className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700"
-                            >
-                              <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-                              {item}
-                            </span>
-                          ))}
-                        </div>
+                      <div className="space-y-6">
+                        <textarea
+                          ref={textareaRef}
+                          value={problemText}
+                          onChange={handleTextareaChange}
+                          onFocus={(e) => {
+                            setTimeout(() => {
+                              e.target.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                            }, 350);
+                          }}
+                          placeholder="예: 틱톡샵 진출 전략이 궁금합니다"
+                          className={`${inputCls} min-h-[192px] resize-none leading-relaxed`}
+                          style={{ overflow: "hidden" }}
+                        />
 
                         {errorMsg && <p className="text-sm font-medium text-red-500">{errorMsg}</p>}
 
@@ -404,12 +259,8 @@ export default function InquiryModal() {
                     {/* ── Step 2 ── */}
                     {step === 2 && (
                       <form onSubmit={handleSubmit} noValidate className="space-y-4">
-                        <div className="rounded-lg border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-700">
-                          입력 완료 후, 24시간 이내 전문가 연결 가능 여부를 안내드립니다.
-                        </div>
-
                         <p className="text-sm font-semibold text-slate-800">
-                          전문가 매칭 안내를 위한 정보를 입력해 주세요.
+                          전문가 매칭을 위해 최소 정보만 입력해 주세요
                         </p>
 
                         {/* Name */}
@@ -441,9 +292,6 @@ export default function InquiryModal() {
                         <div>
                           <p className="mb-2 text-sm font-medium text-slate-700">
                             연락처<span className="ml-0.5 text-red-500">*</span>
-                            <span className="ml-1.5 text-xs font-normal text-slate-400">
-                              (이메일 또는 전화번호 중 하나)
-                            </span>
                           </p>
                           <div className="mb-3 flex gap-2">
                             {(["email", "phone"] as const).map((type) => (
