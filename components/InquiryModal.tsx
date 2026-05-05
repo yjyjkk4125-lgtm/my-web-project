@@ -251,10 +251,7 @@ export default function InquiryModal() {
                     카카오톡으로 바로 상담 이어가기
                   </a>
                   <p className="mt-2 text-xs text-slate-400">빠른 매칭을 원하시면 지금 바로 문의해 주세요.</p>
-                  <div className="mt-4 space-y-1">
-                    <p className="text-xs text-slate-400">요청 순서대로 빠르게 검토됩니다</p>
-                    <p className="text-xs text-slate-400">평균 응답 시간: 12~24시간</p>
-                  </div>
+                 
                   <button
                     onClick={closeModal}
                     className="mt-6 rounded-lg border border-slate-200 px-6 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
