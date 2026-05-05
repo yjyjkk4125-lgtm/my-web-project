@@ -161,13 +161,66 @@ export default function InquiryModal() {
           <div className="w-full max-w-5xl overflow-hidden rounded-2xl shadow-2xl flex flex-col lg:flex-row">
 
             {/* ── 가이드 패널 ── */}
-            <div className="flex flex-col justify-center bg-[#0a1628] px-6 py-8 text-white lg:w-[38%] lg:px-10 lg:py-12">
-              <h2 className="text-2xl font-bold leading-snug lg:text-3xl">
-                비즈니스 자문 신청
-              </h2>
-              <p className="mt-3 text-base text-slate-300">
-                실무자와 직접 연결됩니다
-              </p>
+            <div className="flex flex-col gap-6 bg-[#0a1628] px-6 py-8 text-white lg:w-[38%] lg:gap-0 lg:justify-between lg:px-10 lg:py-12">
+
+              {/* ① 상단: 핵심 메시지 */}
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-blue-300">
+                  K-뷰티 브랜드 실무 자문
+                </p>
+                <h2 className="mt-3 text-xl font-bold leading-snug lg:text-2xl">
+                  비즈니스 자문 신청
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-slate-300">
+                  빠르게 문제를 정리하고<br />
+                  적합한 전문가를 연결해드립니다
+                </p>
+              </div>
+
+              {/* ② 중단: Step Progress */}
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <div
+                    className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 ${
+                      step >= 1 ? "bg-blue-500 text-white" : "bg-white/20 text-white/60"
+                    }`}
+                  >
+                    {step > 1 ? (
+                      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                    ) : "1"}
+                  </div>
+                  <span className={`text-xs font-semibold ${step === 1 ? "text-white" : "text-white/50"}`}>
+                    문제 입력
+                  </span>
+                  <div className="mx-1 h-px flex-1 bg-white/20">
+                    <div
+                      className={`h-full bg-blue-400 transition-all duration-500 ${step === 2 ? "w-full" : "w-0"}`}
+                    />
+                  </div>
+                  <div
+                    className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 ${
+                      step === 2 ? "bg-blue-500 text-white" : "bg-white/20 text-white/60"
+                    }`}
+                  >
+                    2
+                  </div>
+                  <span className={`text-xs ${step === 2 ? "font-semibold text-white" : "text-white/40"}`}>
+                    연락처 입력
+                  </span>
+                </div>
+              </div>
+
+              {/* ③ 하단: 신뢰 요소 */}
+              <div className="space-y-2">
+                {["평균 12시간 내 응답", "실무 경험 기반 자문", "불필요한 컨설팅 없음"].map((item) => (
+                  <div key={item} className="flex items-center gap-2 text-xs text-slate-400">
+                    <span className="h-1 w-1 flex-shrink-0 rounded-full bg-blue-400" />
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* ── 폼 패널 (모바일: 하단 / 데스크탑: 오른쪽) ── */}
@@ -337,7 +390,7 @@ export default function InquiryModal() {
                         {/* Consult method */}
                         <div>
                           <p className="mb-2 text-sm font-medium text-slate-700">
-                            희망 상담 방식
+                            연락받을 방법
                             <span className="ml-1.5 text-xs font-normal text-slate-400">(선택)</span>
                           </p>
                           <div className="flex flex-wrap gap-2">
