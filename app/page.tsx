@@ -181,12 +181,12 @@ export default function Home() {
 
           {/* 타이틀 */}
           <h1 className="mt-14 text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-            K-뷰티 브랜드 컨설팅, 성장 문제를 해결합니다
+            K-뷰티 브랜드 성장 문제를 해결하는 실무 자문
           </h1>
 
           {/* 설명 */}
           <p className="mt-14 max-w-lg text-base leading-relaxed text-slate-300 md:text-lg">
-            전문가 1:1 자문으로 핵심 문제만 빠르게 정리합니다
+            해외 진출, 마케팅, 유통, 운영 등 실무 전반을 다룹니다
           </p>
 
           {/* 자문 신청 버튼 */}
