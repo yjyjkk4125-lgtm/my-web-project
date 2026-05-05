@@ -42,31 +42,34 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "잘못된 요청 본문입니다." }, { status: 400 });
   }
 
-  const row = {
-    last_name: trimStr(body.last_name, 200),
-    first_name: trimStr(body.first_name, 200),
-    company: trimStr(body.company, 500),
-    email: trimStr(body.email, 320),
-    phone: trimStr(body.phone, 100),
-    position: trimStr(body.position, 500),
-    main_task: trimStr(body.main_task, 1000),
-    experience: trimStr(body.experience, 2000),
-  };
+  const firstName = trimStr(body.first_name, 200);
+  const experience = trimStr(body.experience, 2000);
+  const emailVal = trimStr(body.email, 320);
+  const phoneVal = trimStr(body.phone, 100);
 
-  const missingFields = Object.entries(row)
-    .filter(([, value]) => !value)
-    .map(([key]) => key);
-
-  if (missingFields.length > 0) {
+  if (!firstName) {
+    return NextResponse.json({ error: "성함을 입력해 주세요.", missingFields: ["first_name"] }, { status: 400 });
+  }
+  if (!experience) {
+    return NextResponse.json({ error: "문제 내용을 입력해 주세요.", missingFields: ["experience"] }, { status: 400 });
+  }
+  if (!emailVal && !phoneVal) {
     return NextResponse.json(
-      {
-        error:
-          "필수 필드가 비어 있습니다.",
-        missingFields,
-      },
+      { error: "이메일 또는 전화번호를 입력해 주세요.", missingFields: ["email", "phone"] },
       { status: 400 }
     );
   }
+
+  const row = {
+    last_name: trimStr(body.last_name, 200),
+    first_name: firstName,
+    company: trimStr(body.company, 500),
+    email: emailVal,
+    phone: phoneVal,
+    position: trimStr(body.position, 500),
+    main_task: trimStr(body.main_task, 1000),
+    experience,
+  };
 
   const admin = createClient(url, serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
