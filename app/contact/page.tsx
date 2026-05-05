@@ -113,6 +113,7 @@ function ClientForm() {
           phone: phone.trim(),
           email: email.trim(),
           message: problemText.trim(),
+          preferred_method: consultMethod || "",
           marketing_consent: true,
         }),
       });
@@ -607,7 +608,7 @@ function ClientSuccessMessage() {
         요청 내용을 검토한 뒤, 24시간 이내 전문가 연결 가능 여부와 다음 진행 절차를 안내해드립니다.
       </p>
       <a
-        href="#"
+        href="https://open.kakao.com/o/sOT0q5pi"
         target="_blank"
         rel="noopener noreferrer"
         className="mt-6 flex w-full max-w-xs items-center justify-center gap-2 rounded-xl bg-[#FEE500] py-4 text-base font-bold text-[#3A1D1D] shadow-md transition hover:brightness-95 active:scale-[0.98]"
