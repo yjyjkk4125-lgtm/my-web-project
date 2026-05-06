@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useModal } from "@/context/ModalContext";
 
@@ -50,7 +51,7 @@ function FadeIn({
 const advisors = [
   {
     id: 1,
-    region: "필리핀/동남아",
+    region: "글로벌 유통 / 동남아",
     title: "실무 자문위원",
     summary: [
       "500개 이상의 브랜드 자문 및 필리핀 식약처(FDA)/IOR 실무 총괄",
@@ -80,7 +81,7 @@ const advisors = [
   },
   {
     id: 2,
-    region: "유럽",
+    region: "글로벌 진출 / 유럽",
     title: "현지 유통 및 물류 자문위원",
     summary: [
       "이탈리아 기반 유럽 전역 온·오프라인 유통망 입점 지원",
@@ -107,7 +108,7 @@ const advisors = [
   },
   {
     id: 3,
-    region: "중동/글로벌",
+    region: "글로벌 마케팅 / 중동",
     title: "마케팅 자문위원",
     summary: [
       "사우디/중동(GCC) 현지 비즈니스 네트워크 및 바이어 매칭",
@@ -134,29 +135,46 @@ const advisors = [
   },
   {
     id: 4,
-    region: "베트남",
-    title: "B2B 및 물류 최적화 자문위원",
+    region: "국내 유통 전문 / 한국",
+    title: "뷰티 온·오프라인 유통 전략 전문가",
     summary: [
-      "베트남 시장 진입을 위한 데이터 기반 B2B 바이어 매칭",
-      "베트남향 통합 물류 경로 설계 및 공급망 관리(SCM) 자문",
-      "정부 유관기관 수출상담회 초청 바이어 등 공공 협력 사업 수행",
+      "수입 브랜드 총판 및 면세점 MD 역임",
+      "온·오프라인 MD 총괄 및 유통, 컨설팅",
+      "성수 팝업스토어 및 오프라인 매장 구축 자문",
     ],
     detail: {
       mainFields: [
-        { label: "B2B 바이어 매칭", desc: "데이터 분석 기반의 한국 유망 상품(건기식, 뷰티 등) 매칭 전략" },
-        { label: "물류 프로세스 최적화", desc: "베트남향 물류 경로 설계 및 공급망 관리(SCM)를 통한 비용 절감" },
-        { label: "유통/판매 전략", desc: "베트남 온·오프라인 유통 구조를 활용한 판매 활성화 방안 수립" },
+        { label: "국내 유통망 매칭", desc: "면세점, 백화점, 대형마트, 홈쇼핑, 소셜 공구 등 전 채널 입점 및 유통 구조 설계" },
+        { label: "오프라인 경험 설계", desc: "성수동 등 주요 거점 팝업스토어 기획, 오프라인 매장 구축 및 MD 총괄 자문" },
+        { label: "채널 최적화", desc: "브랜드 특성에 맞는 온·오프라인 믹스 전략 및 수익 구조 최적화 가이드" },
       ],
       career: [
-        { label: "연차", desc: "7년 이상의 글로벌 이커머스 및 수출 실무 전문가" },
-        { label: "주요 이력", desc: "한국-베트남 비즈니스 매칭 및 통합 물류 서비스 운영사 대표" },
-        { label: "대외 활동", desc: "정부 산하 유관기관 수출상담회 초청 바이어 등 공공기관 협력 사업 다수 수행" },
+        { label: "연차", desc: "10년 경력의 뷰티 유통 및 MD 실무 전문가" },
+        { label: "주요 이력", desc: "전) 수입 브랜드 총판 및 면세점 MD 역임" },
+        { label: "현재", desc: "현) 온·오프라인 MD 총괄 및 유통/브랜딩 컨설팅 대표" },
       ],
       history: [
-        "누적 판매량 42,000건 이상 및 100여 개 이상의 클라이언트 관리 실적 보유",
-        "베트남 시장 특화 비즈니스 매칭 플랫폼 기획 및 총괄 운영",
+        "수입 브랜드 총판 운영을 통한 국내 시장 안착 및 유통망 확장 프로젝트 성공",
+        "성수동 팝업스토어 및 주요 오프라인 거점 MD 구성을 통한 브랜드 인지도 제고 프로젝트 총괄",
+        "10년 이상의 실무 네트워크를 기반으로 한 국내 뷰티 브랜드 온·오프라인 입점 및 자문 수행",
       ],
     },
+  },
+];
+
+/* ── FAQ 데이터 ───────────────────────────────────────────────── */
+const faqs = [
+  {
+    q: "어떤 전문가가 연결되나요?",
+    a: "실무 경험을 기반으로 요청에 맞는 전문가를 매칭합니다.",
+  },
+  {
+    q: "비용은 어떻게 되나요?",
+    a: "전문가의 경력 및 자문 내용에 따라 비용이 달라집니다.",
+  },
+  {
+    q: "바로 진행 가능한가요?",
+    a: "요청 후 24시간 이내 연결 가능 여부를 안내드립니다.",
   },
 ];
 
@@ -164,6 +182,7 @@ const advisors = [
 export default function Home() {
   const { openModal } = useModal();
   const [selectedAdvisor, setSelectedAdvisor] = useState<(typeof advisors)[0] | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <main>
@@ -189,72 +208,81 @@ export default function Home() {
             해외 진출, 마케팅, 유통, 운영 등 실무 전반을 다룹니다
           </p>
 
-          {/* 자문 신청 버튼 */}
-          <button
-            onClick={openModal}
-            className="mt-8 rounded-lg bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
-          >
-            자문 신청하기
-          </button>
+          {/* 버튼 그룹 */}
+          <div className="mt-8 flex flex-wrap gap-3">
+            <button
+              onClick={openModal}
+              className="rounded-lg bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
+            >
+              자문 신청하기
+            </button>
+            <Link
+              href="/advisor/register"
+              className="rounded-lg bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-[#0a1628]"
+            >
+              전문가 참여
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* ════════════════════════════════════════════
-          섹션 A  |  3열 카드형  |  연한 그레이-블루
+          섹션 A  |  이렇게 진행됩니다  |  연한 그레이-블루
       ════════════════════════════════════════════ */}
       <section className="bg-[#f0f4f8] py-32">
         <div className="mx-auto max-w-7xl px-6">
-          {/* 섹션 헤더 */}
           <FadeIn>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-              왜 VIALOCAL인가
+              진행 방식
             </p>
             <h2 className="mt-3 text-3xl font-bold text-slate-900 md:text-4xl">
-              해외 진출의 모든 단계, 전문가가 함께합니다
+              이렇게 진행됩니다
             </h2>
-            <p className="mt-4 max-w-2xl text-slate-500">
-              시장 진입부터 운영까지, 단계별 실무 자문
-            </p>
           </FadeIn>
 
-          {/* 3열 카드 */}
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 delay: 0,
-                title: "시장 진입",
-                desc: "미국·유럽·동남아 등 유통 채널 선택, 바이어 발굴, 플랫폼 입점 전략",
+                step: "1",
+                title: "문제 입력",
+                desc: "현재 고민을 간단히 작성합니다.",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
                 ),
               },
               {
                 delay: 120,
-                title: "브랜드·마케팅",
-                desc: "현지 소비자 맞춤 브랜딩, 콘텐츠 마케팅, 이커머스 운영 최적화",
+                step: "2",
+                title: "전문가 매칭",
+                desc: "적합한 실무 경험자를 연결합니다.",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 ),
               },
               {
                 delay: 240,
-                title: "인증·물류",
-                desc: "MoCRA·CPNP 등 국가별 인증 취득, 물류 경로 설계, SCM 구축",
+                step: "3",
+                title: "자문 진행",
+                desc: "필요한 방식으로 빠르게 문제를 정리합니다.",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 ),
               },
             ].map((card, idx) => (
               <FadeIn key={idx} delay={card.delay}>
                 <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:shadow-md">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-                    {card.icon}
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                      {card.icon}
+                    </div>
+                    <span className="text-xs font-bold text-blue-400">STEP {card.step}</span>
                   </div>
                   <h3 className="mt-5 text-lg font-semibold text-slate-900">
                     {card.title}
@@ -270,111 +298,77 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════════
-          섹션 B  |  [이미지|텍스트] 교차형  |  화이트
+          섹션 B  |  다양한 실무 문제  |  화이트
       ════════════════════════════════════════════ */}
       <section className="bg-white py-32">
-        <div className="mx-auto max-w-7xl space-y-28 px-6">
-          {/* 섹션 B 헤더 */}
+        <div className="mx-auto max-w-7xl px-6">
           <FadeIn>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-              자문 프로세스
+              자문 분야
             </p>
-            <h2 className="mt-3 max-w-xl text-3xl font-bold text-slate-900 md:text-4xl">
-              문의부터 자문까지, 단 2단계
+            <h2 className="mt-3 text-3xl font-bold text-slate-900 md:text-4xl">
+              다양한 실무 문제를 다룹니다
             </h2>
+            <p className="mt-4 max-w-2xl text-slate-500">
+              해외 진출, 마케팅, 유통, 운영 등 브랜드 성장 전반의 이슈를 함께 정리합니다
+            </p>
           </FadeIn>
 
-          {/* B-1: 이미지 왼쪽 / 텍스트 오른쪽 */}
-          <FadeIn>
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              <div className="relative aspect-video overflow-hidden rounded-2xl bg-slate-100">
-                <Image
-                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80&fit=crop"
-                  alt="비즈니스 고민 접수 및 전문가 매칭"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-                  의뢰 및 매칭
-                </p>
-                <h3 className="mt-3 text-2xl font-bold text-slate-900 md:text-3xl">
-                  비즈니스 고민 접수 및 최적 전문가 매칭
-                </h3>
-                <p className="mt-4 leading-relaxed text-slate-500">
-                  현재 직면한 해외 진출 이슈를 상세히 남겨주세요. VIALOCAL팀이 24시간 이내에 전문가 풀에서 가장 적합한 전문가를 선별해 제안합니다.
-                </p>
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* B-2: 텍스트 왼쪽 / 이미지 오른쪽 */}
-          <FadeIn>
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              <div className="order-2 lg:order-1">
-                <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-                  자문 및 해결
-                </p>
-                <h3 className="mt-3 text-2xl font-bold text-slate-900 md:text-3xl">
-                  검증된 전문가와의 1:1 자문 실행
-                </h3>
-                <p className="mt-4 leading-relaxed text-slate-500">
-                  매칭된 전문가의 경력을 확인하고 일정을 확정하세요. 1시간의 유선/화상 자문을 통해 실무자의 진짜 해결책을 얻습니다.
-                </p>
-              </div>
-              <div className="relative order-1 aspect-video overflow-hidden rounded-2xl bg-slate-100 lg:order-2">
-                <Image
-                  src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80&fit=crop"
-                  alt="검증된 전문가와의 1:1 화상 자문"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════
-          섹션 4.5  |  비즈니스 파트너십 (이미지 + 텍스트)
-      ════════════════════════════════════════════ */}
-      <section className="bg-[#f0f4f8] py-24 lg:py-32">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            {/* 가로형 이미지 */}
-            <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-200">
-              <Image
-                src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&q=80&fit=crop"
-                alt="글로벌 비즈니스 파트너십"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
-
-            {/* 텍스트 */}
+          {/* 이미지 3열 (데스크탑), 1열 (모바일) */}
+          <div className="mt-12">
+            {/* 모바일: 대표 이미지 1개 */}
             <FadeIn>
-              <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-                파트너십
-              </p>
-              <h2 className="mt-4 text-2xl font-bold text-slate-900 md:text-3xl">
-                자문을 넘어 비즈니스 파트너십으로
-              </h2>
-              <p className="mt-5 text-base font-medium leading-relaxed text-blue-700">
-                VIALOCAL은 단순한 지식 전달을 넘어 실질적인 비즈니스 기회를 연결합니다.
-              </p>
-              <div className="mt-5 space-y-4 text-base leading-relaxed text-slate-500">
-                <p>
-                  자문 과정에서 양측의 니즈와 비즈니스 적합성이 확인될 경우, VIALOCAL은 이를 놓치지 않고 실질적인 파트너십으로 이어질 수 있도록 가교 역할을 수행합니다.
-                </p>
-                <p>
-                  현지 시장 진출은 물론, 국내 비즈니스 생태계 내의 유망한 브랜드들과 연결되어 전문가님의 영향력을 더욱 넓혀보세요.
-                </p>
+              <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-100 lg:hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80&fit=crop"
+                  alt="글로벌 비즈니스 전략"
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                />
               </div>
             </FadeIn>
+
+            {/* 데스크탑: 3열 */}
+            <div className="hidden gap-6 lg:grid lg:grid-cols-3">
+              {[
+                {
+                  delay: 0,
+                  src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80&fit=crop",
+                  alt: "글로벌 비즈니스 전략",
+                  label: "글로벌 진출",
+                },
+                {
+                  delay: 120,
+                  src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&fit=crop",
+                  alt: "마케팅 데이터 분석",
+                  label: "마케팅 전략",
+                },
+                {
+                  delay: 240,
+                  src: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=800&q=80&fit=crop",
+                  alt: "뷰티 브랜드 운영",
+                  label: "유통 · 운영",
+                },
+              ].map((img, idx) => (
+                <FadeIn key={idx} delay={img.delay}>
+                  <div className="overflow-hidden rounded-2xl bg-slate-100">
+                    <div className="relative aspect-[4/3] w-full">
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        fill
+                        className="object-cover transition duration-500 hover:scale-105"
+                        sizes="(max-width: 1280px) 33vw, 400px"
+                      />
+                    </div>
+                    <div className="px-4 py-3">
+                      <p className="text-sm font-semibold text-slate-700">{img.label}</p>
+                    </div>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -389,10 +383,13 @@ export default function Home() {
               전문 자문위원단
             </p>
             <h2 className="mt-3 max-w-3xl text-3xl font-bold text-slate-900 md:text-4xl">
-              비아로컬은 각 국가별 시장에 정통한 자문위원과 함께합니다.
+              실무 경험 기반 전문가 네트워크
             </h2>
-            <p className="mt-3 text-sm text-slate-500">
-              (분야별 대표 자문위원 일부를 소개합니다.)
+            <p className="mt-3 max-w-2xl text-slate-500">
+              브랜드 성장 전반의 문제를 다루는 실무 전문가를 연결합니다
+            </p>
+            <p className="mt-2 text-sm text-slate-400">
+              (아래는 일부 분야 예시입니다)
             </p>
           </FadeIn>
 
@@ -427,60 +424,96 @@ export default function Home() {
 
           <FadeIn className="mt-14">
             <p className="text-sm leading-relaxed text-slate-500">
-              비아로컬은 이외에도 국가별·분야별로 세분화된 전문 위원단을 통해 귀사의 가장 확실한 글로벌 파트너가 되어 드립니다.
+              다양한 분야의 실무 전문가 네트워크를 통해 브랜드 상황에 맞는 자문을 제공합니다
             </p>
           </FadeIn>
         </div>
       </section>
 
       {/* ════════════════════════════════════════════
-          섹션 C  |  그리드형  |  다크 네이비
+          이런 분께 적합합니다  |  화이트
       ════════════════════════════════════════════ */}
-      <section className="bg-[#0d1f3c] py-32">
+      <section className="bg-white py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-6">
-          {/* 섹션 C 헤더 */}
           <FadeIn>
-            <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">
-              이런 분께 필요합니다
+            <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+              적합한 대상
             </p>
-            <h2 className="mt-3 max-w-3xl text-3xl font-bold text-white md:text-4xl">
-              K-뷰티 글로벌 진출,<br/> 
-              의사결정을 돕는 상위 1% 전문가 그룹
+            <h2 className="mt-3 text-3xl font-bold text-slate-900 md:text-4xl">
+              이런 분께 적합합니다
             </h2>
           </FadeIn>
 
-          {/* 그리드 (모바일 1열 → md 이상 2×2) */}
-          <div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="mt-10 space-y-4">
             {[
-              { delay: 0,   label: "검증", title: "엄격한 경력 검증을 통과한 산업별 실무 전문가 그룹" },
-              { delay: 120, label: "지식", title: "리포트에는 담기지 않는 현장 실무자들의 생생한 노하우" },
-              { delay: 0,   label: "보안", title: "철저한 비밀유지 의무(NDA) 기반의 안전하고 프라이빗한 정보 교환" },
-              { delay: 120, label: "효율", title: "시행착오를 줄이는 가장 빠른 방법, 실무자의 경험치를 사는 효율성" },
+              "브랜드 운영 중 중요한 의사결정이 필요한 경우",
+              "현재 문제를 빠르게 정리하고 싶은 팀",
+              "실행 전략을 구체화하고 싶은 경우",
             ].map((item, idx) => (
-              <FadeIn key={idx} delay={item.delay} className="h-full">
-                <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:bg-white/10 lg:p-8">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">
-                    {item.label}
-                  </p>
-                  <h3 className="mt-3 text-xs font-bold leading-snug text-white md:text-sm lg:text-base">
-                    {item.title}
-                  </h3>
+              <FadeIn key={idx} delay={idx * 80}>
+                <div className="flex items-center gap-4 rounded-xl border border-slate-100 bg-slate-50 px-6 py-4">
+                  <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">
+                    {idx + 1}
+                  </span>
+                  <p className="text-base font-medium text-slate-800">{item}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════
+          FAQ  |  미색 (#FAF9F6)
+      ════════════════════════════════════════════ */}
+      <section className="bg-[#FAF9F6] py-24 lg:py-32">
+        <div className="mx-auto max-w-3xl px-6">
+          <FadeIn>
+            <h2 className="text-center text-3xl font-bold text-slate-900 md:text-4xl">
+              자주 묻는 질문
+            </h2>
+          </FadeIn>
+
+          <div className="mt-10 space-y-3">
+            {faqs.map((faq, idx) => (
+              <FadeIn key={idx} delay={idx * 80}>
+                <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+                  <button
+                    onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                    className="flex w-full items-center justify-between px-6 py-4 text-left text-base font-semibold text-slate-800 transition hover:bg-slate-50"
+                  >
+                    <span>Q. {faq.q}</span>
+                    <svg
+                      className={`h-5 w-5 flex-shrink-0 text-slate-400 transition-transform duration-300 ${openFaq === idx ? "rotate-180" : ""}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {openFaq === idx && (
+                    <div className="border-t border-slate-100 px-6 py-4">
+                      <p className="text-sm leading-relaxed text-slate-600">A. {faq.a}</p>
+                    </div>
+                  )}
                 </div>
               </FadeIn>
             ))}
           </div>
 
-          {/* CTA */}
-          <FadeIn className="mt-16 text-center">
+          {/* FAQ 하단 CTA */}
+          <FadeIn className="mt-12 flex justify-center">
             <button
               onClick={openModal}
-              className="rounded-lg border border-white/30 bg-white/10 px-8 py-4 text-sm font-semibold text-white transition hover:bg-white/20"
+              className="rounded-xl bg-blue-600 px-10 py-4 text-base font-semibold text-white shadow-md transition hover:bg-blue-500 active:scale-[0.98]"
             >
               자문 신청하기
             </button>
           </FadeIn>
         </div>
       </section>
+
       {/* ═══ 자문위원 상세 모달 ═══ */}
       {selectedAdvisor && (
         <div
