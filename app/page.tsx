@@ -447,7 +447,7 @@ export default function Home() {
               브랜드 성장 전반의 문제를 다루는 실무 전문가를 연결합니다
             </p>
             <p className="mt-2 text-sm text-slate-400">
-              (아래는 일부 분야 예시입니다)
+              (아래는 일부 분야 전문가 구성입니다)
             </p>
           </FadeIn>
 
