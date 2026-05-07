@@ -82,18 +82,30 @@ export default function GuideProcessPage() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-black/70" />
         <div className="relative mx-auto flex h-full max-w-5xl flex-col justify-end px-6 pb-10 md:pb-16">
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-white/50">
+          <p
+            className="text-[11px] font-semibold uppercase tracking-widest text-white/70"
+            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.4)" }}
+          >
             이용 가이드
           </p>
-          <h1 className="mt-2 text-2xl font-bold leading-snug text-white md:text-[2.25rem]">
+          <h1
+            className="mt-2 text-2xl font-bold leading-snug text-white md:text-[2.25rem]"
+            style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}
+          >
             자문 진행 프로세스
           </h1>
-          <p className="mt-2 text-sm text-white/75 md:text-base">
+          <p
+            className="mt-2 text-sm text-white/90 md:text-base"
+            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.4)" }}
+          >
             주제 등록부터 전문가 매칭, 자문 진행까지.
           </p>
-          <p className="mt-1 text-sm text-white/60 md:text-base">
+          <p
+            className="mt-1 text-sm text-white/80 md:text-base"
+            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.4)" }}
+          >
             VIALOCAL은 브랜드 상황에 맞는 실무 자문 연결을 지원합니다.
           </p>
         </div>
@@ -102,11 +114,11 @@ export default function GuideProcessPage() {
       {/* ── Intro ────────────────────────────────────── */}
       <section className="border-b border-slate-200 bg-white py-14 md:py-20">
         <div className="mx-auto max-w-3xl px-6">
-          <p className="text-[15px] leading-[1.85] text-slate-600 md:text-base md:leading-[1.9]">
+          <p className="text-[15px] leading-[1.85] text-slate-800 md:text-base md:leading-[1.9]">
             VIALOCAL은 브랜드가 현재 겪고 있는 실무 문제를 정리하고,
             적합한 전문가와 연결하여 현실적인 방향성을 함께 고민하는 자문 플랫폼입니다.
           </p>
-          <p className="mt-5 text-[15px] leading-[1.85] text-slate-600 md:text-base md:leading-[1.9]">
+          <p className="mt-5 text-[15px] leading-[1.85] text-slate-800 md:text-base md:leading-[1.9]">
             명확한 문제 해결뿐 아니라,
             브랜드 상황을 함께 정리하고 다음 방향을 설정하는 과정 자체를 중요하게 생각합니다.
           </p>
@@ -118,28 +130,28 @@ export default function GuideProcessPage() {
         <div className="mx-auto max-w-3xl px-6">
           {steps.map((step, idx) => (
             <div key={idx} className="border-t border-slate-200 py-12">
-              <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+              <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-500">
                 STEP {step.num}
               </p>
-              <h2 className="mt-2 text-xl font-bold text-slate-900 md:text-2xl">
+              <h2 className="mt-2 text-xl font-semibold text-neutral-950 md:text-2xl">
                 {step.title}
               </h2>
               <div className="mt-4 space-y-2">
                 {step.body.map((para, i) => (
                   <p
                     key={i}
-                    className="text-[15px] leading-relaxed text-slate-600 md:text-base"
+                    className="text-[15px] leading-relaxed text-slate-700 md:text-base"
                   >
                     {para}
                   </p>
                 ))}
               </div>
               {step.examples.length > 0 && (
-                <ul className="mt-6 space-y-3 border-l-2 border-slate-200 pl-5">
+                <ul className="mt-6 space-y-4 border-l-2 border-slate-400 pl-5">
                   {step.examples.map((ex, i) => (
                     <li
                       key={i}
-                      className="text-[14px] leading-relaxed text-slate-500 md:text-[15px]"
+                      className="py-0.5 text-[14px] leading-[1.75] text-slate-700 md:text-[15px]"
                     >
                       &ldquo;{ex}&rdquo;
                     </li>
@@ -147,7 +159,7 @@ export default function GuideProcessPage() {
                 </ul>
               )}
               {step.note && (
-                <p className="mt-6 text-sm leading-relaxed text-slate-400">
+                <p className="mt-6 text-sm leading-relaxed text-slate-600">
                   {step.note.split("\n").map((line, i, arr) => (
                     <span key={i}>
                       {line}
@@ -165,14 +177,14 @@ export default function GuideProcessPage() {
       {/* ── Principles ───────────────────────────────── */}
       <section className="border-t border-slate-200 bg-[#f7f7f5] py-14 md:py-20">
         <div className="mx-auto max-w-3xl px-6">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-slate-900 md:text-sm">
+          <h2 className="text-xs font-bold uppercase tracking-widest text-neutral-950 md:text-sm">
             VIALOCAL이 중요하게 생각하는 것
           </h2>
           <ul className="mt-8 space-y-5">
             {principles.map((item, idx) => (
               <li key={idx} className="flex items-center gap-5">
-                <span className="h-px w-5 flex-shrink-0 bg-slate-400" />
-                <span className="text-[15px] text-slate-700 md:text-base">{item}</span>
+                <span className="h-px w-5 flex-shrink-0 bg-slate-600" />
+                <span className="text-[15px] text-slate-800 md:text-base">{item}</span>
               </li>
             ))}
           </ul>
@@ -182,16 +194,16 @@ export default function GuideProcessPage() {
       {/* ── Notices ──────────────────────────────────── */}
       <section className="border-t border-slate-200 bg-white py-14 md:py-20">
         <div className="mx-auto max-w-3xl px-6">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-slate-900 md:text-sm">
+          <h2 className="text-xs font-bold uppercase tracking-widest text-neutral-950 md:text-sm">
             안내 사항
           </h2>
           <ul className="mt-8 space-y-4">
             {notices.map((item, idx) => (
               <li
                 key={idx}
-                className="flex items-start gap-3 text-sm leading-relaxed text-slate-500 md:text-[15px]"
+                className="flex items-start gap-3 text-sm leading-relaxed text-slate-700 md:text-[15px]"
               >
-                <span className="mt-[9px] h-1 w-1 flex-shrink-0 rounded-full bg-slate-400" />
+                <span className="mt-[9px] h-1 w-1 flex-shrink-0 rounded-full bg-slate-600" />
                 {item}
               </li>
             ))}
