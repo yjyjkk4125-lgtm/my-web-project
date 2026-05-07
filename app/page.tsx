@@ -178,11 +178,37 @@ const faqs = [
   },
 ];
 
+/* ── 이용 가이드 카드 데이터 ─────────────────────────────────────── */
+const guideCards = [
+  {
+    href: "/guide/process",
+    src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80&fit=crop",
+    alt: "자문 진행 프로세스",
+    title: "자문 진행 프로세스",
+    desc: "자문 신청부터 전문가 매칭, 진행 이후 관리까지. 비아로컬이 어떻게 문제를 해결하는지 전체 흐름을 확인하세요.",
+  },
+  {
+    href: "/guide/preparation",
+    src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&fit=crop",
+    alt: "자문 준비 가이드",
+    title: "자문 준비 가이드",
+    desc: "짧은 시간 안에 핵심을 얻을 수 있도록 질문 정리 방법과 자문 활용 전략을 안내합니다.",
+  },
+  {
+    href: "/guide/security",
+    src: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=800&q=80&fit=crop",
+    alt: "보안 및 기밀 유지 정책",
+    title: "보안 및 기밀 유지 정책",
+    desc: "브랜드의 핵심 정보는 안전하게 보호됩니다. 자문 과정에서 적용되는 보안 원칙을 확인하세요.",
+  },
+];
+
 /* ── 메인 페이지 ─────────────────────────────────────────────────── */
 export default function Home() {
   const { openModal } = useModal();
   const [selectedAdvisor, setSelectedAdvisor] = useState<(typeof advisors)[0] | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [guideIdx, setGuideIdx] = useState(0);
 
   return (
     <main>
@@ -298,77 +324,109 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════════
-          섹션 B  |  다양한 실무 문제  |  화이트
+          섹션 B  |  이용 가이드  |  화이트
       ════════════════════════════════════════════ */}
       <section className="bg-white py-32">
         <div className="mx-auto max-w-7xl px-6">
           <FadeIn>
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-              자문 분야
+              이용 가이드
             </p>
             <h2 className="mt-3 text-3xl font-bold text-slate-900 md:text-4xl">
-              다양한 실무 문제를 다룹니다
+              자문 전 꼭 확인하세요
             </h2>
             <p className="mt-4 max-w-2xl text-slate-500">
-              해외 진출, 마케팅, 유통, 운영 등 브랜드 성장 전반의 이슈를 함께 정리합니다
+              자문 신청부터 진행, 보안까지 필요한 내용을 안내합니다
             </p>
           </FadeIn>
 
-          {/* 이미지 3열 (데스크탑), 1열 (모바일) */}
-          <div className="mt-12">
-            {/* 모바일: 대표 이미지 1개 */}
-            <FadeIn>
-              <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-slate-100 lg:hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80&fit=crop"
-                  alt="글로벌 비즈니스 전략"
-                  fill
-                  className="object-cover"
-                  sizes="100vw"
-                />
+          {/* 모바일: 캐러셀 */}
+          <div className="mt-12 lg:hidden">
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-300 ease-out"
+                style={{ transform: `translateX(-${guideIdx * 100}%)` }}
+              >
+                {guideCards.map((card, idx) => (
+                  <div key={idx} className="w-full flex-shrink-0 px-1">
+                    <div className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+                      <Link href={card.href}>
+                        <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+                          <Image
+                            src={card.src}
+                            alt={card.alt}
+                            fill
+                            className="object-cover transition duration-500 group-hover:scale-105"
+                            sizes="100vw"
+                          />
+                        </div>
+                      </Link>
+                      <div className="p-6">
+                        <h3 className="text-lg font-semibold text-slate-900">{card.title}</h3>
+                        <p className="mt-2 text-sm leading-relaxed text-slate-500">{card.desc}</p>
+                        <Link
+                          href={card.href}
+                          className="mt-4 inline-block text-sm font-semibold text-blue-600 transition hover:text-blue-500"
+                        >
+                          자세히 알아보기 →
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </FadeIn>
+            </div>
+            {/* 페이지 인디케이터 */}
+            <div className="mt-6 flex items-center justify-center gap-4">
+              <button
+                onClick={() => setGuideIdx((prev) => Math.max(prev - 1, 0))}
+                disabled={guideIdx === 0}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition hover:border-blue-300 hover:text-blue-500 disabled:opacity-30"
+              >
+                ←
+              </button>
+              <span className="text-sm font-medium text-slate-500">
+                {guideIdx + 1}/3
+              </span>
+              <button
+                onClick={() => setGuideIdx((prev) => Math.min(prev + 1, 2))}
+                disabled={guideIdx === 2}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition hover:border-blue-300 hover:text-blue-500 disabled:opacity-30"
+              >
+                →
+              </button>
+            </div>
+          </div>
 
-            {/* 데스크탑: 3열 */}
-            <div className="hidden gap-6 lg:grid lg:grid-cols-3">
-              {[
-                {
-                  delay: 0,
-                  src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80&fit=crop",
-                  alt: "글로벌 비즈니스 전략",
-                  label: "글로벌 진출",
-                },
-                {
-                  delay: 120,
-                  src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&fit=crop",
-                  alt: "마케팅 데이터 분석",
-                  label: "마케팅 전략",
-                },
-                {
-                  delay: 240,
-                  src: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=800&q=80&fit=crop",
-                  alt: "뷰티 브랜드 운영",
-                  label: "유통 · 운영",
-                },
-              ].map((img, idx) => (
-                <FadeIn key={idx} delay={img.delay}>
-                  <div className="overflow-hidden rounded-2xl bg-slate-100">
-                    <div className="relative aspect-[4/3] w-full">
+          {/* 데스크탑: 3열 그리드 */}
+          <div className="mt-12 hidden gap-6 lg:grid lg:grid-cols-3">
+            {guideCards.map((card, idx) => (
+              <FadeIn key={idx} delay={idx * 120}>
+                <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+                  <Link href={card.href}>
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
                       <Image
-                        src={img.src}
-                        alt={img.alt}
+                        src={card.src}
+                        alt={card.alt}
                         fill
-                        className="object-cover transition duration-500 hover:scale-105"
+                        className="object-cover transition duration-500 group-hover:scale-105"
                         sizes="(max-width: 1280px) 33vw, 400px"
                       />
                     </div>
-                    <div className="px-4 py-3">
-                      <p className="text-sm font-semibold text-slate-700">{img.label}</p>
-                    </div>
+                  </Link>
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="text-lg font-semibold text-slate-900">{card.title}</h3>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">{card.desc}</p>
+                    <Link
+                      href={card.href}
+                      className="mt-4 inline-block text-sm font-semibold text-blue-600 transition hover:text-blue-500"
+                    >
+                      자세히 알아보기 →
+                    </Link>
                   </div>
-                </FadeIn>
-              ))}
-            </div>
+                </div>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
