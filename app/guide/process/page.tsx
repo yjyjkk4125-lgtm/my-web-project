@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const steps = [
   {
@@ -50,7 +51,7 @@ const steps = [
     body: [
     "자문 진행 이후 안내된 방식에 따라 결제가 진행됩니다.",
     "필요 시 추가 자문 및 후속 연결도 가능합니다.",
-    "",
+    " ",
     "자문 비용은 전문가 경력과 주제에 따라 달라질 수 있으며,",
     "일반적으로 1회 기준 10만 원대~수십만 원 수준에서 진행됩니다.",
     ],
@@ -212,6 +213,23 @@ export default function GuideProcessPage() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* ── Next Guide Navigation ─────────────────── */}
+      <section className="border-t border-slate-200 bg-white py-10 md:py-14">
+        <div className="mx-auto max-w-3xl px-6">
+          <Link
+            href="/guide/preparation"
+            className="group inline-flex items-center gap-2"
+          >
+            <span className="text-sm text-neutral-400 transition-colors group-hover:text-neutral-600">
+              다음 가이드 보기 →
+            </span>
+            <span className="text-sm font-bold text-neutral-950 transition-colors group-hover:underline">
+              자문 준비 가이드
+            </span>
+          </Link>
         </div>
       </section>
     </main>

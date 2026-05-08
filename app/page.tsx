@@ -47,6 +47,74 @@ function FadeIn({
   );
 }
 
+/* ── 실무 전문가 네트워크 데이터 ─────────────────────────────────── */
+const networkExperts = [
+  {
+    id: 1,
+    title: "브랜드 운영 및 성장 경험자",
+    desc: "브랜드 런칭부터 운영, 유통 및 성장 과정 전반의 실무 경험 기반 자문",
+    items: [
+      "브랜드 초기 런칭 및 운영 경험",
+      "제품 운영 및 판매 전략",
+      "성장 단계별 운영 이슈",
+      "브랜드 방향성 및 포지셔닝",
+    ],
+  },
+  {
+    id: 2,
+    title: "글로벌 진출 및 유통 전문가",
+    desc: "해외 시장 진출과 유통 구조 전반에 대한 실무 자문",
+    items: [
+      "국가별 유통 구조 및 시장 이해",
+      "바이어 및 현지 파트너 대응",
+      "글로벌 시장 진입 전략",
+      "현지 운영 및 유통 이슈",
+    ],
+  },
+  {
+    id: 3,
+    title: "제조 / OEM / ODM 전문가",
+    desc: "제품 개발 및 생산 과정 중심의 실무 자문",
+    items: [
+      "OEM / ODM 운영 구조",
+      "제조 커뮤니케이션 및 생산 프로세스",
+      "원가 및 생산 이슈",
+      "제품 기획 및 개발 방향성",
+    ],
+  },
+  {
+    id: 4,
+    title: "마케팅 및 유통 전략 전문가",
+    desc: "브랜드 성장과 매출 구조 개선 중심의 실무 자문",
+    items: [
+      "광고 효율 및 퍼포먼스 운영",
+      "콘텐츠 및 브랜드 전략",
+      "온·오프라인 유통 전략",
+      "채널 운영 및 판매 구조 개선",
+    ],
+  },
+];
+
+const networkTags = [
+  "해외 진출 전략",
+  "온/오프라인 입점",
+  "이커머스",
+  "브랜드 런칭",
+  "OEM / ODM",
+  "제품 기획",
+  "광고 효율 개선",
+  "글로벌 유통",
+  "바이어 대응",
+  "각 국가별 수출 인증",
+  "CPNP / MoCRA",
+  "오프라인 유통",
+  "팝업스토어",
+  "브랜드 포지셔닝",
+  "상세페이지 개선",
+  "콘텐츠 마케팅",
+  "인플루언서 시딩 등",
+];
+
 /* ── 자문위원단 데이터 ───────────────────────────────────────────── */
 const advisors = [
   {
@@ -349,29 +417,27 @@ export default function Home() {
               >
                 {guideCards.map((card, idx) => (
                   <div key={idx} className="w-full flex-shrink-0 px-1">
-                    <div className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
-                      <Link href={card.href}>
-                        <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
-                          <Image
-                            src={card.src}
-                            alt={card.alt}
-                            fill
-                            className="object-cover transition duration-500 group-hover:scale-105"
-                            sizes="100vw"
-                          />
-                        </div>
-                      </Link>
+                    <Link
+                      href={card.href}
+                      className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:brightness-[1.02] hover:shadow-lg"
+                    >
+                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+                        <Image
+                          src={card.src}
+                          alt={card.alt}
+                          fill
+                          className="object-cover transition duration-500 group-hover:scale-105"
+                          sizes="100vw"
+                        />
+                      </div>
                       <div className="p-6">
                         <h3 className="text-lg font-semibold text-slate-900">{card.title}</h3>
                         <p className="mt-2 text-sm leading-relaxed text-slate-500">{card.desc}</p>
-                        <Link
-                          href={card.href}
-                          className="mt-4 inline-block text-sm font-semibold text-blue-600 transition hover:text-blue-500"
-                        >
+                        <span className="mt-4 inline-block text-sm font-semibold text-blue-600 transition group-hover:text-blue-500">
                           자세히 알아보기 →
-                        </Link>
+                        </span>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -402,29 +468,27 @@ export default function Home() {
           <div className="mt-12 hidden gap-6 lg:grid lg:grid-cols-3">
             {guideCards.map((card, idx) => (
               <FadeIn key={idx} delay={idx * 120}>
-                <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
-                  <Link href={card.href}>
-                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
-                      <Image
-                        src={card.src}
-                        alt={card.alt}
-                        fill
-                        className="object-cover transition duration-500 group-hover:scale-105"
-                        sizes="(max-width: 1280px) 33vw, 400px"
-                      />
-                    </div>
-                  </Link>
+                <Link
+                  href={card.href}
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:brightness-[1.02] hover:shadow-lg"
+                >
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+                    <Image
+                      src={card.src}
+                      alt={card.alt}
+                      fill
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                      sizes="(max-width: 1280px) 33vw, 400px"
+                    />
+                  </div>
                   <div className="flex flex-1 flex-col p-6">
                     <h3 className="text-lg font-semibold text-slate-900">{card.title}</h3>
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-500">{card.desc}</p>
-                    <Link
-                      href={card.href}
-                      className="mt-4 inline-block text-sm font-semibold text-blue-600 transition hover:text-blue-500"
-                    >
+                    <span className="mt-4 inline-block text-sm font-semibold text-blue-600 transition group-hover:text-blue-500">
                       자세히 알아보기 →
-                    </Link>
+                    </span>
                   </div>
-                </div>
+                </Link>
               </FadeIn>
             ))}
           </div>
@@ -432,58 +496,54 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════════
-          자문위원단  |  Footer 배경색 (#faf5f5)
+          실무 전문가 네트워크  |  Footer 배경색 (#faf5f5)
       ════════════════════════════════════════════ */}
       <section className="bg-[#faf5f5] py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-6">
           <FadeIn>
-            <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-              전문 자문위원단
-            </p>
             <h2 className="mt-3 max-w-3xl text-3xl font-bold text-slate-900 md:text-4xl">
-              실무 경험 기반 전문가 네트워크
+              실무 전문가 네트워크
             </h2>
-            <p className="mt-3 max-w-2xl text-slate-500">
-              브랜드 성장 전반의 문제를 다루는 실무 전문가를 연결합니다
-            </p>
-            <p className="mt-2 text-sm text-slate-400">
-              (아래는 일부 분야 전문가 구성입니다)
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-500 md:text-base">
+              브랜드 운영, 유통, 제조, 마케팅 등 다양한 현업 경험 기반의 전문가 네트워크를 연결합니다.
+              현재 상황과 자문 주제에 따라 운영팀이 적합한 전문가를 직접 검토 및 매칭합니다.
             </p>
           </FadeIn>
 
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {advisors.map((advisor, idx) => (
-              <FadeIn key={advisor.id} delay={idx * 100}>
+            {networkExperts.map((expert, idx) => (
+              <FadeIn key={expert.id} delay={idx * 100}>
                 <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-                    {advisor.region}
-                  </p>
-                  <h3 className="mt-2 text-base font-bold text-slate-900">
-                    {advisor.title}
+                  <h3 className="text-base font-bold text-slate-900">
+                    {expert.title}
                   </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                    {expert.desc}
+                  </p>
                   <ul className="mt-4 flex-1 space-y-2">
-                    {advisor.summary.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs leading-relaxed text-slate-500">
+                    {expert.items.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs leading-relaxed text-slate-600">
                         <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
                         {item}
                       </li>
                     ))}
                   </ul>
-                  <button
-                    onClick={() => setSelectedAdvisor(advisor)}
-                    className="mt-5 rounded-lg border border-blue-200 px-4 py-2 text-xs font-semibold text-blue-600 transition hover:bg-blue-50"
-                  >
-                    상세보기
-                  </button>
                 </div>
               </FadeIn>
             ))}
           </div>
 
-          <FadeIn className="mt-14">
-            <p className="text-sm leading-relaxed text-slate-500">
-              다양한 분야의 실무 전문가 네트워크를 통해 브랜드 상황에 맞는 자문을 제공합니다
-            </p>
+          <FadeIn className="mt-10">
+            <div className="flex flex-wrap gap-2">
+              {networkTags.map((tag, idx) => (
+                <span
+                  key={idx}
+                  className="rounded-full bg-neutral-100 px-3 py-1 text-xs text-slate-600"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </FadeIn>
         </div>
       </section>
