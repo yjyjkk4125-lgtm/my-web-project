@@ -78,10 +78,10 @@ export default function ClientsPage() {
               K-뷰티 브랜드 실무 자문 플랫폼
             </span>
             <h1 className="mt-6 max-w-3xl text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-              K-뷰티 해외 진출,<br />혼자 고민하지 마세요
+              브랜드 운영의 중요한 의사결정,<br />혼자 고민하지 마세요
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-300 md:text-lg">
-              이미 그 길을 걸어본 전문가가 1시간 안에 방향을 잡아드립니다
+              브랜드 운영, 제품 기획, 제조, 유통, 마케팅, 해외 진출까지.<br />실무 경험을 보유한 전문가가 현재 상황에 맞는 방향을 함께 점검합니다.
             </p>
             <button
               onClick={openModal}
@@ -103,10 +103,10 @@ export default function ClientsPage() {
               왜 VIALOCAL인가
             </p>
             <h2 className="mt-3 text-3xl font-bold text-slate-900 md:text-4xl">
-              해외 진출의 모든 단계, 전문가가 함께합니다
+              브랜드 성장 전반의 문제를<br />실무 전문가와 함께 점검합니다
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-500">
-              해외 진출은 시장마다, 분야마다 전혀 다른 전문성이 필요합니다. VIALOCAL은 각 분야 실무 전문가와 직접 연결해 가장 빠른 해결책을 드립니다.
+              브랜드 운영 과정에서는 제품, 제조, 유통, 마케팅, 글로벌 진출 등 다양한 의사결정이 필요합니다.<br />VIALOCAL은 현재 상황과 자문 주제에 맞는 실무 전문가를 연결합니다.
             </p>
           </FadeIn>
 
@@ -116,7 +116,7 @@ export default function ClientsPage() {
               {
                 delay: 0,
                 label: "검증된 전문가",
-                desc: "엄격한 경력 검증을 통과한 실무 전문가와 연결됩니다.",
+                desc: "실무 경험과 전문성을 검토한 전문가와 연결됩니다.",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -126,7 +126,7 @@ export default function ClientsPage() {
               {
                 delay: 120,
                 label: "실무 중심",
-                desc: "보고서가 아닌 내일 바로 실행할 수 있는 답을 드립니다.",
+                desc: "이론보다 실제 현업 경험 기반의 현실적인 조언을 제공합니다.",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -135,8 +135,8 @@ export default function ClientsPage() {
               },
               {
                 delay: 240,
-                label: "합리적인 가격",
-                desc: "대형 컨설팅 비용 부담 없이 1시간 단위로 필요한 만큼만 자문받으세요.",
+                label: "합리적인 비용",
+                desc: "필요한 주제에 대해 1:1 실무 자문으로 방향을 점검할 수 있습니다.",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -172,8 +172,11 @@ export default function ClientsPage() {
               자문 프로세스
             </p>
             <h2 className="mt-3 max-w-xl text-3xl font-bold text-white md:text-4xl">
-              자문 신청부터 해결까지, 단 2단계
+              자문 신청부터 실행까지
             </h2>
+            <p className="mt-4 max-w-2xl leading-relaxed text-slate-300">
+              현재 상황과 자문 주제에 맞는 전문가를 검토하고 연결합니다.
+            </p>
           </FadeIn>
 
           <div className="mt-16 space-y-20">
@@ -183,7 +186,7 @@ export default function ClientsPage() {
                 <div className="relative aspect-video overflow-hidden rounded-2xl bg-slate-800">
                   <Image
                     src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80"
-                    alt="고민 접수 및 전문가 매칭"
+                    alt="자문 신청"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -194,10 +197,10 @@ export default function ClientsPage() {
                     Step 1
                   </p>
                   <h3 className="mt-3 text-2xl font-bold text-white md:text-3xl">
-                    고민 접수
+                    자문 신청
                   </h3>
                   <p className="mt-4 leading-relaxed text-slate-300">
-                    현재 직면한 해외 진출 이슈를 상세히 남겨주세요. VIALOCAL팀이 검토 후 적합한 전문가를 제안합니다.
+                    현재 고민하고 있는 문제와 필요한 자문 내용을 작성합니다.
                   </p>
                 </div>
               </div>
@@ -211,16 +214,16 @@ export default function ClientsPage() {
                     Step 2
                   </p>
                   <h3 className="mt-3 text-2xl font-bold text-white md:text-3xl">
-                    1:1 자문 실행
+                    전문가 검토 및 매칭
                   </h3>
                   <p className="mt-4 leading-relaxed text-slate-300">
-                    매칭된 전문가의 경력을 확인하고 일정을 확정하세요. 1시간의 전화 자문으로 실무 해결책을 바로 얻습니다.
+                    운영팀이 자문 주제와 브랜드 상황을 검토한 후 적합한 실무 전문가를 매칭합니다.
                   </p>
                 </div>
                 <div className="relative order-1 aspect-video overflow-hidden rounded-2xl bg-slate-800 lg:order-2">
                   <Image
                     src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80"
-                    alt="1:1 자문 실행"
+                    alt="전문가 검토 및 매칭"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -228,7 +231,42 @@ export default function ClientsPage() {
                 </div>
               </div>
             </FadeIn>
+
+            {/* Step 3 */}
+            <FadeIn>
+              <div className="grid items-center gap-12 lg:grid-cols-2">
+                <div className="relative aspect-video overflow-hidden rounded-2xl bg-slate-800">
+                  <Image
+                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80"
+                    alt="1:1 실무 자문"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-blue-400">
+                    Step 3
+                  </p>
+                  <h3 className="mt-3 text-2xl font-bold text-white md:text-3xl">
+                    1:1 실무 자문
+                  </h3>
+                  <p className="mt-4 leading-relaxed text-slate-300">
+                    현재 상황과 주제에 맞는 전문가와 1:1 전화 또는 화상 방식의 실무 자문이 진행됩니다.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
           </div>
+
+          <FadeIn className="mt-16 flex justify-center">
+            <a
+              href="/guide/process"
+              className="rounded-lg border border-blue-400/50 bg-blue-500/10 px-8 py-4 text-sm font-semibold text-blue-300 transition hover:bg-blue-500/20"
+            >
+              자문 진행 프로세스 보기
+            </a>
+          </FadeIn>
         </div>
       </section>
 
@@ -242,10 +280,10 @@ export default function ClientsPage() {
               자문 분야
             </p>
             <h2 className="mt-3 text-3xl font-bold text-slate-900 md:text-4xl">
-              해외 진출의 모든 고민, VIALOCAL이 함께합니다
+              브랜드 운영 전반의 문제를 다룹니다
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-500">
-              분야와 주제에 제한 없이 해외 진출과 관련된 모든 이슈를 자문받을 수 있습니다.
+              특정 분야에 한정되지 않고 브랜드 성장 과정에서 발생하는 다양한 실무 이슈에 대해 자문을 받을 수 있습니다.
             </p>
           </FadeIn>
 
@@ -254,8 +292,8 @@ export default function ClientsPage() {
             {[
               {
                 delay: 0,
-                label: "해외 유통·바이어",
-                desc: "유통 채널 선택, 바이어 발굴, 플랫폼 입점 전략",
+                label: "브랜드 운영 및 전략",
+                desc: "브랜드 방향성, 제품 전략, 성장 우선순위 점검",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -264,8 +302,8 @@ export default function ClientsPage() {
               },
               {
                 delay: 120,
-                label: "브랜드·마케팅",
-                desc: "현지 소비자 맞춤 브랜딩, 콘텐츠, 이커머스 운영",
+                label: "제조 및 제품 개발",
+                desc: "OEM / ODM, 제품 기획, 생산 커뮤니케이션",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
@@ -274,8 +312,8 @@ export default function ClientsPage() {
               },
               {
                 delay: 0,
-                label: "인증·물류·SCM",
-                desc: "MoCRA·CPNP 등 국가별 인증, 물류 경로 설계",
+                label: "유통 및 글로벌 진출",
+                desc: "국내외 유통 구조, 바이어 대응, 시장 진출 전략",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -284,8 +322,8 @@ export default function ClientsPage() {
               },
               {
                 delay: 120,
-                label: "투자·사업 전략",
-                desc: "GTM 전략, IR 피칭, 사업 모델 개선",
+                label: "마케팅 및 판매 전략",
+                desc: "광고 효율, 콘텐츠, 판매 구조 개선",
                 icon: (
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -336,7 +374,7 @@ export default function ClientsPage() {
                 자문을 넘어 실질적인 비즈니스 연결로
               </h2>
               <p className="mt-6 text-base leading-relaxed text-slate-300 md:text-lg">
-                VIALOCAL은 단순한 지식 전달에 그치지 않습니다. 자문 과정에서 양측의 니즈와 비즈니스 적합성이 확인될 경우, 실질적인 파트너십으로 이어질 수 있도록 가교 역할을 수행합니다. 현지 유통, 인증, 마케팅 파트너가 필요하다면 VIALOCAL이 연결합니다.
+                자문 과정에서 비즈니스 적합성이 확인될 경우,<br />유통, 제조, 마케팅 등 필요한 파트너와의 후속 연결이 이루어질 수 있습니다.
               </p>
             </div>
           </FadeIn>
@@ -350,7 +388,7 @@ export default function ClientsPage() {
         <div className="mx-auto max-w-7xl px-6 text-center">
           <FadeIn>
             <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-              지금 바로 전문가와 연결하세요
+              지금 바로 실무 전문가와 연결하세요
             </h2>
             <div className="mt-10">
               <button
