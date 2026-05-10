@@ -602,6 +602,51 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════════
+          실제 자문 사례  |  연한 뉴트럴 (#F5F5F4)
+      ════════════════════════════════════════════ */}
+      <section className="bg-neutral-50 py-24 lg:py-32">
+        <div className="mx-auto max-w-7xl px-6">
+          <FadeIn>
+            <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+              자문 사례
+            </p>
+            <h2 className="mt-3 text-3xl font-bold text-slate-900 md:text-4xl">
+              실제 자문 사례
+            </h2>
+            <p className="mt-4 max-w-2xl text-slate-500">
+              다양한 브랜드가 실무 전문가와의 자문을 통해 현재 문제를 정리하고 실행 우선순위를 구체화하고 있습니다.
+            </p>
+          </FadeIn>
+
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                body: "광고는 진행하고 있었지만 어떤 부분이 문제인지 명확히 파악하지 못하고 있었습니다. 자문을 통해 가장 먼저 점검해야 할 요소와 개선 우선순위를 정리할 수 있었고, 이후 실행 방향이 훨씬 명확해졌습니다.",
+                author: "인디 뷰티 브랜드 대표",
+              },
+              {
+                body: "해외 진출을 막연하게 고민하고 있었는데 어떤 시장부터 검토해야 하는지, 준비해야 할 사항이 무엇인지 체계적으로 정리할 수 있었습니다. 내부적으로 다음 단계 의사결정을 내리는 데 큰 도움이 되었습니다.",
+                author: "화장품 브랜드 운영자",
+              },
+              {
+                body: "브랜드 방향성과 제품 전략에 대해 고민이 많았는데 현재 상황에서 가장 중요한 우선순위를 객관적으로 점검할 수 있었습니다. 실무 경험 기반의 현실적인 조언이 특히 도움이 되었습니다.",
+                author: "D2C 브랜드 마케터",
+              },
+            ].map((item, idx) => (
+              <FadeIn key={idx} delay={idx * 100}>
+                <div className="flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
+                  <p className="flex-1 text-base leading-relaxed text-neutral-700">
+                    {item.body}
+                  </p>
+                  <p className="mt-6 text-sm text-neutral-500">{item.author}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════
           FAQ  |  미색 (#FAF9F6)
       ════════════════════════════════════════════ */}
       <section className="bg-[#FAF9F6] py-24 lg:py-32">
