@@ -89,34 +89,34 @@ const processSteps = [
   {
     Icon: IconProfile,
     title: "프로필 등록",
-    desc: "전문 분야와 경력을 등록하시면 VIALOCAL팀이 검토 후 적합한 자문 요청을 안내드립니다.",
+    desc: "전문 분야와 경력을 등록하면 운영팀이 검토합니다.",
   },
   {
     Icon: IconInbox,
     title: "자문 요청 안내",
-    desc: "브랜드의 자문 요청이 들어오면 이메일로 즉시 연락드립니다.",
+    desc: "적합한 자문 요청이 있을 경우 이메일 또는 연락처로 안내합니다.",
   },
   {
     Icon: IconCheck,
-    title: "자문 진행 확인",
-    desc: "일정과 주제를 확인하고 수락하시면 VIALOCAL팀이 브랜드사와 매칭을 확정합니다.",
+    title: "일정 확인 및 자문 진행",
+    desc: "주제와 일정을 확인하고 수락하면 브랜드와 1:1 자문이 진행됩니다.",
   },
   {
     Icon: IconCoin,
     title: "자문료 지급",
-    desc: "자문 완료 건에 대한 자문료는 매월 지정된 정산일에 일괄 계좌 이체로 지급해 드립니다.",
+    desc: "완료된 자문에 대해 안내된 기준에 따라 자문료를 지급합니다.",
   },
   {
     Icon: IconHandshake,
-    title: "지속적인 관계 유지",
-    desc: "자문 이후에도 VIALOCAL 파트너로서 지속적인 자문 기회를 안내받을 수 있습니다.",
+    title: "지속적인 협업",
+    desc: "이후에도 적합한 자문 기회를 지속적으로 안내합니다.",
   },
 ];
 
 const valueCards = [
   {
     title: "자문료 지급",
-    desc: "각 자문 완료 시, 시간당 자문료를 송금해 드립니다.",
+    desc: "각 자문 완료 후 약정된 자문료를 지급합니다.",
     Icon: () => (
       <svg className="h-10 w-10" fill="none" stroke="currentColor" strokeWidth={1.3} viewBox="0 0 24 24">
         <rect x="2" y="7" width="20" height="14" rx="2" />
@@ -128,7 +128,7 @@ const valueCards = [
   },
   {
     title: "업계 네트워크",
-    desc: "K-뷰티 브랜드 및 다양한 업계 리더들과 연결되는 새로운 관점을 얻을 수 있습니다.",
+    desc: "다양한 브랜드 및 업계 관계자와 연결될 수 있습니다.",
     Icon: () => (
       <svg className="h-10 w-10" fill="none" stroke="currentColor" strokeWidth={1.3} viewBox="0 0 24 24">
         <circle cx="12" cy="5" r="2" />
@@ -140,7 +140,7 @@ const valueCards = [
   },
   {
     title: "신뢰할 수 있는 환경",
-    desc: "업계 최고의 컴플라이언스 체계를 바탕으로 안전한 환경에서 인사이트를 공유하고 기밀 정보를 안전하게 보호할 수 있습니다.",
+    desc: "기밀성과 정보 보호를 최우선으로 운영합니다.",
     Icon: () => (
       <svg className="h-10 w-10" fill="none" stroke="currentColor" strokeWidth={1.3} viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l8 4v5c0 5-3.5 9.7-8 11C7.5 21.7 4 17 4 12V7l8-4z" />
@@ -163,8 +163,7 @@ export default function AdvisorPage() {
 
         <div className="relative mx-auto flex min-h-[70vh] max-w-7xl flex-col items-start justify-center px-6 py-28 lg:py-36">
           <h1 className="max-w-2xl text-3xl font-bold leading-snug text-white md:text-4xl lg:text-5xl">
-            K-뷰티 브랜드의 해외 진출을<br className="hidden sm:block" />
-            이끄는 자문위원
+            K-뷰티 브랜드의 성장을 돕는 자문위원
           </h1>
 
           <Link
@@ -192,18 +191,17 @@ export default function AdvisorPage() {
           <FadeIn delay={100}>
             <div className="mt-10 max-w-2xl space-y-5 text-base leading-relaxed text-slate-600">
               <p>
-                K-뷰티 브랜드는 매일 수많은 해외 진출 결정을 내려야 합니다.<br />
-                어떤 시장부터 진입해야 할지, 어떤 유통 채널이 맞는지, 인증은 어떻게 받아야 할지 — 경험 없이는 방향을 잡기 어렵습니다.
+                K-뷰티 브랜드는 제품 기획, 제조, 유통, 마케팅, 해외 진출 등 다양한 의사결정을 내려야 합니다. 실무 경험이 없다면 방향을 잡기 어려운 경우가 많습니다.
               </p>
               <p>
                 <strong className="text-slate-900">그 해답은 당신의 경험에 있습니다.</strong>
               </p>
               <p>
-                VIALOCAL 자문위원은 전화 자문을 통해 K-뷰티 브랜드와 실무 경험을 나누고 시간당 자문료를 받습니다.<br />
-                해외 유통, 마케팅, 인증, 이커머스 등 각 분야의 실무 전문가라면 누구든 참여할 수 있습니다.
+                VIALOCAL 자문위원은 브랜드와 실무 경험을 공유하고 자문료를 받습니다.<br />
+                브랜드 운영, 제조, 유통, 마케팅, 글로벌 비즈니스 등 각 분야의 전문가라면 참여할 수 있습니다.
               </p>
               <p>
-                VIALOCAL 자문위원으로서 어떻게 브랜드와 협력할 수 있는지 알아보세요.
+                VIALOCAL 자문위원으로서 브랜드와 어떻게 협력할 수 있는지 확인해보세요.
               </p>
             </div>
           </FadeIn>
@@ -220,8 +218,7 @@ export default function AdvisorPage() {
               VIALOCAL을 선택해야 하는 이유
             </h2>
             <p className="mt-3 max-w-2xl text-slate-500">
-              경험을 보유한 전문 분야 및 산업의 주제와 관련하여 인사이트를 제공할 수 있습니다.
-              현직인 경우 또는 퇴직 후 등 경력의 모든 단계에서 자유롭게 참여 가능합니다.
+              보유한 실무 경험과 전문성을 바탕으로 브랜드의 중요한 의사결정을 지원할 수 있습니다. 현직이거나 이전 경력을 보유한 전문가 모두 자유롭게 참여할 수 있습니다.
             </p>
           </FadeIn>
 
@@ -248,7 +245,7 @@ export default function AdvisorPage() {
         <div className="mx-auto max-w-7xl px-6">
           <FadeIn>
             <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-              자문위원 프로세스
+              자문위원 참여 프로세스
             </h2>
           </FadeIn>
 
@@ -299,17 +296,12 @@ export default function AdvisorPage() {
                 파트너십
               </p>
               <h2 className="mt-4 text-2xl font-bold text-slate-900 md:text-3xl">
-                자문을 넘어 비즈니스 파트너십으로
+                자문을 넘어 비즈니스 협업으로
               </h2>
-              <p className="mt-5 text-base font-medium leading-relaxed text-blue-700">
-                VIALOCAL은 단순한 지식 전달을 넘어 실질적인 비즈니스 기회를 연결합니다.
-              </p>
               <div className="mt-5 space-y-4 text-base leading-relaxed text-slate-500">
                 <p>
-                  자문 과정에서 양측의 니즈와 비즈니스 적합성이 확인될 경우, VIALOCAL은 이를 놓치지 않고 실질적인 파트너십으로 이어질 수 있도록 가교 역할을 수행합니다.
-                </p>
-                <p>
-                  현지 시장 진출은 물론, 국내 비즈니스 생태계 내의 유망한 브랜드들과 연결되어 전문가님의 영향력을 더욱 넓혀보세요.
+                  자문 과정에서 비즈니스 적합성이 확인될 경우,
+                  유통, 제조, 마케팅 등 다양한 분야의 협업 기회로 이어질 수 있습니다.
                 </p>
               </div>
             </FadeIn>

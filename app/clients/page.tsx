@@ -78,10 +78,10 @@ export default function ClientsPage() {
               K-뷰티 브랜드 실무 자문 플랫폼
             </span>
             <h1 className="mt-6 max-w-3xl text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl">
-              브랜드 운영의 중요한 의사결정,<br />혼자 고민하지 마세요
+              브랜드 운영의 중요한 의사결정, 혼자 고민하지 마세요
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-300 md:text-lg">
-              브랜드 운영, 제품 기획, 제조, 유통, 마케팅, 해외 진출까지.<br />실무 경험을 보유한 전문가가 현재 상황에 맞는 방향을 함께 점검합니다.
+              브랜드 운영, 제품 기획, 제조, 유통, 마케팅, 해외 진출까지. 실무 경험을 보유한 전문가가 현재 상황에 맞는 방향을 함께 점검합니다.
             </p>
             <button
               onClick={openModal}
