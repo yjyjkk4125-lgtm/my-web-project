@@ -11,7 +11,6 @@ const supportItems = [
 const faqItems = [
   { label: "클라이언트용", href: "/faq/client" },
   { label: "자문위원용", href: "/faq/advisor" },
-  { label: "공통 FAQ", href: "/faq/common" },
 ];
 
 const navLinks = [

@@ -41,7 +41,6 @@ const items = [
 const tabs = [
   { label: "클라이언트용", href: "/faq/client" },
   { label: "자문위원용", href: "/faq/advisor" },
-  { label: "공통 FAQ", href: "/faq/common" },
 ];
 
 export default function FaqClientPage() {
