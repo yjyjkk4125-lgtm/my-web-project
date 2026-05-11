@@ -118,7 +118,7 @@ export default function Navbar() {
               className="flex items-center gap-1 rounded-md px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
               onMouseEnter={handleFaqEnter}
             >
-              FAQ
+              자주 묻는 질문
               <svg
                 className={`h-4 w-4 transition-transform duration-200 ${faqOpen ? "rotate-180" : ""}`}
                 fill="none"
@@ -232,7 +232,7 @@ export default function Navbar() {
             className="flex w-full items-center justify-between py-3 text-sm font-medium text-slate-700"
             onClick={() => setMobileFaqOpen((prev) => !prev)}
           >
-            FAQ
+            자주 묻는 질문
             <svg
               className={`h-4 w-4 transition-transform duration-200 ${mobileFaqOpen ? "rotate-180" : ""}`}
               fill="none"
