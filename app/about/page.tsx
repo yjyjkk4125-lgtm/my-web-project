@@ -101,16 +101,16 @@ export default function About() {
       ════════════════════════════════════════════ */}
       <section className="bg-[#0d1f3c] py-32">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { delay: 0,   number: "다양한 분야",  label: "자문 가능 영역" },
               { delay: 120, number: "1시간",        label: "기본 자문 시간" },
               { delay: 240, number: "실무 중심",    label: "현업 경험 기반" },
               { delay: 360, number: "신뢰 기반",    label: "기밀성 우선 운영" },
             ].map((item) => (
-              <FadeIn key={item.label} delay={item.delay}>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm md:p-10">
-                  <p className="text-2xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
+              <FadeIn key={item.label} delay={item.delay} className="h-full">
+                <div className="flex h-full min-h-[220px] min-w-0 flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm md:p-10">
+                  <p className="whitespace-nowrap text-4xl font-bold leading-none tracking-tight text-white md:text-5xl">
                     {item.number}
                   </p>
                   <p className="mt-4 text-xs font-medium uppercase tracking-widest text-blue-300 md:text-sm">
@@ -249,26 +249,26 @@ export default function About() {
                 href: "/guide/security",
               },
             ].map((card, idx) => (
-              <FadeIn key={idx} delay={card.delay}>
-                <div className="flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-6 transition hover:shadow-md">
+              <FadeIn key={idx} delay={card.delay} className="h-full">
+                <Link
+                  href={card.href}
+                  className="flex h-full cursor-pointer flex-col rounded-2xl border border-neutral-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-lg"
+                >
                   <h3 className="text-lg font-semibold text-slate-900">
                     {card.title}
                   </h3>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">
                     {card.desc}
                   </p>
-                  <div className="mt-6">
-                    <Link
-                      href={card.href}
-                      className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-500"
-                    >
+                  <div className="mt-6 flex items-center gap-1">
+                    <span className="text-sm font-medium text-neutral-900">
                       자세히 보기
-                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </Link>
+                    </span>
+                    <svg className="h-4 w-4 text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
                   </div>
-                </div>
+                </Link>
               </FadeIn>
             ))}
           </div>
