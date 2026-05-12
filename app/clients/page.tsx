@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useModal } from "@/context/ModalContext";
 
@@ -350,34 +351,63 @@ export default function ClientsPage() {
       </section>
 
       {/* ════════════════════════════════════════════
-          Section 5 — Partnership
+          Section 5 — 가이드 문서
       ════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden py-24 lg:py-32">
-        <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=70"
-            alt="글로벌 파트너십"
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-black/65" />
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-6">
+      <section className="bg-neutral-50 py-32">
+        <div className="mx-auto max-w-7xl px-6">
           <FadeIn>
-            <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-widest text-blue-300">
-                파트너십
-              </p>
-              <h2 className="mt-4 text-3xl font-bold text-white md:text-4xl">
-                자문을 넘어 실질적인 비즈니스 연결로
-              </h2>
-              <p className="mt-6 text-base leading-relaxed text-slate-300 md:text-lg">
-                자문 과정에서 비즈니스 적합성이 확인될 경우,<br />유통, 제조, 마케팅 등 필요한 파트너와의 후속 연결이 이루어질 수 있습니다.
-              </p>
-            </div>
+            <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
+              자문 전에 확인하면 좋은 가이드
+            </h2>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-500 md:text-lg">
+              VIALOCAL의 자문 방식과 준비 방법, 정보 보호 원칙을 미리 확인할 수 있습니다.
+            </p>
           </FadeIn>
+
+          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {[
+              {
+                delay: 0,
+                title: "자문 진행 프로세스",
+                desc: "신청부터 전문가 매칭, 자문 진행까지 전체 과정을 확인할 수 있습니다.",
+                href: "/guide/process",
+              },
+              {
+                delay: 120,
+                title: "자문 준비 가이드",
+                desc: "현재 상황과 질문을 정리해 자문을 더 효과적으로 활용할 수 있습니다.",
+                href: "/guide/preparation",
+              },
+              {
+                delay: 240,
+                title: "보안 및 기밀 유지 원칙",
+                desc: "민감한 정보 보호와 신뢰 기반 운영 원칙을 확인할 수 있습니다.",
+                href: "/guide/security",
+              },
+            ].map((card, idx) => (
+              <FadeIn key={idx} delay={card.delay} className="h-full">
+                <Link
+                  href={card.href}
+                  className="flex h-full cursor-pointer flex-col rounded-2xl border border-neutral-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-lg"
+                >
+                  <h3 className="text-lg font-semibold text-slate-900">
+                    {card.title}
+                  </h3>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">
+                    {card.desc}
+                  </p>
+                  <div className="mt-6 flex items-center gap-1">
+                    <span className="text-sm font-medium text-neutral-900">
+                      자세히 보기
+                    </span>
+                    <svg className="h-4 w-4 text-neutral-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </Link>
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </section>
 
