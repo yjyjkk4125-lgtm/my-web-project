@@ -571,7 +571,7 @@ export default function Home() {
               href="/network"
               className="inline-block rounded-lg border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-400 hover:text-blue-600 hover:shadow-md"
             >
-              전체 전문가 보기 →
+              전문가 네트워크 보기 →
             </Link>
           </FadeIn>
         </div>
