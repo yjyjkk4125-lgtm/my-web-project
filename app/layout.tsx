@@ -19,15 +19,17 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const siteDescription =
-  "K-뷰티 브랜드의 성공적인 글로벌 진출을 위한 실무 전문가 자문 및 매칭 플랫폼, 비아로컬.";
+const siteTitle = "VIALOCAL | K-뷰티 브랜드 실무 자문 플랫폼";
 
-const ogImage =
-  "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&h=630&fit=crop&q=80";
+const siteDescription =
+  "브랜드 운영, 제품 기획, 제조, 유통, 마케팅, 해외 진출까지. K-뷰티 실무 전문가와 1:1 자문을 연결합니다.";
 
 export const metadata: Metadata = {
-  title: "VIALOCAL | 전문가의 실무 자문으로 완성하는 K-뷰티 비즈니스",
+  metadataBase: new URL("https://vialocal.vercel.app"),
+
+  title: siteTitle,
   description: siteDescription,
+
   robots: {
     index: true,
     follow: true,
@@ -35,8 +37,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://vialocal.vercel.app/",
   },
+
   openGraph: {
-    title: "VIALOCAL | K-뷰티 브랜드 실무 자문 플랫폼",
+    title: siteTitle,
     description: siteDescription,
     url: "https://vialocal.vercel.app",
     siteName: "VIALOCAL",
@@ -44,18 +47,19 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: ogImage,
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "VIALOCAL - K-뷰티 브랜드 실무 자문 플랫폼",
+        alt: siteTitle,
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "VIALOCAL | K-뷰티 브랜드 실무 자문 플랫폼",
+    title: siteTitle,
     description: siteDescription,
-    images: [ogImage],
+    images: ["/og-image.jpg"],
   },
 };
 
